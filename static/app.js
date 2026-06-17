@@ -102,6 +102,11 @@ const T = {
   diligenceWorkplan: "실사 워크플랜",
   hundredDayPlan: "100일 계획",
   boardQuestions: "이사회 질문",
+  automation: "자동 갱신",
+  reportIntelligence: "DART 원문 인텔리전스",
+  newsEvents: "뉴스 이벤트 타임라인",
+  dealScenario: "300억 딜 시나리오",
+  aiBrief: "AI 투자 메모",
 };
 
 const GROUP_ORDER = [T.instantReview, T.deepDiligence, T.highRiskOption, T.monitoring];
@@ -125,6 +130,7 @@ const state = {
   scoreTuning: null,
   teamOps: null,
   icPackages: null,
+  automationPlan: null,
   workflowOptions: null,
   newsArticlePages: {},
 };
@@ -238,6 +244,12 @@ async function loadICPackages() {
   const res = await fetch("/api/ic-packages?limit=12");
   state.icPackages = await res.json();
   renderICPackages();
+}
+
+async function loadAutomationPlan() {
+  const res = await fetch("/api/automation-plan");
+  state.automationPlan = await res.json();
+  renderAutomationPlan();
 }
 
 function opsCard(label, value, sub = "", tone = "") {
@@ -524,6 +536,36 @@ function renderICPackages() {
       loadCandidates();
     });
   });
+}
+
+function renderAutomationPlan() {
+  const summary = document.getElementById("automationSummary");
+  const grid = document.getElementById("automationGrid");
+  if (!summary || !grid || !state.automationPlan) return;
+  const plan = state.automationPlan;
+  const current = plan.current_state || {};
+  summary.textContent = `파이프라인 ${current.pipeline_status || "-"} · 모니터링 알림 ${current.monitoring_alert_count ?? 0}개 · 스케줄 ${current.scheduler_configured ? "설정됨" : "미설정"}`;
+  const cadence = plan.cadence || [];
+  const alerts = plan.alert_rules || [];
+  grid.innerHTML = `
+    ${cadence
+      .map(
+        (row) => `
+          <div class="automation-card">
+            <span>${escapeHtml(row.frequency || "")}</span>
+            <strong>${escapeHtml(row.name || "-")}</strong>
+            <em>${escapeHtml(row.purpose || "")}</em>
+            <code>${escapeHtml(row.command || "")}</code>
+          </div>
+        `,
+      )
+      .join("")}
+    <div class="automation-card wide">
+      <span>Alert Rules</span>
+      <strong>자동 알림 조건</strong>
+      ${memoList(alerts.slice(0, 5))}
+    </div>
+  `;
 }
 
 function shortlistGroups() {
@@ -1636,6 +1678,128 @@ function icPackageBlock(item) {
   `;
 }
 
+function reportIntelligenceBlock(item) {
+  const intel = item.report_intelligence || {};
+  const findings = intel.findings || [];
+  if (!findings.length) return "";
+  return `
+    <section class="section intelligence-detail">
+      <div class="section-title-row">
+        <h3>${T.reportIntelligence}</h3>
+        <span class="meta-pill">${escapeHtml(intel.severity || "-")} · ${intel.finding_count ?? findings.length}건</span>
+      </div>
+      <div class="finding-grid">
+        ${findings
+          .slice(0, 6)
+          .map(
+            (row) => `
+              <article class="finding-card ${escapeHtml(row.severity || "")}">
+                <span>${escapeHtml(row.category || "-")} · ${escapeHtml(row.severity || "-")}</span>
+                <strong>${escapeHtml(row.title || "-")}</strong>
+                <p>${escapeHtml(row.implication || "")}</p>
+                <em>${escapeHtml(row.next_step || "")}</em>
+              </article>
+            `,
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function newsEventsBlock(item) {
+  const events = item.news_events || {};
+  const rows = events.top_events || [];
+  if (!rows.length) return "";
+  return `
+    <section class="section news-events-detail">
+      <div class="section-title-row">
+        <h3>${T.newsEvents}</h3>
+        <span class="meta-pill">${events.event_count ?? rows.length}건 분류</span>
+      </div>
+      <p class="note">${escapeHtml(events.summary || "")}</p>
+      <div class="event-timeline">
+        ${rows
+          .slice(0, 8)
+          .map(
+            (row) => `
+              <div class="event-time-row ${escapeHtml(row.tone || "")}">
+                <span>${escapeHtml(row.date || "-")} · ${escapeHtml(row.event_type || "-")} · 중요도 ${row.importance ?? "-"}</span>
+                <strong>${escapeHtml(row.title || "-")}</strong>
+                <em>${escapeHtml(row.source || "")}</em>
+              </div>
+            `,
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function dealScenarioBlock(item) {
+  const scenario = item.deal_scenario || {};
+  const display = scenario.display || {};
+  if (!scenario.summary) return "";
+  return `
+    <section class="section deal-scenario-detail">
+      <div class="section-title-row">
+        <h3>${T.dealScenario}</h3>
+        <span class="meta-pill">${escapeHtml(display.control_feasibility || "-")}</span>
+      </div>
+      <p class="note">${escapeHtml(scenario.summary || "")}</p>
+      <div class="scenario-metrics">
+        ${qualityCard("신규 자금", display.new_money || "-", "유상증자 가정", "good")}
+        ${qualityCard("신규 지분", display.new_share || "-", "단순 기준", "good")}
+        ${qualityCard("보수 지분", display.conservative_new_share || "-", "CB/BW 오버행 반영", "warn")}
+        ${qualityCard("기존 최대주주", display.post_largest_share || "-", "유증 후 추정", "")}
+      </div>
+      <div class="ic-split">
+        <div>
+          <h4>구조 옵션</h4>
+          ${valueRows((scenario.exit_structure_options || []).map((row) => ({ label: row.structure, value: `${row.use_case} · ${row.key_checks}` })))}
+        </div>
+        <div>
+          <h4>법무/회계 체크포인트</h4>
+          ${memoList(scenario.legal_accounting_checkpoints || [])}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function aiBriefBlock(item) {
+  const brief = item.ai_brief || {};
+  if (!brief.memo_title) return "";
+  return `
+    <section class="section ai-brief-detail">
+      <div class="section-title-row">
+        <h3>${T.aiBrief}</h3>
+        <span class="meta-pill">Draft</span>
+      </div>
+      <div class="ic-split">
+        <div>
+          <h4>${escapeHtml(brief.memo_title || "투자 메모")}</h4>
+          ${memoList(brief.executive_memo || [])}
+        </div>
+        <div>
+          <h4>반론/리스크 관점</h4>
+          ${memoList(brief.counterarguments || [])}
+        </div>
+      </div>
+      <div class="ic-split">
+        <div>
+          <h4>법무/회계 요청서 초안</h4>
+          ${memoList(brief.legal_accounting_request || [])}
+        </div>
+        <div>
+          <h4>외부 AI 전달 프롬프트</h4>
+          <p class="note">${escapeHtml(brief.prompt_for_external_ai || "")}</p>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 function workflowBlock(item) {
   const workflow = item.workflow || {};
   const options = state.workflowOptions || {
@@ -1866,8 +2030,12 @@ function renderDetail() {
 
     ${acquisitionJudgmentBlock(item)}
     ${icPackageBlock(item)}
+    ${dealScenarioBlock(item)}
+    ${reportIntelligenceBlock(item)}
     ${newsAnalysisBlock(item)}
+    ${newsEventsBlock(item)}
     ${dataQualityBlock(item)}
+    ${aiBriefBlock(item)}
     ${workflowBlock(item)}
 
     <section class="section">
@@ -1962,6 +2130,7 @@ loadDataQuality();
 loadScoreTuning();
 loadTeamOps();
 loadICPackages();
+loadAutomationPlan();
 loadMonitoring();
 loadShortlist();
 loadScoreAudit();

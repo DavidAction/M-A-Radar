@@ -103,6 +103,7 @@ h2 {
 .monitoring-panel,
 .score-audit-panel,
 .ic-panel,
+.automation-panel,
 .shortlist-panel {
   margin-bottom: 20px;
   border: 1px solid var(--line);
@@ -282,6 +283,47 @@ h2 {
 
 .ic-card strong {
   font-size: 15px;
+}
+
+.automation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.automation-card {
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-2);
+}
+
+.automation-card.wide {
+  grid-column: span 1;
+}
+
+.automation-card span,
+.automation-card em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.automation-card strong {
+  font-size: 15px;
+}
+
+.automation-card code {
+  overflow-wrap: anywhere;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 8px;
+  background: #0b1117;
+  color: var(--teal);
+  font-size: 11px;
 }
 
 .audit-card {
@@ -1234,6 +1276,73 @@ h2 {
   line-height: 1.55;
 }
 
+.finding-grid,
+.event-timeline,
+.scenario-metrics {
+  display: grid;
+  gap: 10px;
+}
+
+.finding-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.scenario-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.finding-card,
+.event-time-row {
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-2);
+}
+
+.finding-card.critical,
+.finding-card.high,
+.event-time-row.risk {
+  border-color: #704247;
+}
+
+.finding-card.medium,
+.event-time-row.mixed,
+.event-time-row.financing {
+  border-color: #68522e;
+}
+
+.finding-card.low,
+.event-time-row.opportunity,
+.event-time-row.synergy,
+.event-time-row.deal {
+  border-color: #245445;
+}
+
+.finding-card span,
+.finding-card em,
+.event-time-row span,
+.event-time-row em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.finding-card strong,
+.event-time-row strong {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.finding-card p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .workflow-history {
   display: grid;
   gap: 8px;
@@ -1775,6 +1884,7 @@ ul.clean {
   .monitoring-alerts,
   .score-audit-list,
   .ic-list,
+  .automation-grid,
   .report-insight-grid,
   .snippet-list.evidence-snippets,
   .shortlist-grid {
@@ -1786,7 +1896,9 @@ ul.clean {
   .judgment-grid,
   .quality-grid,
   .quality-check-grid,
-  .ic-split {
+  .ic-split,
+  .finding-grid,
+  .scenario-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1808,6 +1920,8 @@ ul.clean {
   .quality-grid,
   .quality-check-grid,
   .ic-split,
+  .finding-grid,
+  .scenario-metrics,
   .history-row {
     grid-template-columns: 1fr;
   }

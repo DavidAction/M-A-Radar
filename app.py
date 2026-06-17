@@ -11,18 +11,23 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, quote, urlencode, urlparse
 
 from tl_ma_radar.acquisition_judgment import build_acquisition_judgment
+from tl_ma_radar.ai_brief import build_ai_brief
+from tl_ma_radar.automation_plan import build_automation_plan
 from tl_ma_radar.candidate_workflow import load_workflows, update_workflow, workflow_for_code, workflow_options
 from tl_ma_radar.collectors.dart import download_filing_pdf
 from tl_ma_radar.config import get_settings
 from tl_ma_radar.data_quality import build_data_quality, build_data_quality_summary
 from tl_ma_radar.deal_report import build_deal_cards_docx
+from tl_ma_radar.deal_scenario import build_deal_scenario
 from tl_ma_radar.deal_signals import analyze_deal_signals
 from tl_ma_radar.event_digest import build_event_digest
 from tl_ma_radar.ic_package import build_ic_package, build_ic_package_summary
 from tl_ma_radar.monitoring import latest_monitoring, monitoring_csv
 from tl_ma_radar.news_analysis import load_news_cache, news_for_code
+from tl_ma_radar.news_events import build_news_events
 from tl_ma_radar.operations import operations_status
 from tl_ma_radar.repository import data_source, load_candidates
+from tl_ma_radar.report_intelligence import build_report_intelligence
 from tl_ma_radar.scoring import score_candidate
 from tl_ma_radar.score_audit import build_score_audit
 from tl_ma_radar.score_tuning import build_score_tuning
@@ -167,9 +172,11 @@ def prepare_candidate(
     prepared = dict(item)
     code = str(prepared.get("code", ""))
     prepared["news_analysis"] = news_for_code(news_cache or {}, code)
+    prepared["news_events"] = build_news_events(prepared)
     filings = load_filings(str(prepared.get("code", "")))
     prepared["deal_signals"] = analyze_deal_signals(prepared, filings)
     prepared["event_digest"] = build_event_digest(filings)
+    prepared["report_intelligence"] = build_report_intelligence(prepared, filings)
     dart = prepared.get("dart_enrichment")
     if isinstance(dart, dict) and isinstance(dart.get("periodic_reports"), list):
         for report in dart["periodic_reports"]:
@@ -186,6 +193,8 @@ def prepare_candidate(
     scored["workflow"] = workflow_for_code(workflows or {}, str(scored.get("code") or ""))
     scored["data_quality"] = build_data_quality(ROOT, scored, filings, scored["news_analysis"])
     scored["ic_package"] = build_ic_package(scored)
+    scored["deal_scenario"] = build_deal_scenario(scored)
+    scored["ai_brief"] = build_ai_brief(scored)
     shortlist_row = shortlist_items([scored])[0]
     scored["shortlist_score"] = shortlist_row["shortlist_score"]
     scored["priority_score"] = shortlist_row["priority_score"]
@@ -289,6 +298,10 @@ class RadarHandler(BaseHTTPRequestHandler):
 
         if path == "/api/operations":
             json_response(self, operations_status(ROOT))
+            return
+
+        if path == "/api/automation-plan":
+            json_response(self, build_automation_plan(ROOT))
             return
 
         if path == "/api/data-quality":

@@ -119,6 +119,9 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                     data_quality_grade text,
                     ic_decision text,
                     ic_readiness_score real,
+                    report_risk_severity text,
+                    news_event_count integer,
+                    deal_control_feasibility text,
                     workflow_status text,
                     workflow_owner text,
                     next_action text,
@@ -154,12 +157,15 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                 scores = item.get("scores") or {}
                 quality = item.get("data_quality") or {}
                 ic_package = item.get("ic_package") or {}
+                report_intelligence = item.get("report_intelligence") or {}
+                news_events = item.get("news_events") or {}
+                deal_scenario = item.get("deal_scenario") or {}
                 workflow = item.get("workflow") or {}
                 news = item.get("news_analysis") or {}
                 news_scores = news.get("scores") or {}
                 conn.execute(
                     """
-                    insert or replace into candidates values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    insert or replace into candidates values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         item.get("code"),
@@ -174,6 +180,9 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                         quality.get("grade"),
                         ic_package.get("decision"),
                         ic_package.get("readiness_score"),
+                        report_intelligence.get("severity"),
+                        news_events.get("event_count"),
+                        (deal_scenario.get("display") or {}).get("control_feasibility"),
                         workflow.get("status"),
                         workflow.get("owner"),
                         workflow.get("next_action"),

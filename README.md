@@ -168,6 +168,10 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 - 파이프라인 이력: 후보 상태, 연락 상태, 담당자, 기한, 다음 액션, 메모 변경 이력이 자동 저장됩니다.
 - Word 보고서: 전체/개별 딜카드에 Investment Committee Lens, 데이터 신뢰도, 파이프라인 상태, 변경 이력이 반영됩니다.
 - IC 패키지: 후보별 IC 상정 여부, 300억 유증 딜 구조, 실사 워크플랜, 리스크 완화, 100일 계획을 자동 생성합니다.
+- DART 원문 인텔리전스: 감사/계속기업, 관리/환기, 자본잠식, CB/BW, 특수관계, 매출채권 리스크를 구조화합니다.
+- 뉴스 이벤트 타임라인: 최대주주/경영권, 유상증자/CB/BW, 감사/상장유지, 소송, 공급계약, 실적, 시너지 이벤트로 분류합니다.
+- 300억 딜 시나리오: 단순 신규 지분율과 CB/BW 오버행을 반영한 보수적 지분율, 경영권 확보 가능성을 함께 보여줍니다.
+- AI형 투자 메모: 외부 AI API 없이 현재 데이터 기반 투자 메모, 반론, 법무/회계 요청서 초안을 생성합니다.
 - 팀 이관: `/api/team-ops`에서 GitHub 연결, 자동 푸시 훅, 데이터 파일, 다른 PC 실행 준비 상태를 점검합니다.
 - SQLite Export: `/api/export-pipeline.sqlite`로 후보/뉴스/워크플로 데이터를 외부 분석툴에 넘길 수 있습니다.
 
@@ -177,6 +181,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 /api/data-quality
 /api/score-tuning?limit=20
 /api/ic-packages?limit=12
+/api/automation-plan
 /api/team-ops
 /api/export-pipeline.sqlite
 /api/export-deal-cards.docx?format=ic

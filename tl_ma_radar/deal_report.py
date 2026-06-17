@@ -283,6 +283,26 @@ def _ic_package(item: dict[str, Any]) -> dict[str, Any]:
     return package if isinstance(package, dict) else {}
 
 
+def _report_intelligence(item: dict[str, Any]) -> dict[str, Any]:
+    value = item.get("report_intelligence")
+    return value if isinstance(value, dict) else {}
+
+
+def _news_events(item: dict[str, Any]) -> dict[str, Any]:
+    value = item.get("news_events")
+    return value if isinstance(value, dict) else {}
+
+
+def _deal_scenario(item: dict[str, Any]) -> dict[str, Any]:
+    value = item.get("deal_scenario")
+    return value if isinstance(value, dict) else {}
+
+
+def _ai_brief(item: dict[str, Any]) -> dict[str, Any]:
+    value = item.get("ai_brief")
+    return value if isinstance(value, dict) else {}
+
+
 def _score(item: dict[str, Any], key: str) -> float:
     return float((item.get("scores") or {}).get(key) or 0)
 
@@ -392,6 +412,75 @@ def _ic_package_detail(doc: Docx, item: dict[str, Any]) -> None:
         )
 
 
+def _advanced_intelligence_detail(doc: Docx, item: dict[str, Any]) -> None:
+    report = _report_intelligence(item)
+    scenario = _deal_scenario(item)
+    news_events = _news_events(item)
+    ai = _ai_brief(item)
+
+    if scenario:
+        doc.paragraph("Deal Scenario", style="Heading2", color="13232E", bold=True, size=24, before=160, after=80)
+        display = scenario.get("display") or {}
+        doc.table(
+            [
+                ["항목", "값"],
+                ["신규 자금", display.get("new_money") or "-"],
+                ["신규 지분", display.get("new_share") or "-"],
+                ["보수적 신규 지분", display.get("conservative_new_share") or "-"],
+                ["유증 후 기존 최대주주", display.get("post_largest_share") or "-"],
+                ["경영권 확보 가능성", display.get("control_feasibility") or "-"],
+            ],
+            widths=[2200, 7160],
+            compact=True,
+        )
+        for checkpoint in (scenario.get("legal_accounting_checkpoints") or [])[:5]:
+            doc.bullet(checkpoint)
+
+    findings = report.get("findings") or []
+    if findings:
+        doc.paragraph("DART Source Intelligence", style="Heading2", color="13232E", bold=True, size=24, before=160, after=80)
+        doc.table(
+            [["구분", "심각도", "핵심 신호", "다음 확인"]]
+            + [
+                [
+                    row.get("category"),
+                    row.get("severity"),
+                    row.get("title"),
+                    row.get("next_step"),
+                ]
+                for row in findings[:5]
+                if isinstance(row, dict)
+            ],
+            widths=[1400, 1100, 2600, 4260],
+            compact=True,
+        )
+
+    events = news_events.get("top_events") or []
+    if events:
+        doc.paragraph("News Event Timeline", style="Heading2", color="13232E", bold=True, size=24, before=160, after=80)
+        doc.table(
+            [["일자", "이벤트", "중요도", "제목"]]
+            + [
+                [row.get("date"), row.get("event_type"), row.get("importance"), row.get("title")]
+                for row in events[:6]
+                if isinstance(row, dict)
+            ],
+            widths=[1300, 1700, 1100, 5260],
+            compact=True,
+        )
+
+    if ai:
+        doc.paragraph("AI-Style Review Memo", style="Heading2", color="13232E", bold=True, size=24, before=160, after=80)
+        for point in (ai.get("executive_memo") or [])[:5]:
+            doc.bullet(point)
+        doc.paragraph("Counterarguments", style="Heading3", color="B42318", bold=True, size=21, before=120, after=60)
+        for point in (ai.get("counterarguments") or [])[:4]:
+            doc.bullet(point)
+        doc.paragraph("Legal / Accounting Request Draft", style="Heading3", color="13232E", bold=True, size=21, before=120, after=60)
+        for point in (ai.get("legal_accounting_request") or [])[:6]:
+            doc.bullet(point)
+
+
 def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_format: str = "ic") -> None:
     scores = item.get("scores") or {}
     analysis = _analysis(item)
@@ -435,6 +524,7 @@ def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_forma
     )
     if report_format in {"ic", "deep", "full"}:
         _ic_package_detail(doc, item)
+        _advanced_intelligence_detail(doc, item)
         doc.paragraph("Investment Committee Lens", style="Heading2", color="13232E", bold=True, size=24, before=180, after=80)
         doc.table(_ic_lens_rows(item), widths=[1700, 2600, 5060], compact=True)
         history_rows = _workflow_history_rows(item)
