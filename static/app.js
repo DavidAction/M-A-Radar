@@ -138,6 +138,9 @@ const state = {
   automationPlan: null,
   topReview: null,
   alerts: null,
+  notificationStatus: null,
+  extractionAudit: null,
+  pipelineDashboard: null,
   workflowOptions: null,
   newsArticlePages: {},
 };
@@ -360,6 +363,24 @@ async function loadAlerts() {
   renderAlerts();
 }
 
+async function loadNotificationStatus() {
+  const res = await fetch("/api/notification-status");
+  state.notificationStatus = await res.json();
+  renderNotificationStatus();
+}
+
+async function loadExtractionAudit() {
+  const res = await fetch("/api/extraction-audit?limit=30");
+  state.extractionAudit = await res.json();
+  renderExtractionAudit();
+}
+
+async function loadPipelineDashboard() {
+  const res = await fetch("/api/pipeline-dashboard");
+  state.pipelineDashboard = await res.json();
+  renderPipelineDashboard();
+}
+
 async function loadTopReview() {
   const res = await fetch("/api/top-review?limit=20");
   state.topReview = await res.json();
@@ -490,6 +511,115 @@ function renderAlerts() {
         .join("")
     : `<p class="note">현재 자동 알림이 없습니다.</p>`;
   document.querySelectorAll(".alert-card").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (el.dataset.code) selectCandidate(el.dataset.code);
+    });
+  });
+}
+
+function renderNotificationStatus() {
+  const target = document.getElementById("notificationStatus");
+  if (!target || !state.notificationStatus) return;
+  const data = state.notificationStatus;
+  const channels = data.channels || {};
+  const latest = data.latest || {};
+  const tone = data.status === "configured" ? "good" : "warn";
+  target.innerHTML = `
+    ${qualityCard("알림 채널", data.status === "configured" ? "연결됨" : "미설정", "웹훅 또는 SMTP", tone)}
+    ${qualityCard("Webhook", channels.webhook ? "ON" : "OFF", data.targets?.webhook || "-", channels.webhook ? "good" : "")}
+    ${qualityCard("Email", channels.email ? "ON" : "OFF", data.targets?.email_to || "-", channels.email ? "good" : "")}
+    ${qualityCard("최근 발송", latest.status || "-", latest.sent_at ? latest.sent_at.slice(0, 16).replace("T", " ") : "기록 없음", latest.status === "ok" ? "good" : "")}
+  `;
+}
+
+async function sendAlertsDryRun() {
+  const button = document.getElementById("sendAlertsDryRun");
+  if (button) button.disabled = true;
+  try {
+    const res = await fetch("/api/send-alerts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dry_run: true, limit: 20 }),
+    });
+    state.notificationStatus = {
+      ...(state.notificationStatus || {}),
+      latest: await res.json(),
+    };
+    renderNotificationStatus();
+  } finally {
+    if (button) button.disabled = false;
+  }
+}
+
+function renderExtractionAudit() {
+  const summary = document.getElementById("extractionAuditSummary");
+  const list = document.getElementById("extractionAuditList");
+  if (!summary || !list || !state.extractionAudit) return;
+  const data = state.extractionAudit;
+  const stats = data.summary || {};
+  const counts = stats.verdict_counts || {};
+  summary.textContent = `상위 ${stats.sample_size || 0}개 검수 · 평균 신뢰도 ${stats.average_confidence || 0}점 · 애널리스트 검수 ${stats.manual_review || 0}개 · 원문 보강 ${stats.remediation_first || 0}개`;
+  list.innerHTML = (data.items || [])
+    .map((row) => {
+      const tone = row.verdict === "투자심의 사용 가능" ? "good" : row.verdict === "원문 보강 우선" ? "risk" : "warn";
+      const issueText = (row.issues || []).slice(0, 3).join(" / ") || "핵심 추출값 정상";
+      const tuningText = (row.recommended_tuning || []).slice(0, 2).join(" / ");
+      return `
+        <button class="extraction-card ${tone}" data-code="${escapeHtml(row.code || "")}">
+          <span>#${row.rank} · ${escapeHtml(row.code || "")} · ${row.confidence_score}점</span>
+          <strong>${escapeHtml(row.name || "-")}</strong>
+          <em>${escapeHtml(row.verdict || "-")} · ${escapeHtml(row.audit_opinion || "-")} · ${escapeHtml(row.shareholder_quality || "-")}</em>
+          <p>${escapeHtml(issueText)}</p>
+          <small>${escapeHtml(tuningText)}</small>
+        </button>
+      `;
+    })
+    .join("");
+  document.querySelectorAll(".extraction-card").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (el.dataset.code) selectCandidate(el.dataset.code);
+    });
+  });
+}
+
+function renderPipelineDashboard() {
+  const summary = document.getElementById("pipelineDashboardSummary");
+  const actions = document.getElementById("pipelineDashboardActions");
+  const lanes = document.getElementById("pipelineDashboardLanes");
+  if (!summary || !actions || !lanes || !state.pipelineDashboard) return;
+  const data = state.pipelineDashboard;
+  const stats = data.summary || {};
+  const hygiene = stats.hygiene || {};
+  summary.textContent = `활성 ${stats.active || 0}개 · 7일 내 액션 ${stats.next_7_days || 0}개 · 기한 초과 ${hygiene.overdue || 0}개 · 담당자 미지정 ${hygiene.no_owner || 0}개`;
+  actions.innerHTML = (data.recommended_actions || [])
+    .map((text) => `<span>${escapeHtml(text)}</span>`)
+    .join("");
+  lanes.innerHTML = (data.lanes || [])
+    .filter((lane) => lane.count)
+    .map(
+      (lane) => `
+        <div class="pipeline-lane">
+          <div class="pipeline-lane-head">
+            <strong>${escapeHtml(lane.status || "-")}</strong>
+            <span>${lane.count || 0}</span>
+          </div>
+          ${(lane.items || [])
+            .map(
+              (row) => `
+                <button class="pipeline-card" data-code="${escapeHtml(row.code || "")}">
+                  <span>${escapeHtml(row.owner || "미지정")} · ${escapeHtml(row.due_date || "기한 없음")}</span>
+                  <strong>${escapeHtml(row.name || "-")}</strong>
+                  <em>${escapeHtml(row.next_action || "-")}</em>
+                  <p>${escapeHtml(row.decision || "-")} · ${escapeHtml(row.risk_level || "-")} · ${row.priority_score ?? "-"}점</p>
+                </button>
+              `,
+            )
+            .join("")}
+        </div>
+      `,
+    )
+    .join("");
+  document.querySelectorAll(".pipeline-card").forEach((el) => {
     el.addEventListener("click", () => {
       if (el.dataset.code) selectCandidate(el.dataset.code);
     });
@@ -1963,6 +2093,59 @@ function dealScenarioBlock(item) {
   `;
 }
 
+function investmentCaseBlock(item) {
+  const ic = item.investment_case || {};
+  if (!ic || !Object.keys(ic).length) return "";
+  const display = ic.display || {};
+  const scorecard = ic.scorecard || {};
+  const offer = ic.offer_range || {};
+  const conditions = ic.required_conditions || [];
+  const plan = ic.hundred_day_plan || [];
+  const synergy = ic.synergy_map || [];
+  return `
+    <section class="section investment-case">
+      <div class="judgment-head">
+        <div>
+          <span class="section-kicker">Investment Case</span>
+          <h3>${escapeHtml(display.decision || ic.decision || "검토 필요")}</h3>
+          <p class="note">${escapeHtml(display.headline || ic.thesis || "")}</p>
+        </div>
+        <a class="export-link primary" href="/api/candidates/${encodeURIComponent(item.code)}/deal-card.docx?format=ic">Word</a>
+      </div>
+      <div class="quality-grid compact-quality">
+        ${qualityCard("지배력", scorecard.control ?? "-", display.base_new_share ? `신규지분 ${display.base_new_share}` : "", "good")}
+        ${qualityCard("시너지", scorecard.synergy ?? "-", (synergy[0] || {}).keyword || "TL/Renes", "good")}
+        ${qualityCard("자금/희석", scorecard.financing ?? "-", display.conservative_new_share ? `보수 ${display.conservative_new_share}` : "", "warn")}
+        ${qualityCard("리스크 조정", scorecard.risk_adjusted ?? "-", offer.control_premium || "", "")}
+      </div>
+      <div class="two-col">
+        <div class="mini-panel">
+          <h4>필수 선행조건</h4>
+          <ul class="clean">
+            ${conditions.slice(0, 5).map((text) => `<li>${escapeHtml(text)}</li>`).join("")}
+          </ul>
+        </div>
+        <div class="mini-panel">
+          <h4>100일 실행계획</h4>
+          <div class="timeline-mini">
+            ${plan
+              .slice(0, 3)
+              .map(
+                (row) => `
+                  <div>
+                    <strong>${escapeHtml(row.period || "-")} · ${escapeHtml(row.focus || "-")}</strong>
+                    <span>${escapeHtml(row.actions || "")}</span>
+                  </div>
+                `,
+              )
+              .join("")}
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 function aiBriefBlock(item) {
   const brief = item.ai_brief || {};
   if (!brief.memo_title) return "";
@@ -2245,6 +2428,7 @@ function renderDetail() {
     ${acquisitionJudgmentBlock(item)}
     ${icPackageBlock(item)}
     ${dealScenarioBlock(item)}
+    ${investmentCaseBlock(item)}
     ${reportIntelligenceBlock(item)}
     ${newsAnalysisBlock(item)}
     ${newsEventsBlock(item)}
@@ -2342,17 +2526,25 @@ if (qualityRemediateButton) {
   qualityRemediateButton.addEventListener("click", startQualityRemediation);
 }
 
+const sendAlertsDryRunButton = document.getElementById("sendAlertsDryRun");
+if (sendAlertsDryRunButton) {
+  sendAlertsDryRunButton.addEventListener("click", sendAlertsDryRun);
+}
+
 loadConfig();
 loadWorkflowOptions();
 loadOperations();
 loadDataQuality();
 loadRemediationStatus();
+loadExtractionAudit();
+loadPipelineDashboard();
 loadScoreTuning();
 loadTeamOps();
 loadICPackages();
 loadAutomationPlan();
 loadMonitoring();
 loadAlerts();
+loadNotificationStatus();
 loadTopReview();
 loadShortlist();
 loadScoreAudit();

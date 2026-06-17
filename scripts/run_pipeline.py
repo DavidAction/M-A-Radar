@@ -208,6 +208,13 @@ def run_pipeline(args: argparse.Namespace) -> Path:
             ["scripts/export_daily_quality_report.py"],
             timeout=900,
         )
+        if args.send_alerts:
+            run_required_step(
+                payload,
+                "send_alert_notifications",
+                ["scripts/send_alert_notifications.py", "--limit", str(args.alert_limit)],
+                timeout=300,
+            )
         payload["status"] = "ok"
     except StepFailed as exc:
         payload["status"] = "failed"
@@ -245,6 +252,8 @@ def main() -> None:
     parser.add_argument("--news-months", type=int, default=6)
     parser.add_argument("--news-max-articles", type=int, default=30)
     parser.add_argument("--news-sleep", type=float, default=0.25)
+    parser.add_argument("--send-alerts", action="store_true")
+    parser.add_argument("--alert-limit", type=int, default=30)
     args = parser.parse_args()
     start = time.time()
     path = run_pipeline(args)

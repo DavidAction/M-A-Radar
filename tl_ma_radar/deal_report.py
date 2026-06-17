@@ -481,6 +481,57 @@ def _advanced_intelligence_detail(doc: Docx, item: dict[str, Any]) -> None:
             doc.bullet(point)
 
 
+def _investment_case_detail(doc: Docx, item: dict[str, Any]) -> None:
+    case = item.get("investment_case")
+    if not isinstance(case, dict):
+        return
+    display = case.get("display") if isinstance(case.get("display"), dict) else {}
+    scorecard = case.get("scorecard") if isinstance(case.get("scorecard"), dict) else {}
+    offer = case.get("offer_range") if isinstance(case.get("offer_range"), dict) else {}
+    summary = case.get("summary") if isinstance(case.get("summary"), dict) else {}
+
+    doc.paragraph("Consulting Investment Case", style="Heading2", color="13232E", bold=True, size=24, before=180, after=80)
+    doc.paragraph(
+        _clip(display.get("headline") or case.get("thesis") or "Investment thesis requires analyst validation.", 420),
+        style="BodyLead",
+        color="374151",
+        size=20,
+        after=120,
+    )
+    doc.table(
+        [
+            ["Lens", "Assessment", "Score / Range"],
+            ["Decision", display.get("decision") or case.get("decision") or "-", _fmt_score(scorecard.get("risk_adjusted"))],
+            ["Control", summary.get("control") or "-", _fmt_score(scorecard.get("control"))],
+            ["TL/Renes Synergy", summary.get("synergy") or "-", _fmt_score(scorecard.get("synergy"))],
+            ["Financing / Dilution", f"Base {display.get('base_new_share', '-')} / Conservative {display.get('conservative_new_share', '-')}", _fmt_score(scorecard.get("financing"))],
+            ["Indicative Value", offer.get("pre_money_range") or "-", offer.get("control_premium") or "-"],
+        ],
+        widths=[1900, 5560, 1900],
+        compact=True,
+    )
+
+    conditions = case.get("required_conditions") or []
+    if conditions:
+        doc.paragraph("Required Deal Conditions", style="Heading3", color="B42318", bold=True, size=21, before=120, after=60)
+        for point in conditions[:5]:
+            doc.bullet(point)
+
+    plan = case.get("hundred_day_plan") or []
+    if plan:
+        doc.paragraph("First 100-Day Value Creation Plan", style="Heading3", color="0F766E", bold=True, size=21, before=120, after=60)
+        doc.table(
+            [["Period", "Focus", "Action"]]
+            + [
+                [row.get("period"), row.get("focus"), row.get("actions")]
+                for row in plan[:3]
+                if isinstance(row, dict)
+            ],
+            widths=[1400, 1800, 6160],
+            compact=True,
+        )
+
+
 def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_format: str = "ic") -> None:
     scores = item.get("scores") or {}
     analysis = _analysis(item)
@@ -523,6 +574,7 @@ def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_forma
         compact=True,
     )
     if report_format in {"ic", "deep", "full"}:
+        _investment_case_detail(doc, item)
         _ic_package_detail(doc, item)
         _advanced_intelligence_detail(doc, item)
         doc.paragraph("Investment Committee Lens", style="Heading2", color="13232E", bold=True, size=24, before=180, after=80)

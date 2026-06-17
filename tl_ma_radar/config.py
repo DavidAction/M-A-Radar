@@ -13,6 +13,15 @@ class Settings:
     capital_raise_krw: int
     target_market: str
     market_cap_limit_krw: int
+    app_base_url: str
+    alert_webhook_url: str
+    alert_email_to: str
+    alert_email_from: str
+    smtp_host: str
+    smtp_port: int
+    smtp_username: str
+    smtp_password: str
+    smtp_use_tls: bool
 
 
 def _parse_env_file(path: Path) -> dict[str, str]:
@@ -35,6 +44,13 @@ def _int_value(values: dict[str, str], key: str, default: int) -> int:
     return int(raw.replace("_", "").replace(",", ""))
 
 
+def _bool_value(values: dict[str, str], key: str, default: bool) -> bool:
+    raw = os.getenv(key) or values.get(key)
+    if raw is None or raw == "":
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
 def get_settings(root: Path) -> Settings:
     env_values = _parse_env_file(root / ".env")
     return Settings(
@@ -44,4 +60,13 @@ def get_settings(root: Path) -> Settings:
         capital_raise_krw=_int_value(env_values, "CAPITAL_RAISE_KRW", 30_000_000_000),
         target_market=os.getenv("TARGET_MARKET") or env_values.get("TARGET_MARKET", "KOSDAQ"),
         market_cap_limit_krw=_int_value(env_values, "MARKET_CAP_LIMIT_KRW", 30_000_000_000),
+        app_base_url=os.getenv("APP_BASE_URL") or env_values.get("APP_BASE_URL", "http://127.0.0.1:8765"),
+        alert_webhook_url=os.getenv("ALERT_WEBHOOK_URL") or env_values.get("ALERT_WEBHOOK_URL", ""),
+        alert_email_to=os.getenv("ALERT_EMAIL_TO") or env_values.get("ALERT_EMAIL_TO", ""),
+        alert_email_from=os.getenv("ALERT_EMAIL_FROM") or env_values.get("ALERT_EMAIL_FROM", ""),
+        smtp_host=os.getenv("SMTP_HOST") or env_values.get("SMTP_HOST", ""),
+        smtp_port=_int_value(env_values, "SMTP_PORT", 587),
+        smtp_username=os.getenv("SMTP_USERNAME") or env_values.get("SMTP_USERNAME", ""),
+        smtp_password=os.getenv("SMTP_PASSWORD") or env_values.get("SMTP_PASSWORD", ""),
+        smtp_use_tls=_bool_value(env_values, "SMTP_USE_TLS", True),
     )

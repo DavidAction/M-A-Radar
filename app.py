@@ -22,12 +22,16 @@ from tl_ma_radar.deal_report import build_deal_cards_docx
 from tl_ma_radar.deal_scenario import build_deal_scenario
 from tl_ma_radar.deal_signals import analyze_deal_signals
 from tl_ma_radar.event_digest import build_event_digest
+from tl_ma_radar.extraction_audit import build_extraction_audit, extraction_audit_csv
 from tl_ma_radar.ic_package import build_ic_package, build_ic_package_summary
 from tl_ma_radar.ic_one_pager import build_ic_one_pager_docx
+from tl_ma_radar.investment_case import build_investment_case
 from tl_ma_radar.monitoring import latest_monitoring, monitoring_csv
 from tl_ma_radar.news_analysis import load_news_cache, news_for_code
 from tl_ma_radar.news_events import build_news_events
+from tl_ma_radar.notifier import notification_status, send_alert_notifications
 from tl_ma_radar.operations import operations_status
+from tl_ma_radar.pipeline_dashboard import build_pipeline_dashboard, pipeline_dashboard_csv
 from tl_ma_radar.remediation import read_remediation_status, start_quality_remediation
 from tl_ma_radar.repository import data_source, load_candidates
 from tl_ma_radar.report_intelligence import build_report_intelligence
@@ -198,6 +202,7 @@ def prepare_candidate(
     scored["data_quality"] = build_data_quality(ROOT, scored, filings, scored["news_analysis"])
     scored["ic_package"] = build_ic_package(scored)
     scored["deal_scenario"] = build_deal_scenario(scored)
+    scored["investment_case"] = build_investment_case(scored)
     scored["ai_brief"] = build_ai_brief(scored)
     shortlist_row = shortlist_items([scored])[0]
     scored["shortlist_score"] = shortlist_row["shortlist_score"]
@@ -277,6 +282,7 @@ class RadarHandler(BaseHTTPRequestHandler):
                     "capital_raise_krw": settings.capital_raise_krw,
                     "dart_configured": bool(settings.dart_api_key),
                     "naver_configured": bool(settings.naver_client_id and settings.naver_client_secret),
+                    "alert_configured": bool(settings.alert_webhook_url or (settings.smtp_host and settings.alert_email_to)),
                     "data_source": data_source(ROOT),
                     "synergy_network": ["티엘홀딩스", "르네스머테리얼"],
                 },
@@ -346,10 +352,30 @@ class RadarHandler(BaseHTTPRequestHandler):
             json_response(self, build_alerts(prepared_candidates(settings), latest_monitoring(ROOT), limit=limit))
             return
 
+        if path == "/api/notification-status":
+            settings = get_settings(ROOT)
+            json_response(self, notification_status(ROOT, settings))
+            return
+
         if path == "/api/data-quality":
             settings = get_settings(ROOT)
             candidates = prepared_candidates(settings)
             json_response(self, build_data_quality_summary(candidates))
+            return
+
+        if path == "/api/extraction-audit":
+            settings = get_settings(ROOT)
+            limit_text = (query.get("limit", ["30"])[0] or "30").strip()
+            try:
+                limit = max(10, min(int(limit_text), 80))
+            except ValueError:
+                limit = 30
+            json_response(self, build_extraction_audit(prepared_candidates(settings), limit=limit))
+            return
+
+        if path == "/api/pipeline-dashboard":
+            settings = get_settings(ROOT)
+            json_response(self, build_pipeline_dashboard(prepared_candidates(settings)))
             return
 
         if path == "/api/data-quality/remediation-status":
@@ -422,6 +448,20 @@ class RadarHandler(BaseHTTPRequestHandler):
             payload = build_alerts(prepared_candidates(settings), latest_monitoring(ROOT), limit=200)
             body = alerts_csv(payload)
             bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_alerts.csv")
+            return
+
+        if path == "/api/export-extraction-audit.csv":
+            settings = get_settings(ROOT)
+            payload = build_extraction_audit(prepared_candidates(settings), limit=80)
+            body = extraction_audit_csv(payload)
+            bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_extraction_audit.csv")
+            return
+
+        if path == "/api/export-pipeline-dashboard.csv":
+            settings = get_settings(ROOT)
+            payload = build_pipeline_dashboard(prepared_candidates(settings))
+            body = pipeline_dashboard_csv(payload)
+            bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_pipeline_dashboard.csv")
             return
 
         if path == "/api/export-data-quality.csv":
@@ -583,6 +623,22 @@ class RadarHandler(BaseHTTPRequestHandler):
                 )
             except OSError as exc:
                 self.send_error(500, f"Could not start remediation: {exc}")
+            return
+
+        if path == "/api/send-alerts":
+            try:
+                payload = read_json_body(self)
+            except json.JSONDecodeError:
+                self.send_error(400, "Invalid JSON body")
+                return
+            settings = get_settings(ROOT)
+            try:
+                limit = max(1, min(int(payload.get("limit") or 20), 100))
+            except (TypeError, ValueError):
+                limit = 20
+            dry_run = bool(payload.get("dry_run"))
+            alerts = build_alerts(prepared_candidates(settings), latest_monitoring(ROOT), limit=limit)
+            json_response(self, send_alert_notifications(ROOT, alerts, settings, dry_run=dry_run, limit=limit))
             return
 
         if path.startswith("/api/candidates/") and path.endswith("/workflow"):

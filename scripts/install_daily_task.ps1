@@ -25,7 +25,8 @@ $ActionArgs = @(
   "-Mode", $Mode,
   "-News", $News,
   "-IncludePdfs",
-  "-SaveText"
+  "-SaveText",
+  "-SendAlerts"
 ) -join " "
 
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $ActionArgs
@@ -61,6 +62,7 @@ $Config = [ordered]@{
   news = $News
   include_pdfs = $true
   save_text = $true
+  send_alerts = $true
   enabled = $true
   next_run_time = $Info.NextRunTime.ToString("yyyy-MM-dd HH:mm:ss")
   action = $ActionArgs

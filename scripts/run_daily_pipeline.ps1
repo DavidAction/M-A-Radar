@@ -15,6 +15,7 @@ param(
 
   [switch]$IncludePdfs,
   [switch]$SaveText,
+  [switch]$SendAlerts,
 
   [switch]$DryRun
 )
@@ -25,6 +26,9 @@ if (-not $PSBoundParameters.ContainsKey("IncludePdfs")) {
 }
 if (-not $PSBoundParameters.ContainsKey("SaveText")) {
   $SaveText = $true
+}
+if (-not $PSBoundParameters.ContainsKey("SendAlerts")) {
+  $SendAlerts = $true
 }
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -59,6 +63,9 @@ if ($IncludePdfs) {
 if ($SaveText) {
   $PipelineArgs += "--save-text"
 }
+if ($SendAlerts) {
+  $PipelineArgs += "--send-alerts"
+}
 
 Set-Location $Root
 if ($DryRun) {
@@ -86,6 +93,7 @@ $Meta = [ordered]@{
   news = $News
   include_pdfs = [bool]$IncludePdfs
   save_text = [bool]$SaveText
+  send_alerts = [bool]$SendAlerts
   stdout_log = $OutLog
   stderr_log = $ErrLog
 }

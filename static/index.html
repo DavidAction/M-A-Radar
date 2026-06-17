@@ -117,9 +117,36 @@
             <h2>자동 알림 센터</h2>
             <p id="alertsSummary" class="note"></p>
           </div>
-          <a class="export-link" href="/api/export-alerts.csv">Alert CSV</a>
+          <div class="export-actions">
+            <button id="sendAlertsDryRun" class="export-link primary" type="button">Test Send</button>
+            <a class="export-link" href="/api/export-alerts.csv">Alert CSV</a>
+          </div>
         </div>
+        <div id="notificationStatus" class="notification-status"></div>
         <div id="alertsList" class="alerts-list"></div>
+      </section>
+
+      <section class="extraction-panel">
+        <div class="score-audit-head">
+          <div>
+            <h2>추출 정확도 검수</h2>
+            <p id="extractionAuditSummary" class="note"></p>
+          </div>
+          <a class="export-link" href="/api/export-extraction-audit.csv">Audit CSV</a>
+        </div>
+        <div id="extractionAuditList" class="extraction-list"></div>
+      </section>
+
+      <section class="pipeline-board-panel">
+        <div class="score-audit-head">
+          <div>
+            <h2>딜 파이프라인 보드</h2>
+            <p id="pipelineDashboardSummary" class="note"></p>
+          </div>
+          <a class="export-link" href="/api/export-pipeline-dashboard.csv">Pipeline CSV</a>
+        </div>
+        <div id="pipelineDashboardActions" class="pipeline-actions"></div>
+        <div id="pipelineDashboardLanes" class="pipeline-board"></div>
       </section>
 
       <section class="score-audit-panel">
