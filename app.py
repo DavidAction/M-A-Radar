@@ -18,6 +18,7 @@ from tl_ma_radar.data_quality import build_data_quality, build_data_quality_summ
 from tl_ma_radar.deal_report import build_deal_cards_docx
 from tl_ma_radar.deal_signals import analyze_deal_signals
 from tl_ma_radar.event_digest import build_event_digest
+from tl_ma_radar.ic_package import build_ic_package, build_ic_package_summary
 from tl_ma_radar.monitoring import latest_monitoring, monitoring_csv
 from tl_ma_radar.news_analysis import load_news_cache, news_for_code
 from tl_ma_radar.operations import operations_status
@@ -184,6 +185,7 @@ def prepare_candidate(
     scored["acquisition_judgment"] = build_acquisition_judgment(scored)
     scored["workflow"] = workflow_for_code(workflows or {}, str(scored.get("code") or ""))
     scored["data_quality"] = build_data_quality(ROOT, scored, filings, scored["news_analysis"])
+    scored["ic_package"] = build_ic_package(scored)
     shortlist_row = shortlist_items([scored])[0]
     scored["shortlist_score"] = shortlist_row["shortlist_score"]
     scored["priority_score"] = shortlist_row["priority_score"]
@@ -299,6 +301,16 @@ class RadarHandler(BaseHTTPRequestHandler):
             settings = get_settings(ROOT)
             candidates = prepared_candidates(settings)
             json_response(self, team_ops_status(ROOT, candidates))
+            return
+
+        if path == "/api/ic-packages":
+            settings = get_settings(ROOT)
+            limit_text = (query.get("limit", ["12"])[0] or "12").strip()
+            try:
+                limit = max(4, min(int(limit_text), 40))
+            except ValueError:
+                limit = 12
+            json_response(self, build_ic_package_summary(prepared_candidates(settings), limit=limit))
             return
 
         if path == "/api/workflow-options":

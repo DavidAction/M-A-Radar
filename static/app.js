@@ -95,6 +95,13 @@ const T = {
   scoreTuning: "스코어 튜닝",
   teamOps: "팀 운영/이관",
   workflowHistory: "변경 이력",
+  icPackage: "IC 패키지",
+  icReadiness: "IC 준비도",
+  dealStructure: "딜 구조",
+  riskMitigants: "리스크 완화",
+  diligenceWorkplan: "실사 워크플랜",
+  hundredDayPlan: "100일 계획",
+  boardQuestions: "이사회 질문",
 };
 
 const GROUP_ORDER = [T.instantReview, T.deepDiligence, T.highRiskOption, T.monitoring];
@@ -117,6 +124,7 @@ const state = {
   dataQuality: null,
   scoreTuning: null,
   teamOps: null,
+  icPackages: null,
   workflowOptions: null,
   newsArticlePages: {},
 };
@@ -224,6 +232,12 @@ async function loadTeamOps() {
   const res = await fetch("/api/team-ops");
   state.teamOps = await res.json();
   renderTeamOps();
+}
+
+async function loadICPackages() {
+  const res = await fetch("/api/ic-packages?limit=12");
+  state.icPackages = await res.json();
+  renderICPackages();
 }
 
 function opsCard(label, value, sub = "", tone = "") {
@@ -478,6 +492,38 @@ function renderTeamOps() {
     qualityCard("다른 PC 실행", "준비됨", handoff.first_run || "FIRST_RUN_WINDOWS.ps1", "good"),
     qualityCard("팀 데이터", "SQLite Export", "/api/export-pipeline.sqlite", "good"),
   ].join("");
+}
+
+function renderICPackages() {
+  const summary = document.getElementById("icPackageSummary");
+  const list = document.getElementById("icPackageList");
+  if (!summary || !list || !state.icPackages) return;
+  const pack = state.icPackages;
+  const counts = pack.summary || {};
+  summary.textContent = `IC 상정 ${counts["IC 상정 후보"] || 0}개 · 조건부 ${counts["조건부 IC 후보"] || 0}개 · 프리-IC ${counts["프리-IC 관찰"] || 0}개`;
+  list.innerHTML = (pack.items || [])
+    .map(
+      (row) => `
+        <button class="ic-card ${escapeHtml(row.tone || "")}" data-code="${escapeHtml(row.code || "")}">
+          <span>${escapeHtml(row.decision || "-")} · ${escapeHtml(row.code || "")}</span>
+          <strong>${escapeHtml(row.name || "-")}</strong>
+          <em>${T.icReadiness} ${row.readiness_score ?? "-"} · 리스크 ${row.risk_score ?? "-"} · 신뢰도 ${row.data_quality_score ?? "-"}</em>
+          <p>${escapeHtml(row.next_action || "")}</p>
+        </button>
+      `,
+    )
+    .join("");
+  document.querySelectorAll(".ic-card").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (!el.dataset.code) return;
+      state.query = "";
+      state.candidatePage = 0;
+      setActiveFilter("all");
+      document.getElementById("searchInput").value = "";
+      state.selectedCode = el.dataset.code;
+      loadCandidates();
+    });
+  });
 }
 
 function shortlistGroups() {
@@ -1524,6 +1570,72 @@ function workflowHistoryBlock(workflow) {
   `;
 }
 
+function valueRows(rows) {
+  return `
+    <div class="value-row-list">
+      ${(rows || [])
+        .map(
+          (row) => `
+            <div class="value-row">
+              <span>${escapeHtml(row.label || row.risk || row.workstream || "-")}</span>
+              <strong>${escapeHtml(row.value || row.mitigant || row.task || "-")}</strong>
+              ${row.owner || row.target ? `<em>${escapeHtml([row.owner, row.target].filter(Boolean).join(" · "))}</em>` : ""}
+            </div>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function icPackageBlock(item) {
+  const pack = item.ic_package || {};
+  if (!pack.decision) return "";
+  return `
+    <section class="section ic-detail">
+      <div class="section-title-row">
+        <h3>${T.icPackage}</h3>
+        <span class="ic-decision ${escapeHtml(pack.tone || "")}">${escapeHtml(pack.decision)} · ${pack.readiness_score ?? "-"}점</span>
+      </div>
+      <p class="note">${escapeHtml(pack.summary || "")}</p>
+      <div class="ic-split">
+        <div>
+          <h4>투자 논거</h4>
+          ${memoList(pack.investment_case || [])}
+        </div>
+        <div>
+          <h4>${T.dealStructure}</h4>
+          ${valueRows(pack.deal_structure || [])}
+        </div>
+      </div>
+      <div class="ic-split">
+        <div>
+          <h4>${T.riskMitigants}</h4>
+          ${valueRows(pack.risk_mitigants || [])}
+        </div>
+        <div>
+          <h4>${T.diligenceWorkplan}</h4>
+          ${valueRows(pack.diligence_workplan || [])}
+        </div>
+      </div>
+      <div class="ic-split">
+        <div>
+          <h4>${T.hundredDayPlan}</h4>
+          ${memoList(pack.hundred_day_plan || [])}
+        </div>
+        <div>
+          <h4>${T.boardQuestions}</h4>
+          ${memoList(pack.board_questions || [])}
+        </div>
+      </div>
+      <div class="next-action-box">
+        <span>${T.nextAction}</span>
+        <strong>${escapeHtml(pack.next_action || "-")}</strong>
+      </div>
+    </section>
+  `;
+}
+
 function workflowBlock(item) {
   const workflow = item.workflow || {};
   const options = state.workflowOptions || {
@@ -1753,6 +1865,7 @@ function renderDetail() {
     </div>
 
     ${acquisitionJudgmentBlock(item)}
+    ${icPackageBlock(item)}
     ${newsAnalysisBlock(item)}
     ${dataQualityBlock(item)}
     ${workflowBlock(item)}
@@ -1848,6 +1961,7 @@ loadOperations();
 loadDataQuality();
 loadScoreTuning();
 loadTeamOps();
+loadICPackages();
 loadMonitoring();
 loadShortlist();
 loadScoreAudit();

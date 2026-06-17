@@ -167,6 +167,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 - 스코어 튜닝: 코이즈, 나노씨엠에스, 아이씨에이치, 베셀을 벤치마크로 고정하고 상위 20개 후보의 과대평가/과소평가 가능성을 검수합니다.
 - 파이프라인 이력: 후보 상태, 연락 상태, 담당자, 기한, 다음 액션, 메모 변경 이력이 자동 저장됩니다.
 - Word 보고서: 전체/개별 딜카드에 Investment Committee Lens, 데이터 신뢰도, 파이프라인 상태, 변경 이력이 반영됩니다.
+- IC 패키지: 후보별 IC 상정 여부, 300억 유증 딜 구조, 실사 워크플랜, 리스크 완화, 100일 계획을 자동 생성합니다.
 - 팀 이관: `/api/team-ops`에서 GitHub 연결, 자동 푸시 훅, 데이터 파일, 다른 PC 실행 준비 상태를 점검합니다.
 - SQLite Export: `/api/export-pipeline.sqlite`로 후보/뉴스/워크플로 데이터를 외부 분석툴에 넘길 수 있습니다.
 
@@ -175,6 +176,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 ```text
 /api/data-quality
 /api/score-tuning?limit=20
+/api/ic-packages?limit=12
 /api/team-ops
 /api/export-pipeline.sqlite
 /api/export-deal-cards.docx?format=ic

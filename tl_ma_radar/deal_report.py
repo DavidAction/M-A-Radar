@@ -278,6 +278,11 @@ def _workflow(item: dict[str, Any]) -> dict[str, Any]:
     return workflow if isinstance(workflow, dict) else {}
 
 
+def _ic_package(item: dict[str, Any]) -> dict[str, Any]:
+    package = item.get("ic_package")
+    return package if isinstance(package, dict) else {}
+
+
 def _score(item: dict[str, Any], key: str) -> float:
     return float((item.get("scores") or {}).get(key) or 0)
 
@@ -337,6 +342,56 @@ def _workflow_history_rows(item: dict[str, Any]) -> list[list[object]]:
     return rows if len(rows) > 1 else []
 
 
+def _ic_package_rows(item: dict[str, Any]) -> list[list[object]]:
+    package = _ic_package(item)
+    if not package:
+        return []
+    structure = package.get("deal_structure") or []
+    structure_text = "; ".join(
+        f"{row.get('label')}: {row.get('value')}" for row in structure[:4] if isinstance(row, dict)
+    )
+    gates = package.get("gates") or []
+    return [
+        ["항목", "내용"],
+        ["IC 판단", f"{package.get('decision', '-')} / 준비도 {_fmt_score(package.get('readiness_score'))}"],
+        ["다음 액션", package.get("next_action") or "-"],
+        ["딜 구조", structure_text or "-"],
+        ["상정 게이트", _join(gates, 4)],
+    ]
+
+
+def _ic_package_detail(doc: Docx, item: dict[str, Any]) -> None:
+    package = _ic_package(item)
+    if not package:
+        return
+    doc.paragraph("IC Decision Package", style="Heading2", color="13232E", bold=True, size=24, before=180, after=80)
+    doc.table(_ic_package_rows(item), widths=[1800, 7560], compact=True)
+    cases = package.get("investment_case") or []
+    if cases:
+        doc.paragraph("Investment Case", style="Heading3", color="0F766E", bold=True, size=21, before=120, after=60)
+        for point in cases[:5]:
+            doc.bullet(point)
+    mitigants = package.get("risk_mitigants") or []
+    if mitigants:
+        doc.paragraph("Risk Mitigation", style="Heading3", color="B42318", bold=True, size=21, before=120, after=60)
+        for row in mitigants[:4]:
+            if isinstance(row, dict):
+                doc.bullet(f"{row.get('risk', '-')}: {row.get('mitigant', '-')}")
+    workplan = package.get("diligence_workplan") or []
+    if workplan:
+        doc.paragraph("Diligence Workplan", style="Heading3", color="13232E", bold=True, size=21, before=120, after=60)
+        doc.table(
+            [["영역", "과제", "담당", "기한"]]
+            + [
+                [row.get("workstream"), row.get("task"), row.get("owner"), row.get("target")]
+                for row in workplan[:6]
+                if isinstance(row, dict)
+            ],
+            widths=[1350, 5160, 1450, 1400],
+            compact=True,
+        )
+
+
 def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_format: str = "ic") -> None:
     scores = item.get("scores") or {}
     analysis = _analysis(item)
@@ -379,6 +434,7 @@ def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_forma
         compact=True,
     )
     if report_format in {"ic", "deep", "full"}:
+        _ic_package_detail(doc, item)
         doc.paragraph("Investment Committee Lens", style="Heading2", color="13232E", bold=True, size=24, before=180, after=80)
         doc.table(_ic_lens_rows(item), widths=[1700, 2600, 5060], compact=True)
         history_rows = _workflow_history_rows(item)

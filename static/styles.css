@@ -102,6 +102,7 @@ h2 {
 .ops-panel,
 .monitoring-panel,
 .score-audit-panel,
+.ic-panel,
 .shortlist-panel {
   margin-bottom: 20px;
   border: 1px solid var(--line);
@@ -232,6 +233,55 @@ h2 {
 
 .tuning-row strong {
   font-size: 14px;
+}
+
+.ic-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ic-card {
+  display: grid;
+  gap: 6px;
+  min-height: 132px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-2);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ic-card.good {
+  border-color: #245445;
+}
+
+.ic-card.warn {
+  border-color: #68522e;
+}
+
+.ic-card.risk {
+  border-color: #704247;
+}
+
+.ic-card:hover {
+  border-color: var(--teal);
+}
+
+.ic-card span,
+.ic-card em,
+.ic-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.ic-card strong {
+  font-size: 15px;
 }
 
 .audit-card {
@@ -1099,6 +1149,91 @@ h2 {
   padding-left: 12px;
 }
 
+.ic-detail {
+  display: grid;
+  gap: 14px;
+}
+
+.ic-decision {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: #111820;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.ic-decision.good {
+  border-color: #245445;
+  color: var(--green);
+}
+
+.ic-decision.warn {
+  border-color: #68522e;
+  color: var(--amber);
+}
+
+.ic-decision.risk {
+  border-color: #704247;
+  color: var(--red);
+}
+
+.ic-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ic-split h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+
+.value-row-list {
+  display: grid;
+  gap: 8px;
+}
+
+.value-row {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--panel-2);
+}
+
+.value-row span,
+.value-row em,
+.next-action-box span {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.value-row strong {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.next-action-box {
+  display: grid;
+  gap: 5px;
+  border: 1px solid #245445;
+  border-radius: 8px;
+  padding: 12px;
+  background: #102019;
+}
+
+.next-action-box strong {
+  color: var(--green);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
 .workflow-history {
   display: grid;
   gap: 8px;
@@ -1639,6 +1774,7 @@ ul.clean {
   .ops-grid,
   .monitoring-alerts,
   .score-audit-list,
+  .ic-list,
   .report-insight-grid,
   .snippet-list.evidence-snippets,
   .shortlist-grid {
@@ -1649,7 +1785,8 @@ ul.clean {
   .score-grid,
   .judgment-grid,
   .quality-grid,
-  .quality-check-grid {
+  .quality-check-grid,
+  .ic-split {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1670,6 +1807,7 @@ ul.clean {
   .judgment-grid,
   .quality-grid,
   .quality-check-grid,
+  .ic-split,
   .history-row {
     grid-template-columns: 1fr;
   }

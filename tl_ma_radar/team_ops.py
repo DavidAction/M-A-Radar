@@ -117,6 +117,8 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                     recommendation text,
                     data_quality_score real,
                     data_quality_grade text,
+                    ic_decision text,
+                    ic_readiness_score real,
                     workflow_status text,
                     workflow_owner text,
                     next_action text,
@@ -151,12 +153,13 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
             for item in candidates:
                 scores = item.get("scores") or {}
                 quality = item.get("data_quality") or {}
+                ic_package = item.get("ic_package") or {}
                 workflow = item.get("workflow") or {}
                 news = item.get("news_analysis") or {}
                 news_scores = news.get("scores") or {}
                 conn.execute(
                     """
-                    insert or replace into candidates values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    insert or replace into candidates values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         item.get("code"),
@@ -169,6 +172,8 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                         item.get("recommendation"),
                         quality.get("score"),
                         quality.get("grade"),
+                        ic_package.get("decision"),
+                        ic_package.get("readiness_score"),
                         workflow.get("status"),
                         workflow.get("owner"),
                         workflow.get("next_action"),
