@@ -153,6 +153,20 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                 )
                 """
             )
+            conn.execute(
+                """
+                create table extraction_feedback (
+                    code text,
+                    field text,
+                    status text,
+                    corrected_value text,
+                    note text,
+                    reviewer text,
+                    updated_at text,
+                    raw_json text
+                )
+                """
+            )
             for item in candidates:
                 scores = item.get("scores") or {}
                 quality = item.get("data_quality") or {}
@@ -163,6 +177,7 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                 workflow = item.get("workflow") or {}
                 news = item.get("news_analysis") or {}
                 news_scores = news.get("scores") or {}
+                feedback = item.get("extraction_feedback") or {}
                 conn.execute(
                     """
                     insert or replace into candidates values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -212,6 +227,19 @@ def build_pipeline_sqlite(candidates: list[dict[str, Any]]) -> bytes:
                             json.dumps(event, ensure_ascii=False),
                         ),
                     )
+                conn.execute(
+                    "insert into extraction_feedback values (?, ?, ?, ?, ?, ?, ?, ?)",
+                    (
+                        item.get("code"),
+                        feedback.get("field"),
+                        feedback.get("status"),
+                        feedback.get("corrected_value"),
+                        feedback.get("note"),
+                        feedback.get("reviewer"),
+                        feedback.get("updated_at"),
+                        json.dumps(feedback, ensure_ascii=False),
+                    ),
+                )
         body = db_path.read_bytes()
         return body
     finally:

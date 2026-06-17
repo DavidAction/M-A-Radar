@@ -1,0 +1,755 @@
+{
+  "updated_at": "2026-06-17T14:10:03.444004+00:00",
+  "items": {
+    "131100": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 19 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.258065+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.733266+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 1 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.258065+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 19 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "142760": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 18 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.236804+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.755318+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 2 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.236804+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 18 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "060260": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 13 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.158012+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.772482+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 3 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.158012+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 13 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "016100": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 16 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.204418+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.791356+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 4 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.204418+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 16 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "368600": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 6 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.031099+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.809283+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 5 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.031099+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 6 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "121850": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 1 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:02.938869+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.826898+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 6 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:02.938869+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 1 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "110020": {
+      "field": "largest_shareholder",
+      "status": "수정",
+      "corrected_value": ") 이일규(출석률 / 80.0",
+      "note": "Top 7 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:41.846730+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.846730+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 7 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "353590": {
+      "field": "largest_shareholder",
+      "status": "수정",
+      "corrected_value": "주요 활동내역 회차 개최일자 의안 내용 가결여부 감사 비고 양인석(출석률 / 60.0",
+      "note": "Top 5 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.014508+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.865035+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 8 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.014508+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 5 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "154040": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 14 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.172416+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.885553+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 9 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.172416+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 14 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "347770": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 8 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.063337+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.902827+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 10 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.063337+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 8 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "177350": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 3 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:02.975986+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.923961+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 11 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:02.975986+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 3 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "177830": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 17 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.219079+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.942435+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 12 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.219079+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 17 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "250930": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 11 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.129466+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.961690+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 13 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.129466+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 11 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "091340": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 2 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:02.958129+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:41.981944+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 14 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:02.958129+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 2 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "455180": {
+      "field": "largest_shareholder",
+      "status": "수정",
+      "corrected_value": ") (출석률 / 93.0",
+      "note": "Top 21 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.292149+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.000803+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 15 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.292149+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 21 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "285800": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 26 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.377439+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.026240+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 16 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.377439+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 26 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "069920": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 17 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.043278+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.043278+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 17 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "060230": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 27 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.393957+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.060249+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 18 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.393957+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 27 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "247660": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 19 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.076886+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.076886+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 19 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "042040": {
+      "field": "largest_shareholder",
+      "status": "수정",
+      "corrected_value": "합산한 지분율이며 의결권이 존재하는 보통주 기준 연결실체의 유효지분율은 / 50.47",
+      "note": "Top 20 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.094538+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.094538+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 20 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "188260": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 25 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.361106+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.115463+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 21 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.361106+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 25 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "123840": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 22 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.132947+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.132947+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 22 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "079190": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 23 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.152544+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.152544+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 23 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "313760": {
+      "field": "largest_shareholder",
+      "status": "보류",
+      "corrected_value": "업종 소재지 유효지분율 결산일 (주)캐리에너지랩 제조 및 판매 대한민국 / 90.0",
+      "note": "Top 12 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.144955+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.173672+00:00",
+          "field": "largest_shareholder",
+          "status": "보류",
+          "summary": "Top 24 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.144955+00:00",
+          "field": "largest_shareholder",
+          "status": "보류",
+          "summary": "Top 12 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "101390": {
+      "field": "largest_shareholder",
+      "status": "보류",
+      "corrected_value": ") 투자조합 등 단체의 주요출자자 현황 설립근거법률 재산총액 주요출자자( / 10.0",
+      "note": "Top 22 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.308628+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.193732+00:00",
+          "field": "largest_shareholder",
+          "status": "보류",
+          "summary": "Top 25 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.308628+00:00",
+          "field": "largest_shareholder",
+          "status": "보류",
+          "summary": "Top 22 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "027580": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 24 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.343239+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.217710+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 26 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:03.343239+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 24 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "080530": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 27 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.243358+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.243358+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 27 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "191410": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 4 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:02.994228+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.258666+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 28 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        },
+        {
+          "at": "2026-06-17T14:10:02.994228+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 4 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "224060": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 29 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.284085+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.284085+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 29 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "123750": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 30 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:04:42.308232+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:04:42.308232+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 30 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "091970": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 7 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.046325+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.046325+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 7 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "054090": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 9 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.084188+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.084188+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 9 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "097780": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 10 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.110200+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.110200+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 10 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "200230": {
+      "field": "largest_shareholder",
+      "status": "수정",
+      "corrected_value": "금액 지분율 장부금액 종속기업 (주)중원바이오팜 도매업외 12월 대한민국 / 59.48",
+      "note": "Top 15 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.190593+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.190593+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 15 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "037400": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 20 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.274573+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.274573+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 20 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "043590": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 23 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.325514+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.325514+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 23 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "076080": {
+      "field": "largest_shareholder",
+      "status": "수정",
+      "corrected_value": "025.12.31) 회차 개최일자 의안내용 의결현황 감사 비 고 송영섭( / 94.0",
+      "note": "Top 28 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.409293+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.409293+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 28 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    },
+    "377220": {
+      "field": "audit_opinion",
+      "status": "정상",
+      "corrected_value": "중요한 불확실성 / medium",
+      "note": "Top 29 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.425406+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.425406+00:00",
+          "field": "audit_opinion",
+          "status": "정상",
+          "summary": "Top 29 자동 검수 시드. 판정 투자심의 사용 가능, 신뢰도 90점. 확인: 근거 스니펫 없음"
+        }
+      ]
+    },
+    "073570": {
+      "field": "largest_shareholder",
+      "status": "수정",
+      "corrected_value": "감사의 주요 활동내역 회차 개최일자 의안내용 가결여부 감사 이중철(출석률 / 90.9",
+      "note": "Top 30 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음",
+      "reviewer": "TL M&A Radar",
+      "updated_at": "2026-06-17T14:10:03.443712+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T14:10:03.443712+00:00",
+          "field": "largest_shareholder",
+          "status": "수정",
+          "summary": "Top 30 자동 검수 시드. 판정 애널리스트 검수, 신뢰도 72점. 확인: 최대주주명 오탐 가능 / 근거 스니펫 없음"
+        }
+      ]
+    }
+  }
+}

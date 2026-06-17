@@ -50,6 +50,15 @@ NAVER_CLIENT_SECRET=...
 
 키가 없어도 기존 커밋에 포함된 후보/뉴스/공시 JSON 기준으로 앱 조회와 Word Report 다운로드는 가능합니다.
 
+외부 네트워크에 노출되는 운영 환경에서는 아래 로그인 값을 추가합니다.
+
+```text
+APP_USERNAME=...
+APP_PASSWORD=...
+```
+
+이 두 값이 모두 있으면 UI와 API에 Basic Auth가 적용됩니다. 로컬 전용으로 쓸 때는 비워둬도 됩니다.
+
 ## 5. 앱 실행
 
 ```powershell
@@ -146,6 +155,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 
 - 데이터 신뢰도: 후보 데이터가 투자심의에 바로 쓸 수 있는 수준인지 확인합니다.
 - 스코어 튜닝: 상위 20개와 코이즈/나노씨엠에스/아이씨에이치/베셀 벤치마크를 검수합니다.
+- Top30 캘리브레이션: 고위험 상위권, 보고서 근거 약함, 시너지 과소반영 후보를 점검합니다.
 - IC 패키지: IC 상정 후보, 조건부 후보, 프리-IC 관찰 후보를 보고 다음 액션을 정합니다.
 - 상위 20 후보 검수: 정량 점수와 사람 검수 포인트를 함께 확인합니다.
 - 자동 알림 센터: DART 원문, CB/BW, 특수관계, 뉴스 리스크, IC 진입, 검토 기한 알림을 확인합니다.
@@ -157,6 +167,12 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 
 ```text
 http://127.0.0.1:8766/api/export-pipeline.sqlite
+```
+
+캘리브레이션 원본 JSON은 아래 주소에서 확인합니다.
+
+```text
+http://127.0.0.1:8766/api/calibration?limit=30
 ```
 
 투자심의용 Word 보고서는 아래 주소를 사용합니다.

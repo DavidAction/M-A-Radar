@@ -22,6 +22,8 @@ class Settings:
     smtp_username: str
     smtp_password: str
     smtp_use_tls: bool
+    app_username: str
+    app_password: str
 
 
 def _parse_env_file(path: Path) -> dict[str, str]:
@@ -69,4 +71,6 @@ def get_settings(root: Path) -> Settings:
         smtp_username=os.getenv("SMTP_USERNAME") or env_values.get("SMTP_USERNAME", ""),
         smtp_password=os.getenv("SMTP_PASSWORD") or env_values.get("SMTP_PASSWORD", ""),
         smtp_use_tls=_bool_value(env_values, "SMTP_USE_TLS", True),
+        app_username=os.getenv("APP_USERNAME") or env_values.get("APP_USERNAME", ""),
+        app_password=os.getenv("APP_PASSWORD") or env_values.get("APP_PASSWORD", ""),
     )

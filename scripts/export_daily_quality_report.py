@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT))
 
 from app import prepared_candidates  # noqa: E402
 from tl_ma_radar.alerts import alerts_csv, build_alerts  # noqa: E402
+from tl_ma_radar.calibration import build_calibration_report  # noqa: E402
 from tl_ma_radar.config import get_settings  # noqa: E402
 from tl_ma_radar.data_quality import build_data_quality_summary, data_quality_csv  # noqa: E402
 from tl_ma_radar.monitoring import latest_monitoring  # noqa: E402
@@ -26,9 +27,11 @@ def export() -> Path:
     monitoring = latest_monitoring(ROOT)
     quality = build_data_quality_summary(candidates)
     alerts = build_alerts(candidates, monitoring, limit=200)
+    calibration = build_calibration_report(candidates, limit=30)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "quality": quality,
+        "calibration": calibration,
         "alerts": alerts,
         "monitoring": {
             "status": monitoring.get("status"),

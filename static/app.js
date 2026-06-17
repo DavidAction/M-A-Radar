@@ -134,6 +134,7 @@ const state = {
   dataQuality: null,
   remediationStatus: null,
   scoreTuning: null,
+  calibration: null,
   teamOps: null,
   icPackages: null,
   automationPlan: null,
@@ -210,6 +211,7 @@ async function loadConfig() {
     `${T.capitalRaise} ${formatWon(cfg.capital_raise_krw)}`,
     `DART ${cfg.dart_configured ? T.connected : T.waiting}`,
     `Naver News ${cfg.naver_configured ? T.connected : T.waiting}`,
+    `Auth ${cfg.auth_configured ? T.connected : "Local"}`,
     `${T.data} ${cfg.data_source}`,
     pipelineText,
   ]
@@ -249,6 +251,12 @@ async function loadRemediationStatus() {
 async function loadScoreTuning() {
   const res = await fetch("/api/score-tuning?limit=20");
   state.scoreTuning = await res.json();
+  renderScoreTuning();
+}
+
+async function loadCalibration() {
+  const res = await fetch("/api/calibration?limit=30");
+  state.calibration = await res.json();
   renderScoreTuning();
 }
 
@@ -757,10 +765,13 @@ async function startQualityRemediation() {
 function renderScoreTuning() {
   const summary = document.getElementById("scoreTuningSummary");
   const list = document.getElementById("scoreTuningList");
+  const calibration = document.getElementById("calibrationList");
   if (!summary || !list || !state.scoreTuning) return;
   const tuning = state.scoreTuning;
   const stats = tuning.summary || {};
-  summary.textContent = `상위 ${stats.top_count || 0}개 · 과대평가 점검 ${stats.over_risk_count || 0}개 · 시너지 과소반영 ${stats.under_synergy_count || 0}개`;
+  const cal = state.calibration?.summary || {};
+  const top = cal.top || {};
+  summary.textContent = `상위 ${stats.top_count || 0}개 · 과대평가 점검 ${stats.over_risk_count || 0}개 · 시너지 과소반영 ${stats.under_synergy_count || 0}개 · Top30 평균 리스크 ${top.avg_risk ?? "-"}`;
   const rows = [...(tuning.benchmarks || []), ...(tuning.items || []).slice(0, 6)];
   list.innerHTML = rows
     .map(
@@ -784,6 +795,18 @@ function renderScoreTuning() {
       loadCandidates();
     });
   });
+  if (calibration && state.calibration) {
+    calibration.innerHTML = `
+      <div class="calibration-head">
+        <strong>Top30 캘리브레이션</strong>
+        <span>High Risk ${cal.high_risk_top_count || 0} · 근거 약함 ${cal.weak_evidence_top_count || 0} · 시너지 과소반영 ${cal.under_synergy_count || 0}</span>
+      </div>
+      ${(state.calibration.recommendations || [])
+        .slice(0, 3)
+        .map((text) => `<p>${escapeHtml(text)}</p>`)
+        .join("")}
+    `;
+  }
 }
 
 function renderTeamOps() {
@@ -2698,6 +2721,7 @@ loadExtractionFeedbackOptions();
 loadExtractionAudit();
 loadPipelineDashboard();
 loadScoreTuning();
+loadCalibration();
 loadTeamOps();
 loadICPackages();
 loadAutomationPlan();

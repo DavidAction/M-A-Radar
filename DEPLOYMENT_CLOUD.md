@@ -28,9 +28,12 @@ SMTP_PORT
 SMTP_USERNAME
 SMTP_PASSWORD
 SMTP_USE_TLS
+APP_USERNAME
+APP_PASSWORD
 ```
 
 Only the first three are required for data collection. Alert secrets are optional.
+`APP_USERNAME` and `APP_PASSWORD` are optional for local use, but should be set for any internet-facing deployment.
 
 ## GitHub Actions Daily Refresh
 
@@ -44,7 +47,11 @@ What it does:
 - pull DART filings and latest report artifacts
 - save report text/PDF where available
 - collect recent news
+- backfill business keywords from report text
+- seed top 30 workflow owners/actions/deadlines
+- seed top 30 extraction feedback review state
 - regenerate monitoring and quality reports
+- export the Top30 calibration report
 - send alert notifications when a channel is configured
 - commit refreshed data artifacts back to GitHub
 
@@ -101,6 +108,9 @@ Check these URLs after deploy:
 - `/api/extraction-audit`
 - `/api/pipeline-dashboard`
 - `/api/notification-status`
+- `/api/calibration?limit=30`
+
+If `APP_USERNAME` and `APP_PASSWORD` are set, the browser will prompt for a login before serving the UI and API.
 
 ## Alert Delivery
 

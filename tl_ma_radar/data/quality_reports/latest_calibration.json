@@ -1,0 +1,871 @@
+{
+  "status": "ok",
+  "generated_at": "2026-06-17T14:10:19.697848+00:00",
+  "limit": 30,
+  "summary": {
+    "candidate_count": 288,
+    "top": {
+      "avg_score": 55.2,
+      "avg_risk": 62.7,
+      "avg_fit": 71.4,
+      "avg_quality": 99.2,
+      "high_risk_top": 14,
+      "weak_evidence_top": 0,
+      "low_quality_top": 0
+    },
+    "decision_counts": {
+      "조건부 검토": 18,
+      "보류": 239,
+      "조건부 추진": 31
+    },
+    "risk_counts": {
+      "High Risk": 133,
+      "Watch": 155
+    },
+    "high_risk_top_count": 14,
+    "weak_evidence_top_count": 0,
+    "under_synergy_count": 4
+  },
+  "recommendations": [
+    "상위권 고위험 후보 비중이 높아 리스크 감점 가중치 상향 또는 우선 검토 컷오프 재조정이 필요합니다.",
+    "상위 30개 중 High Risk 후보는 점수 유지 전에 감사의견, 계속기업, CB/BW, 특수관계 거래 원문을 다시 확인합니다.",
+    "전략 적합도가 80점 이상인데 총점이 60점 미만인 후보는 TL/르네스 시너지 가중치 과소반영 여부를 별도 검수합니다.",
+    "보고서 근거 45점 미만 후보는 IC 보고서에 올리기 전 원문 PDF/TXT 재분석과 추출 피드백을 먼저 확정합니다."
+  ],
+  "benchmarks": [
+    {
+      "rank": 1,
+      "code": "121850",
+      "name": "코이즈",
+      "decision": "조건부 검토",
+      "score": 64.8,
+      "priority_score": 82.0,
+      "strategic_fit": 85.6,
+      "risk_level": 62.4,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험"
+      ]
+    },
+    {
+      "rank": 58,
+      "code": "247660",
+      "name": "나노씨엠에스",
+      "decision": "보류",
+      "score": 48.6,
+      "priority_score": 55.9,
+      "strategic_fit": 53.0,
+      "risk_level": 60.5,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 64.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 6,
+      "code": "368600",
+      "name": "아이씨에이치",
+      "decision": "조건부 검토",
+      "score": 68.2,
+      "priority_score": 70.4,
+      "strategic_fit": 80.6,
+      "risk_level": 40.1,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 3,
+      "code": "177350",
+      "name": "베셀",
+      "decision": "조건부 검토",
+      "score": 62.8,
+      "priority_score": 74.5,
+      "strategic_fit": 85.2,
+      "risk_level": 62.6,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 24.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "rank": 1,
+      "code": "121850",
+      "name": "코이즈",
+      "decision": "조건부 검토",
+      "score": 64.8,
+      "priority_score": 82.0,
+      "strategic_fit": 85.6,
+      "risk_level": 62.4,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험"
+      ]
+    },
+    {
+      "rank": 2,
+      "code": "091340",
+      "name": "S&K폴리텍",
+      "decision": "보류",
+      "score": 68.4,
+      "priority_score": 74.7,
+      "strategic_fit": 100.0,
+      "risk_level": 75.0,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험"
+      ]
+    },
+    {
+      "rank": 3,
+      "code": "177350",
+      "name": "베셀",
+      "decision": "조건부 검토",
+      "score": 62.8,
+      "priority_score": 74.5,
+      "strategic_fit": 85.2,
+      "risk_level": 62.6,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 24.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 4,
+      "code": "191410",
+      "name": "육일씨엔에쓰",
+      "decision": "조건부 검토",
+      "score": 79.5,
+      "priority_score": 73.5,
+      "strategic_fit": 100.0,
+      "risk_level": 37.4,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 5,
+      "code": "353590",
+      "name": "오토앤",
+      "decision": "조건부 검토",
+      "score": 58.8,
+      "priority_score": 71.1,
+      "strategic_fit": 70.1,
+      "risk_level": 42.5,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 30.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 6,
+      "code": "368600",
+      "name": "아이씨에이치",
+      "decision": "조건부 검토",
+      "score": 68.2,
+      "priority_score": 70.4,
+      "strategic_fit": 80.6,
+      "risk_level": 40.1,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 7,
+      "code": "091970",
+      "name": "나노캠텍",
+      "decision": "보류",
+      "score": 52.8,
+      "priority_score": 70.2,
+      "strategic_fit": 100.0,
+      "risk_level": 99.7,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 96.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험",
+        "시너지 과소반영"
+      ]
+    },
+    {
+      "rank": 8,
+      "code": "347770",
+      "name": "핌스",
+      "decision": "조건부 검토",
+      "score": 61.9,
+      "priority_score": 69.7,
+      "strategic_fit": 79.1,
+      "risk_level": 42.5,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 30.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 9,
+      "code": "054090",
+      "name": "삼진엘앤디",
+      "decision": "조건부 검토",
+      "score": 65.9,
+      "priority_score": 69.2,
+      "strategic_fit": 77.7,
+      "risk_level": 40.1,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 10,
+      "code": "097780",
+      "name": "에코볼트",
+      "decision": "보류",
+      "score": 52.7,
+      "priority_score": 68.5,
+      "strategic_fit": 100.0,
+      "risk_level": 100.0,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험",
+        "시너지 과소반영"
+      ]
+    },
+    {
+      "rank": 11,
+      "code": "250930",
+      "name": "예선테크",
+      "decision": "조건부 검토",
+      "score": 60.0,
+      "priority_score": 67.5,
+      "strategic_fit": 80.6,
+      "risk_level": 58.9,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험"
+      ]
+    },
+    {
+      "rank": 12,
+      "code": "313760",
+      "name": "캐리",
+      "decision": "조건부 추진",
+      "score": 48.4,
+      "priority_score": 66.9,
+      "strategic_fit": 85.6,
+      "risk_level": 100.0,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험",
+        "시너지 과소반영"
+      ]
+    },
+    {
+      "rank": 13,
+      "code": "060260",
+      "name": "뉴보텍",
+      "decision": "조건부 검토",
+      "score": 60.8,
+      "priority_score": 66.4,
+      "strategic_fit": 70.1,
+      "risk_level": 45.4,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험"
+      ]
+    },
+    {
+      "rank": 14,
+      "code": "154040",
+      "name": "다산솔루에타",
+      "decision": "보류",
+      "score": 56.9,
+      "priority_score": 66.0,
+      "strategic_fit": 55.0,
+      "risk_level": 49.0,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 10.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 15,
+      "code": "200230",
+      "name": "텔콘RF제약",
+      "decision": "보류",
+      "score": 46.7,
+      "priority_score": 65.2,
+      "strategic_fit": 55.0,
+      "risk_level": 75.5,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험"
+      ]
+    },
+    {
+      "rank": 16,
+      "code": "016100",
+      "name": "리더스코스메틱",
+      "decision": "보류",
+      "score": 48.0,
+      "priority_score": 64.3,
+      "strategic_fit": 53.0,
+      "risk_level": 61.5,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 38.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "상위권 고위험"
+      ]
+    },
+    {
+      "rank": 17,
+      "code": "177830",
+      "name": "파버나인",
+      "decision": "보류",
+      "score": 57.8,
+      "priority_score": 64.3,
+      "strategic_fit": 55.0,
+      "risk_level": 44.9,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 60.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 18,
+      "code": "142760",
+      "name": "모아라이프플러스",
+      "decision": "보류",
+      "score": 48.2,
+      "priority_score": 63.9,
+      "strategic_fit": 46.0,
+      "risk_level": 40.1,
+      "report_evidence": 100.0,
+      "data_quality": 92.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 19,
+      "code": "131100",
+      "name": "티엔엔터테인먼트",
+      "decision": "보류",
+      "score": 55.5,
+      "priority_score": 63.6,
+      "strategic_fit": 55.0,
+      "risk_level": 40.1,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 20,
+      "code": "037400",
+      "name": "우리엔터프라이즈",
+      "decision": "보류",
+      "score": 56.1,
+      "priority_score": 63.3,
+      "strategic_fit": 55.0,
+      "risk_level": 40.1,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 21,
+      "code": "455180",
+      "name": "케이지에이",
+      "decision": "보류",
+      "score": 49.3,
+      "priority_score": 63.1,
+      "strategic_fit": 64.0,
+      "risk_level": 65.5,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 22,
+      "code": "101390",
+      "name": "아이엠",
+      "decision": "조건부 추진",
+      "score": 43.5,
+      "priority_score": 62.4,
+      "strategic_fit": 70.1,
+      "risk_level": 98.4,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 80.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 23,
+      "code": "043590",
+      "name": "웰킵스하이텍",
+      "decision": "조건부 검토",
+      "score": 49.3,
+      "priority_score": 61.3,
+      "strategic_fit": 76.2,
+      "risk_level": 82.9,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 24,
+      "code": "027580",
+      "name": "상보",
+      "decision": "보류",
+      "score": 47.8,
+      "priority_score": 61.3,
+      "strategic_fit": 71.6,
+      "risk_level": 80.0,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 25,
+      "code": "188260",
+      "name": "세니젠",
+      "decision": "보류",
+      "score": 41.3,
+      "priority_score": 61.3,
+      "strategic_fit": 46.0,
+      "risk_level": 64.4,
+      "report_evidence": 100.0,
+      "data_quality": 92.0,
+      "news_risk": 64.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 26,
+      "code": "285800",
+      "name": "진영",
+      "decision": "조건부 검토",
+      "score": 55.2,
+      "priority_score": 61.0,
+      "strategic_fit": 70.1,
+      "risk_level": 40.9,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 10.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 27,
+      "code": "060230",
+      "name": "제이케이시냅스",
+      "decision": "보류",
+      "score": 48.3,
+      "priority_score": 60.7,
+      "strategic_fit": 70.1,
+      "risk_level": 98.1,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 76.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 28,
+      "code": "076080",
+      "name": "웰크론한텍",
+      "decision": "조건부 검토",
+      "score": 57.9,
+      "priority_score": 60.5,
+      "strategic_fit": 70.1,
+      "risk_level": 56.9,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 38.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 29,
+      "code": "377220",
+      "name": "프롬바이오",
+      "decision": "보류",
+      "score": 48.4,
+      "priority_score": 60.2,
+      "strategic_fit": 44.0,
+      "risk_level": 40.1,
+      "report_evidence": 100.0,
+      "data_quality": 92.0,
+      "news_risk": 0.0,
+      "risk_bucket": "Watch",
+      "flags": [
+        "산식 일관"
+      ]
+    },
+    {
+      "rank": 30,
+      "code": "073570",
+      "name": "리튬포어스",
+      "decision": "보류",
+      "score": 41.1,
+      "priority_score": 60.1,
+      "strategic_fit": 71.6,
+      "risk_level": 96.2,
+      "report_evidence": 100.0,
+      "data_quality": 100.0,
+      "news_risk": 100.0,
+      "risk_bucket": "High Risk",
+      "flags": [
+        "산식 일관"
+      ]
+    }
+  ],
+  "watchlists": {
+    "high_risk_top": [
+      {
+        "rank": 1,
+        "code": "121850",
+        "name": "코이즈",
+        "decision": "조건부 검토",
+        "score": 64.8,
+        "priority_score": 82.0,
+        "strategic_fit": 85.6,
+        "risk_level": 62.4,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험"
+        ]
+      },
+      {
+        "rank": 2,
+        "code": "091340",
+        "name": "S&K폴리텍",
+        "decision": "보류",
+        "score": 68.4,
+        "priority_score": 74.7,
+        "strategic_fit": 100.0,
+        "risk_level": 75.0,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 0.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험"
+        ]
+      },
+      {
+        "rank": 7,
+        "code": "091970",
+        "name": "나노캠텍",
+        "decision": "보류",
+        "score": 52.8,
+        "priority_score": 70.2,
+        "strategic_fit": 100.0,
+        "risk_level": 99.7,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 96.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험",
+          "시너지 과소반영"
+        ]
+      },
+      {
+        "rank": 10,
+        "code": "097780",
+        "name": "에코볼트",
+        "decision": "보류",
+        "score": 52.7,
+        "priority_score": 68.5,
+        "strategic_fit": 100.0,
+        "risk_level": 100.0,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험",
+          "시너지 과소반영"
+        ]
+      },
+      {
+        "rank": 11,
+        "code": "250930",
+        "name": "예선테크",
+        "decision": "조건부 검토",
+        "score": 60.0,
+        "priority_score": 67.5,
+        "strategic_fit": 80.6,
+        "risk_level": 58.9,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험"
+        ]
+      },
+      {
+        "rank": 12,
+        "code": "313760",
+        "name": "캐리",
+        "decision": "조건부 추진",
+        "score": 48.4,
+        "priority_score": 66.9,
+        "strategic_fit": 85.6,
+        "risk_level": 100.0,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험",
+          "시너지 과소반영"
+        ]
+      },
+      {
+        "rank": 13,
+        "code": "060260",
+        "name": "뉴보텍",
+        "decision": "조건부 검토",
+        "score": 60.8,
+        "priority_score": 66.4,
+        "strategic_fit": 70.1,
+        "risk_level": 45.4,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험"
+        ]
+      },
+      {
+        "rank": 15,
+        "code": "200230",
+        "name": "텔콘RF제약",
+        "decision": "보류",
+        "score": 46.7,
+        "priority_score": 65.2,
+        "strategic_fit": 55.0,
+        "risk_level": 75.5,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험"
+        ]
+      },
+      {
+        "rank": 16,
+        "code": "016100",
+        "name": "리더스코스메틱",
+        "decision": "보류",
+        "score": 48.0,
+        "priority_score": 64.3,
+        "strategic_fit": 53.0,
+        "risk_level": 61.5,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 38.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험"
+        ]
+      },
+      {
+        "rank": 22,
+        "code": "101390",
+        "name": "아이엠",
+        "decision": "조건부 추진",
+        "score": 43.5,
+        "priority_score": 62.4,
+        "strategic_fit": 70.1,
+        "risk_level": 98.4,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 80.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "산식 일관"
+        ]
+      }
+    ],
+    "weak_evidence_top": [],
+    "under_synergy": [
+      {
+        "rank": 7,
+        "code": "091970",
+        "name": "나노캠텍",
+        "decision": "보류",
+        "score": 52.8,
+        "priority_score": 70.2,
+        "strategic_fit": 100.0,
+        "risk_level": 99.7,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 96.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험",
+          "시너지 과소반영"
+        ]
+      },
+      {
+        "rank": 10,
+        "code": "097780",
+        "name": "에코볼트",
+        "decision": "보류",
+        "score": 52.7,
+        "priority_score": 68.5,
+        "strategic_fit": 100.0,
+        "risk_level": 100.0,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험",
+          "시너지 과소반영"
+        ]
+      },
+      {
+        "rank": 12,
+        "code": "313760",
+        "name": "캐리",
+        "decision": "조건부 추진",
+        "score": 48.4,
+        "priority_score": 66.9,
+        "strategic_fit": 85.6,
+        "risk_level": 100.0,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 100.0,
+        "risk_bucket": "High Risk",
+        "flags": [
+          "상위권 고위험",
+          "시너지 과소반영"
+        ]
+      },
+      {
+        "rank": 56,
+        "code": "067770",
+        "name": "세진티에스",
+        "decision": "조건부 검토",
+        "score": 59.8,
+        "priority_score": 55.9,
+        "strategic_fit": 86.7,
+        "risk_level": 41.7,
+        "report_evidence": 100.0,
+        "data_quality": 100.0,
+        "news_risk": 20.0,
+        "risk_bucket": "Watch",
+        "flags": [
+          "시너지 과소반영"
+        ]
+      }
+    ]
+  }
+}

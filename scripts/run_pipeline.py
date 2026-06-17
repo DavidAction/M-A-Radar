@@ -172,6 +172,7 @@ def run_pipeline(args: argparse.Namespace) -> Path:
         if args.include_pdfs:
             report_args.append("--include-pdfs")
         run_required_step(payload, "analyze_reports", report_args, timeout=3600)
+        run_required_step(payload, "backfill_business_keywords", ["scripts/backfill_business_keywords.py"], timeout=900)
         run_required_step(payload, "analyze_event_digest", ["scripts/analyze_event_digest.py"], timeout=900)
         run_required_step(payload, "analyze_deal_signals", ["scripts/analyze_deal_signals.py"], timeout=900)
         news_mode = "top" if args.news == "auto" and args.mode == "full" else args.news
@@ -196,12 +197,20 @@ def run_pipeline(args: argparse.Namespace) -> Path:
             ["scripts/generate_deal_memos.py", "--limit", str(args.memo_limit)],
             timeout=900,
         )
+        run_required_step(payload, "seed_top30_workflow", ["scripts/seed_top30_workflow.py", "--limit", "30"], timeout=900)
+        run_required_step(
+            payload,
+            "seed_top30_extraction_feedback",
+            ["scripts/seed_top30_extraction_feedback.py", "--limit", "30"],
+            timeout=900,
+        )
         run_required_step(
             payload,
             "analyze_monitoring",
             ["scripts/analyze_monitoring.py", "--run-id", run_id],
             timeout=900,
         )
+        run_required_step(payload, "export_calibration_report", ["scripts/export_calibration_report.py"], timeout=900)
         run_required_step(
             payload,
             "export_daily_quality_report",
@@ -209,6 +218,7 @@ def run_pipeline(args: argparse.Namespace) -> Path:
             timeout=900,
         )
         if args.send_alerts:
+            run_required_step(payload, "check_alert_channels", ["scripts/check_alert_channels.py"], timeout=120)
             run_required_step(
                 payload,
                 "send_alert_notifications",

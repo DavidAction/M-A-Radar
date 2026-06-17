@@ -28,6 +28,8 @@ jobs:
       SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       SMTP_USE_TLS: ${{ secrets.SMTP_USE_TLS }}
+      APP_USERNAME: ${{ secrets.APP_USERNAME }}
+      APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
       CAPITAL_RAISE_KRW: "30000000000"
       TARGET_MARKET: KOSDAQ
       MARKET_CAP_LIMIT_KRW: "30000000000"
@@ -73,8 +75,16 @@ jobs:
           --memo-limit 40
           --news top
           --news-limit 120
-          --send-alerts
           --alert-limit 30
+
+      - name: Send alerts when configured
+        shell: bash
+        run: |
+          if python scripts/check_alert_channels.py --allow-missing | tee alert_channel_status.json | grep -q '"ready_for_real_send": true'; then
+            python scripts/send_alert_notifications.py --limit 30
+          else
+            echo "Alert delivery is not configured; keeping refresh green."
+          fi
 
       - name: Commit refreshed artifacts
         run: |

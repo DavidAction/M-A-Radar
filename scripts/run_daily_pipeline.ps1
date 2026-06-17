@@ -27,10 +27,6 @@ if (-not $PSBoundParameters.ContainsKey("IncludePdfs")) {
 if (-not $PSBoundParameters.ContainsKey("SaveText")) {
   $SaveText = $true
 }
-if (-not $PSBoundParameters.ContainsKey("SendAlerts")) {
-  $SendAlerts = $true
-}
-
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Root = Resolve-Path (Join-Path $ScriptDir "..")
 $Python = Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"

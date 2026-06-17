@@ -252,9 +252,38 @@ h2 {
 .tuning-list {
   display: grid;
   gap: 8px;
-  max-height: 312px;
+  max-height: 238px;
   overflow: auto;
   padding-right: 2px;
+}
+
+.calibration-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: var(--panel-2);
+}
+
+.calibration-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.calibration-head strong {
+  font-size: 13px;
+}
+
+.calibration-head span,
+.calibration-list p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .tuning-row {

@@ -98,6 +98,7 @@ python scripts\collect_news.py --code 121850 --code 247660
 - 단일 회사 딜카드 보고서: `/api/candidates/<종목코드>/deal-card.docx`
 - 단일 회사 IC 1페이지 요약: `/api/candidates/<종목코드>/ic-summary.docx`
 - 상위 20개 후보 검수 보고서: `/api/export-top-review.docx`
+- 상위 30개 캘리브레이션 JSON: `/api/calibration?limit=30`
 - 자동 알림 CSV: `/api/export-alerts.csv`
 - 데이터 신뢰도 QA CSV: `/api/export-data-quality.csv`
 - 숏리스트 CSV: `/api/export-shortlist.csv`
@@ -188,6 +189,11 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 - IC One-Pager: 후보별 1페이지 투자심의 요약 Word 파일을 다운로드할 수 있습니다.
 - 팀 이관: `/api/team-ops`에서 GitHub 연결, 자동 푸시 훅, 데이터 파일, 다른 PC 실행 준비 상태를 점검합니다.
 - SQLite Export: `/api/export-pipeline.sqlite`로 후보/뉴스/워크플로 데이터를 외부 분석툴에 넘길 수 있습니다.
+- Top30 파이프라인 시드: `scripts/seed_top30_workflow.py`로 담당자, 다음 액션, 검토 기한을 자동 입력합니다.
+- Top30 추출 검수 시드: `scripts/seed_top30_extraction_feedback.py`로 최대주주, 감사의견, CB/BW, 특수관계 거래 검수 상태를 초기화합니다.
+- 사업 키워드 보강: `scripts/backfill_business_keywords.py`로 DART 원문 텍스트에서 TL/르네스 시너지 키워드를 자동 보강합니다.
+- 점수 캘리브레이션: `/api/calibration`과 `scripts/export_calibration_report.py`로 상위 30개 고위험/근거 약함/시너지 과소반영 후보를 점검합니다.
+- 선택형 접속 인증: 운영 배포 시 `.env` 또는 호스팅 Secret에 `APP_USERNAME`, `APP_PASSWORD`를 넣으면 Basic Auth가 켜집니다.
 
 주요 API:
 
@@ -195,6 +201,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 /api/data-quality
 /api/export-data-quality.csv
 /api/score-tuning?limit=20
+/api/calibration?limit=30
 /api/ic-packages?limit=12
 /api/automation-plan
 /api/top-review

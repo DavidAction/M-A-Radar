@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import base64
+import binascii
 import json
 import mimetypes
 import re
@@ -14,6 +16,7 @@ from tl_ma_radar.acquisition_judgment import build_acquisition_judgment
 from tl_ma_radar.ai_brief import build_ai_brief
 from tl_ma_radar.alerts import alerts_csv, build_alerts
 from tl_ma_radar.automation_plan import build_automation_plan
+from tl_ma_radar.calibration import build_calibration_report
 from tl_ma_radar.candidate_workflow import load_workflows, update_workflow, workflow_for_code, workflow_options
 from tl_ma_radar.collectors.dart import download_filing_pdf
 from tl_ma_radar.config import get_settings
@@ -171,6 +174,31 @@ def memo_response(handler: BaseHTTPRequestHandler, relative_path: str) -> None:
     file_response(handler, candidate_path)
 
 
+def check_basic_auth(handler: BaseHTTPRequestHandler) -> bool:
+    settings = get_settings(ROOT)
+    username = str(getattr(settings, "app_username", "") or "")
+    password = str(getattr(settings, "app_password", "") or "")
+    if not username or not password:
+        return True
+    header = handler.headers.get("Authorization", "")
+    prefix = "Basic "
+    valid = False
+    if header.startswith(prefix):
+        try:
+            decoded = base64.b64decode(header.removeprefix(prefix)).decode("utf-8")
+            provided_username, provided_password = decoded.split(":", 1)
+            valid = provided_username == username and provided_password == password
+        except (binascii.Error, ValueError, UnicodeDecodeError):
+            valid = False
+    if valid:
+        return True
+    handler.send_response(401)
+    handler.send_header("WWW-Authenticate", 'Basic realm="TL M&A Radar"')
+    handler.send_header("Content-Length", "0")
+    handler.end_headers()
+    return False
+
+
 def load_filings(code: str) -> list[dict[str, object]]:
     path = ROOT / "tl_ma_radar" / "data" / "dart_filings" / f"{code}.json"
     if not path.exists():
@@ -269,6 +297,8 @@ class RadarHandler(BaseHTTPRequestHandler):
     server_version = "TLRadar/0.1"
 
     def do_GET(self) -> None:  # noqa: N802 - stdlib callback name
+        if not check_basic_auth(self):
+            return
         parsed = urlparse(self.path)
         path = parsed.path
         query = parse_qs(parsed.query)
@@ -296,6 +326,7 @@ class RadarHandler(BaseHTTPRequestHandler):
                     "dart_configured": bool(settings.dart_api_key),
                     "naver_configured": bool(settings.naver_client_id and settings.naver_client_secret),
                     "alert_configured": bool(settings.alert_webhook_url or (settings.smtp_host and settings.alert_email_to)),
+                    "auth_configured": bool(settings.app_username and settings.app_password),
                     "data_source": data_source(ROOT),
                     "synergy_network": ["티엘홀딩스", "르네스머테리얼"],
                 },
@@ -442,6 +473,16 @@ class RadarHandler(BaseHTTPRequestHandler):
             except ValueError:
                 limit = 20
             json_response(self, build_score_tuning(prepared_candidates(settings), limit=limit))
+            return
+
+        if path == "/api/calibration":
+            settings = get_settings(ROOT)
+            limit_text = (query.get("limit", ["30"])[0] or "30").strip()
+            try:
+                limit = max(10, min(int(limit_text), 80))
+            except ValueError:
+                limit = 30
+            json_response(self, build_calibration_report(prepared_candidates(settings), limit=limit))
             return
 
         if path == "/api/top-review":
@@ -623,6 +664,8 @@ class RadarHandler(BaseHTTPRequestHandler):
         self.send_error(404, "Not found")
 
     def do_POST(self) -> None:  # noqa: N802 - stdlib callback name
+        if not check_basic_auth(self):
+            return
         parsed = urlparse(self.path)
         path = parsed.path
 

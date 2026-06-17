@@ -73,11 +73,14 @@ def run(limit: int, max_reports: int, include_pdfs: bool) -> Path:
         if include_pdfs:
             analyze_args.append("--include-pdfs")
         _run(payload, "analyze_reports", analyze_args, timeout=3600)
+        _run(payload, "backfill_business_keywords", ["scripts/backfill_business_keywords.py"], timeout=900)
         _run(payload, "analyze_event_digest", ["scripts/analyze_event_digest.py"], timeout=900)
         _run(payload, "analyze_deal_signals", ["scripts/analyze_deal_signals.py"], timeout=900)
         _run(payload, "seed_top30_workflow", ["scripts/seed_top30_workflow.py", "--limit", "30"], timeout=900)
+        _run(payload, "seed_top30_extraction_feedback", ["scripts/seed_top30_extraction_feedback.py", "--limit", "30"], timeout=900)
         _run(payload, "generate_deal_memos", ["scripts/generate_deal_memos.py", "--limit", "30"], timeout=900)
         _run(payload, "analyze_monitoring", ["scripts/analyze_monitoring.py", "--run-id", run_id], timeout=900)
+        _run(payload, "export_calibration_report", ["scripts/export_calibration_report.py"], timeout=900)
         _run(payload, "export_daily_quality_report", ["scripts/export_daily_quality_report.py"], timeout=900)
         _run(payload, "snapshot", ["scripts/run_pipeline.py", "--snapshot-only"], timeout=900)
         payload["status"] = "ok"
