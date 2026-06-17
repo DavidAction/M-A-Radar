@@ -9,8 +9,16 @@ $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $RepoRoot
 
+function Invoke-Git {
+  param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$GitArgs
+  )
+  & git -c "safe.directory=$RepoRoot" @GitArgs
+}
+
 try {
-  $inside = (& git rev-parse --is-inside-work-tree 2>$null).Trim()
+  $inside = (Invoke-Git rev-parse --is-inside-work-tree 2>$null).Trim()
 } catch {
   throw "This folder is not a Git repository. Run scripts\setup_github_remote.ps1 first."
 }
@@ -20,18 +28,18 @@ if ($inside -ne "true") {
 }
 
 if (-not $Branch) {
-  $Branch = (& git branch --show-current).Trim()
+  $Branch = (Invoke-Git branch --show-current).Trim()
 }
 if (-not $Branch) {
   $Branch = "main"
-  & git branch -M $Branch
+  Invoke-Git branch -M $Branch
 }
 
-& git add -A
-$changes = & git status --porcelain
+Invoke-Git add -A
+$changes = Invoke-Git status --porcelain
 
 if ($changes) {
-  & git commit -m $Message
+  Invoke-Git commit -m $Message
 } else {
   Write-Host "No local changes to commit."
 }
@@ -41,11 +49,11 @@ if ($NoPush) {
   exit 0
 }
 
-$remoteUrl = (& git remote get-url $Remote 2>$null)
+$remoteUrl = (Invoke-Git remote get-url $Remote 2>$null)
 if (-not $remoteUrl) {
   Write-Host "No '$Remote' remote is configured. Commit is local only."
   Write-Host "Add a remote with: git remote add $Remote https://github.com/<owner>/<repo>.git"
   exit 0
 }
 
-& git push -u $Remote $Branch
+Invoke-Git push -u $Remote $Branch

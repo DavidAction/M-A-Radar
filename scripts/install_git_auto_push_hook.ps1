@@ -6,7 +6,15 @@ $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $RepoRoot
 
-$gitDir = (& git rev-parse --git-dir 2>$null).Trim()
+function Invoke-Git {
+  param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$GitArgs
+  )
+  & git -c "safe.directory=$RepoRoot" @GitArgs
+}
+
+$gitDir = (Invoke-Git rev-parse --git-dir 2>$null).Trim()
 if (-not $gitDir) {
   throw "Git repository is not initialized. Run scripts\setup_github_remote.ps1 first."
 }
@@ -24,7 +32,7 @@ fi
 
 if git remote get-url "$remote" >/dev/null 2>&1; then
   echo "Auto-pushing $branch to $remote..."
-  git push -u "$remote" "$branch"
+  git -c safe.directory="$RepoRoot" push -u "$remote" "$branch"
 else
   echo "Auto-push skipped: remote '$remote' is not configured."
 fi

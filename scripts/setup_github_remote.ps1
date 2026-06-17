@@ -11,23 +11,31 @@ $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $RepoRoot
 
+function Invoke-Git {
+  param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$GitArgs
+  )
+  & git -c "safe.directory=$RepoRoot" @GitArgs
+}
+
 try {
-  $inside = (& git rev-parse --is-inside-work-tree 2>$null).Trim()
+  $inside = (Invoke-Git rev-parse --is-inside-work-tree 2>$null).Trim()
 } catch {
   $inside = ""
 }
 
 if ($inside -ne "true") {
-  & git init
+  Invoke-Git init
 }
 
-& git branch -M $Branch
+Invoke-Git branch -M $Branch
 
-$existingRemote = (& git remote get-url $Remote 2>$null)
+$existingRemote = (Invoke-Git remote get-url $Remote 2>$null)
 if ($existingRemote) {
-  & git remote set-url $Remote $RemoteUrl
+  Invoke-Git remote set-url $Remote $RemoteUrl
 } else {
-  & git remote add $Remote $RemoteUrl
+  Invoke-Git remote add $Remote $RemoteUrl
 }
 
 if ($InstallAutoPushHook) {
