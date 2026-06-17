@@ -211,6 +211,44 @@ h2 {
   line-height: 1.25;
 }
 
+.quality-issues {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  max-height: 312px;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.quality-issue {
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: var(--panel-2);
+}
+
+.quality-issue div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.quality-issue strong {
+  font-size: 13px;
+}
+
+.quality-issue span,
+.quality-issue p,
+.quality-issue em {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+  font-style: normal;
+}
+
 .tuning-list {
   display: grid;
   gap: 8px;

@@ -99,6 +99,7 @@ python scripts\collect_news.py --code 121850 --code 247660
 - 단일 회사 IC 1페이지 요약: `/api/candidates/<종목코드>/ic-summary.docx`
 - 상위 20개 후보 검수 보고서: `/api/export-top-review.docx`
 - 자동 알림 CSV: `/api/export-alerts.csv`
+- 데이터 신뢰도 QA CSV: `/api/export-data-quality.csv`
 - 숏리스트 CSV: `/api/export-shortlist.csv`
 - 변화 모니터링 CSV: `/api/export-monitoring.csv`
 
@@ -172,7 +173,8 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 
 이번 버전에는 외주사나 Claude Code가 바로 이어서 작업할 수 있도록 아래 운영 레이어가 추가되었습니다.
 
-- 데이터 신뢰도: 후보별 DART 공시 최신성, 뉴스 표본/최신성, 보고서 근거, 사업 키워드, 파이프라인 상태를 100점 기준으로 점검합니다.
+- 데이터 신뢰도: 후보별 DART 공시 최신성, 뉴스 표본/최신성, 보고서 근거, 사업 키워드, 파이프라인 상태를 100점 기준으로 점검하고 보강 우선 버킷을 자동 생성합니다.
+- 품질 관제 CSV: 보고서 원문 분석 대기, 사업 키워드 보강, 최대주주/지분 보강, 담당자/액션 미지정 후보를 `/api/export-data-quality.csv`로 내려받아 외부 실사팀에 배포할 수 있습니다.
 - 스코어 튜닝: 코이즈, 나노씨엠에스, 아이씨에이치, 베셀을 벤치마크로 고정하고 상위 20개 후보의 과대평가/과소평가 가능성을 검수합니다.
 - 파이프라인 이력: 후보 상태, 연락 상태, 담당자, 기한, 다음 액션, 메모 변경 이력이 자동 저장됩니다.
 - Word 보고서: 전체/개별 딜카드에 Investment Committee Lens, 데이터 신뢰도, 파이프라인 상태, 변경 이력이 반영됩니다.
@@ -191,6 +193,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 
 ```text
 /api/data-quality
+/api/export-data-quality.csv
 /api/score-tuning?limit=20
 /api/ic-packages?limit=12
 /api/automation-plan

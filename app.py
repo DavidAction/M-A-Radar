@@ -17,7 +17,7 @@ from tl_ma_radar.automation_plan import build_automation_plan
 from tl_ma_radar.candidate_workflow import load_workflows, update_workflow, workflow_for_code, workflow_options
 from tl_ma_radar.collectors.dart import download_filing_pdf
 from tl_ma_radar.config import get_settings
-from tl_ma_radar.data_quality import build_data_quality, build_data_quality_summary
+from tl_ma_radar.data_quality import build_data_quality, build_data_quality_summary, data_quality_csv
 from tl_ma_radar.deal_report import build_deal_cards_docx
 from tl_ma_radar.deal_scenario import build_deal_scenario
 from tl_ma_radar.deal_signals import analyze_deal_signals
@@ -417,6 +417,13 @@ class RadarHandler(BaseHTTPRequestHandler):
             payload = build_alerts(prepared_candidates(settings), latest_monitoring(ROOT), limit=200)
             body = alerts_csv(payload)
             bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_alerts.csv")
+            return
+
+        if path == "/api/export-data-quality.csv":
+            settings = get_settings(ROOT)
+            payload = build_data_quality_summary(prepared_candidates(settings))
+            body = data_quality_csv(payload)
+            bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_data_quality.csv")
             return
 
         if path == "/api/export-top-review.csv":

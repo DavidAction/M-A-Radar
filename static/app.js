@@ -533,17 +533,22 @@ function qualityCard(label, value, sub = "", tone = "") {
 function renderDataQuality() {
   const summary = document.getElementById("dataQualitySummary");
   const grid = document.getElementById("dataQualityGrid");
+  const issues = document.getElementById("dataQualityIssues");
   if (!summary || !grid || !state.dataQuality) return;
   const quality = state.dataQuality;
   const grades = quality.grade_counts || {};
+  const coverage = quality.coverage || {};
   const weakRows = quality.weakest || [];
+  const buckets = quality.issue_buckets || [];
   summary.textContent = quality.status === "ok"
-    ? `평균 ${quality.average_score}점 · 보완 필요 ${grades["보완 필요"] || 0}개 · 데이터 부족 ${grades["데이터 부족"] || 0}개`
+    ? `평균 ${quality.average_score}점 · 원문 분석 ${coverage.report_text_ready ?? "-"}개 · 뉴스 완료 ${coverage.total ? coverage.total - (coverage.news_gap || 0) : "-"}개`
     : quality.summary || "";
   grid.innerHTML = [
     qualityCard("평균 신뢰도", `${quality.average_score ?? "-"}점`, "공시·뉴스·보고서 기반", "good"),
     qualityCard("투자심의 가능", `${grades["투자심의 사용 가능"] || 0}개`, "즉시 보고서 활용 가능", "good"),
-    qualityCard("보완 필요", `${(grades["보완 필요"] || 0) + (grades["데이터 부족"] || 0)}개`, "원문/뉴스 재검증 우선", "warn"),
+    qualityCard("원문 보강", `${coverage.report_text_missing ?? "-"}개`, "사업/감사보고서 본문 분석 대기", coverage.report_text_missing ? "warn" : "good"),
+    qualityCard("키워드 보강", `${coverage.keyword_gap ?? "-"}개`, "TL·르네스 시너지 설명력 보강", coverage.keyword_gap ? "warn" : "good"),
+    qualityCard("지분 보강", `${coverage.shareholder_gap ?? "-"}개`, "최대주주·경영권 판단 입력", coverage.shareholder_gap ? "warn" : "good"),
     qualityCard(
       "최우선 보강",
       weakRows[0] ? `${weakRows[0].name} ${weakRows[0].score}점` : "-",
@@ -551,6 +556,28 @@ function renderDataQuality() {
       weakRows[0] ? "risk" : "",
     ),
   ].join("");
+  if (issues) {
+    issues.innerHTML = buckets
+      .filter((bucket) => bucket.count)
+      .slice(0, 4)
+      .map((bucket) => {
+        const names = (bucket.items || [])
+          .slice(0, 4)
+          .map((row) => `${row.name} ${row.score ?? "-"}점`)
+          .join(" · ");
+        return `
+          <div class="quality-issue">
+            <div>
+              <strong>${escapeHtml(bucket.label)}</strong>
+              <span>${escapeHtml(bucket.count)}개</span>
+            </div>
+            <p>${escapeHtml(bucket.why || "")}</p>
+            <em>${escapeHtml(names || "-")}</em>
+          </div>
+        `;
+      })
+      .join("");
+  }
 }
 
 function renderScoreTuning() {
