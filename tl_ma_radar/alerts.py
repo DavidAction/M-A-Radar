@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import csv
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from io import StringIO
 from typing import Any
 
@@ -45,8 +45,7 @@ def _parse_due_date(value: object) -> date | None:
 
 
 def _today_kst() -> date:
-    # The app does not require pytz; UTC date is conservative enough for due-date alerting.
-    return datetime.now(timezone.utc).date()
+    return datetime.now(timezone(timedelta(hours=9))).date()
 
 
 def _add(
@@ -89,12 +88,14 @@ def _dart_alerts(rows: list[dict[str, Any]], item: dict[str, Any]) -> None:
     findings = _list(report.get("findings"))
     severity = str(report.get("severity") or "").lower()
 
-    if severity in {"critical", "high"}:
+    audit_severity = str(audit.get("severity") or "").lower()
+
+    if severity == "critical" and audit_severity not in {"critical", "high"}:
         finding = _dict(findings[0]) if findings else {}
         _add(
             rows,
             item,
-            severity="critical" if severity == "critical" else "high",
+            severity="critical",
             category="DART 원문",
             title=f"{item.get('name')} DART 원문 리스크",
             detail=str(finding.get("title") or "감사/지배구조/자금조달 원문 리스크 확인 필요"),
@@ -102,7 +103,6 @@ def _dart_alerts(rows: list[dict[str, Any]], item: dict[str, Any]) -> None:
             source="report_intelligence",
         )
 
-    audit_severity = str(audit.get("severity") or "").lower()
     if audit_severity in {"critical", "high"}:
         _add(
             rows,
@@ -292,7 +292,7 @@ def build_alerts(items: list[dict[str, Any]], monitoring: dict[str, Any] | None 
             "total": len(rows),
             "severity": counts,
             "category": categories,
-            "action_required": sum(counts.get(key, 0) for key in ("critical", "high", "medium")),
+            "action_required": sum(counts.get(key, 0) for key in ("critical", "high")),
         },
         "items": rows[:limit],
         "alert_policy": [

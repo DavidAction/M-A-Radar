@@ -23,6 +23,7 @@ from tl_ma_radar.report_parser import (  # noqa: E402
 PARSER_KEYWORDS = set(TL_SYNERGY_TERMS) | set(RENES_SYNERGY_TERMS)
 STALE_PARSER_KEYWORDS = {"원료", "유통", "가공/납품"}
 REPORT_NOTE_RE = re.compile(r"\s*/\s*보고서 원문 \d+건 텍스트 분석")
+AUDIT_RECHECK_FLAGS = {"계속기업불확실성", "감사의견리스크"}
 
 
 def load_rows() -> list[dict[str, Any]]:
@@ -86,31 +87,57 @@ def analyze_row(row: dict[str, Any], max_reports: int, save_text: bool, include_
         path = report_path(report["local_path"])
         if not path.exists():
             continue
-        parsed = extract_zip_text(path)
-        if parsed.text:
-            text_parts.append(parsed.text)
-        parsed_reports.append(
-            {
-                "report_nm": report.get("report_nm"),
-                "rcept_dt": report.get("rcept_dt"),
-                "local_path": report.get("local_path"),
-                "source": "zip_xml",
-                "text_chars": len(parsed.text),
-            }
-        )
-        if include_pdfs and (pdf_path := cached_pdf_path(report)) and pdf_path.exists():
-            pdf_parsed = extract_pdf_text(pdf_path)
-            if pdf_parsed.text:
-                text_parts.append(pdf_parsed.text)
+        try:
+            parsed = extract_zip_text(path)
+        except Exception as exc:
             parsed_reports.append(
                 {
                     "report_nm": report.get("report_nm"),
                     "rcept_dt": report.get("rcept_dt"),
-                    "local_path": pdf_path.relative_to(ROOT / "tl_ma_radar" / "data").as_posix(),
-                    "source": "pdf",
-                    "text_chars": len(pdf_parsed.text),
+                    "local_path": report.get("local_path"),
+                    "source": "zip_error",
+                    "text_chars": 0,
+                    "message": str(exc),
                 }
             )
+        else:
+            if parsed.text:
+                text_parts.append(parsed.text)
+            parsed_reports.append(
+                {
+                    "report_nm": report.get("report_nm"),
+                    "rcept_dt": report.get("rcept_dt"),
+                    "local_path": report.get("local_path"),
+                    "source": "zip_xml",
+                    "text_chars": len(parsed.text),
+                }
+            )
+        if include_pdfs and (pdf_path := cached_pdf_path(report)) and pdf_path.exists():
+            try:
+                pdf_parsed = extract_pdf_text(pdf_path)
+            except Exception as exc:
+                parsed_reports.append(
+                    {
+                        "report_nm": report.get("report_nm"),
+                        "rcept_dt": report.get("rcept_dt"),
+                        "local_path": pdf_path.relative_to(ROOT / "tl_ma_radar" / "data").as_posix(),
+                        "source": "pdf_error",
+                        "text_chars": 0,
+                        "message": str(exc),
+                    }
+                )
+            else:
+                if pdf_parsed.text:
+                    text_parts.append(pdf_parsed.text)
+                parsed_reports.append(
+                    {
+                        "report_nm": report.get("report_nm"),
+                        "rcept_dt": report.get("rcept_dt"),
+                        "local_path": pdf_path.relative_to(ROOT / "tl_ma_radar" / "data").as_posix(),
+                        "source": "pdf",
+                        "text_chars": len(pdf_parsed.text),
+                    }
+                )
 
     combined_text = " ".join(text_parts)
     analysis = analyze_text(combined_text)
@@ -125,7 +152,8 @@ def analyze_row(row: dict[str, Any], max_reports: int, save_text: bool, include_
         if keyword not in PARSER_KEYWORDS and keyword not in STALE_PARSER_KEYWORDS
     ]
     updated["business_keywords"] = merge_unique(base_keywords, analysis["business_keywords"])
-    updated["status_flags"] = merge_unique(row.get("status_flags") or [], analysis["risk_flags"])
+    base_flags = [flag for flag in (row.get("status_flags") or []) if flag not in AUDIT_RECHECK_FLAGS]
+    updated["status_flags"] = merge_unique(base_flags, analysis["risk_flags"])
     shareholder = analysis.get("largest_shareholder")
     if shareholder and updated.get("largest_shareholder_ratio") is None:
         updated["largest_shareholder_ratio"] = shareholder["ratio"]
@@ -133,7 +161,10 @@ def analyze_row(row: dict[str, Any], max_reports: int, save_text: bool, include_
         updated["sector"] = analysis["inferred_sector"]
     if analysis["business_keywords"]:
         updated["has_operating_assets"] = True
-    updated["source_note"] = update_source_note(updated.get("source_note", ""), len(parsed_reports))
+    if parsed_reports:
+        updated["source_note"] = update_source_note(updated.get("source_note", ""), len(parsed_reports))
+    else:
+        updated["source_note"] = REPORT_NOTE_RE.sub("", updated.get("source_note", "") or "").strip()
 
     if save_text and combined_text:
         text_dir = ROOT / "tl_ma_radar" / "data" / "dart_texts"

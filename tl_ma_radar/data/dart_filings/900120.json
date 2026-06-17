@@ -4,6 +4,28 @@
     "corp_name": "씨엑스아이",
     "stock_code": "900120",
     "corp_cls": "K",
+    "report_nm": "임원ㆍ주요주주특정증권등소유상황보고서",
+    "rcept_no": "20260617000448",
+    "flr_nm": "LIN JINSHENG",
+    "rcept_dt": "20260617",
+    "rm": ""
+  },
+  {
+    "corp_code": "00800084",
+    "corp_name": "씨엑스아이",
+    "stock_code": "900120",
+    "corp_cls": "K",
+    "report_nm": "주식등의대량보유상황보고서(일반)",
+    "rcept_no": "20260617000446",
+    "flr_nm": "LIN JINSHENG",
+    "rcept_dt": "20260617",
+    "rm": ""
+  },
+  {
+    "corp_code": "00800084",
+    "corp_name": "씨엑스아이",
+    "stock_code": "900120",
+    "corp_cls": "K",
     "report_nm": "주주명부폐쇄기간또는기준일설정              ",
     "rcept_no": "20260612900686",
     "flr_nm": "씨엑스아이",

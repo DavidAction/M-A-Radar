@@ -4,6 +4,17 @@
     "corp_name": "롤링스톤",
     "stock_code": "214610",
     "corp_cls": "K",
+    "report_nm": "주식등의대량보유상황보고서(약식)",
+    "rcept_no": "20260617000353",
+    "flr_nm": "상상인저축은행",
+    "rcept_dt": "20260617",
+    "rm": ""
+  },
+  {
+    "corp_code": "01049167",
+    "corp_name": "롤링스톤",
+    "stock_code": "214610",
+    "corp_cls": "K",
     "report_nm": "[기재정정]주주총회소집공고",
     "rcept_no": "20260616000063",
     "flr_nm": "롤링스톤",

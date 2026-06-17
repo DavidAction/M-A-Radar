@@ -211,6 +211,34 @@ def prepared_candidates(settings: object) -> list[dict[str, object]]:
     return [prepare_candidate(item, settings, workflows, news_cache) for item in load_candidates(ROOT)]
 
 
+def slim_candidate(item: dict[str, object]) -> dict[str, object]:
+    news = item.get("news_analysis")
+    news_summary = {}
+    if isinstance(news, dict):
+        news_summary = {
+            "tone": news.get("tone"),
+            "article_count": news.get("article_count"),
+            "scores": news.get("scores") or {},
+        }
+    scores = item.get("scores") if isinstance(item.get("scores"), dict) else {}
+    return {
+        "code": item.get("code"),
+        "name": item.get("name"),
+        "market": item.get("market"),
+        "sector": item.get("sector"),
+        "market_cap_krw": item.get("market_cap_krw"),
+        "pbr": item.get("pbr"),
+        "recommendation": item.get("recommendation"),
+        "status_flags": item.get("status_flags") or [],
+        "workflow": item.get("workflow") or {},
+        "scores": {"total": scores.get("total")},
+        "shortlist_score": item.get("shortlist_score"),
+        "priority_score": item.get("priority_score"),
+        "shortlist_group": item.get("shortlist_group"),
+        "news_analysis": news_summary,
+    }
+
+
 def pipeline_status() -> dict[str, object]:
     path = ROOT / "tl_ma_radar" / "data" / "pipeline_runs" / "latest.json"
     if not path.exists():
@@ -448,7 +476,7 @@ class RadarHandler(BaseHTTPRequestHandler):
                     or keyword in " ".join(item.get("business_keywords", [])).lower()
                 ]
             candidates.sort(key=lambda item: item["scores"]["total"], reverse=True)
-            json_response(self, {"items": candidates, "count": len(candidates)})
+            json_response(self, {"items": [slim_candidate(item) for item in candidates], "count": len(candidates)})
             return
 
         if path.startswith("/api/candidates/") and path.endswith("/deal-card.docx"):

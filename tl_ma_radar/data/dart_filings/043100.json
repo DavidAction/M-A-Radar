@@ -4,6 +4,17 @@
     "corp_name": "알파AI",
     "stock_code": "043100",
     "corp_cls": "K",
+    "report_nm": "사채원리금미지급발생              ",
+    "rcept_no": "20260617900670",
+    "flr_nm": "알파AI",
+    "rcept_dt": "20260617",
+    "rm": "코"
+  },
+  {
+    "corp_code": "00220109",
+    "corp_name": "알파AI",
+    "stock_code": "043100",
+    "corp_cls": "K",
     "report_nm": "주권매매거래정지기간변경              (회생절차 개시신청)",
     "rcept_no": "20260616900753",
     "flr_nm": "코스닥시장본부",

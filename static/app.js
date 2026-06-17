@@ -120,6 +120,7 @@ const NEWS_ARTICLE_PAGE_SIZE = 6;
 
 const state = {
   items: [],
+  candidateDetails: {},
   selectedCode: null,
   filter: "all",
   query: "",
@@ -331,7 +332,7 @@ async function loadCandidates() {
     state.selectedCode = state.items[0].code;
   }
   renderList();
-  renderDetail();
+  ensureSelectedDetail();
 }
 
 async function loadShortlist() {
@@ -384,6 +385,32 @@ function selectCandidate(code) {
   document.getElementById("searchInput").value = "";
   state.selectedCode = code;
   loadCandidates();
+}
+
+async function ensureSelectedDetail() {
+  const code = state.selectedCode;
+  if (!code) {
+    renderDetail();
+    return;
+  }
+  if (state.candidateDetails[code]) {
+    renderDetail();
+    return;
+  }
+  renderDetail();
+  try {
+    const res = await fetch(`/api/candidates/${encodeURIComponent(code)}`);
+    const detail = await res.json();
+    state.candidateDetails[code] = detail;
+    if (state.selectedCode === code) {
+      renderDetail();
+    }
+  } catch {
+    const pane = document.getElementById("detailPane");
+    if (pane && state.selectedCode === code) {
+      pane.innerHTML = `<div class="empty-state">상세 데이터를 불러오지 못했습니다.</div>`;
+    }
+  }
 }
 
 function renderMonitoring() {
@@ -819,7 +846,7 @@ function renderCandidatePager(items, start, end, pageCount) {
       state.candidatePage = clamp(state.candidatePage + direction, 0, pageCount - 1);
       state.selectedCode = null;
       renderList();
-      renderDetail();
+      ensureSelectedDetail();
     });
   });
 }
@@ -873,7 +900,7 @@ function renderList() {
     el.addEventListener("click", () => {
       state.selectedCode = el.dataset.code;
       renderList();
-      renderDetail();
+      ensureSelectedDetail();
     });
   });
 }
@@ -1974,6 +2001,9 @@ async function saveWorkflow(code) {
   state.items = state.items.map((item) =>
     item.code === code ? { ...item, workflow: result.workflow } : item,
   );
+  if (state.candidateDetails[code]) {
+    state.candidateDetails[code] = { ...state.candidateDetails[code], workflow: result.workflow };
+  }
   renderList();
   renderDetail();
 }
@@ -2108,10 +2138,24 @@ function dealMemoBlock(item) {
 }
 
 function renderDetail() {
-  const item = state.items.find((candidate) => candidate.code === state.selectedCode);
+  const listItem = state.items.find((candidate) => candidate.code === state.selectedCode);
+  const item = state.candidateDetails[state.selectedCode] || listItem;
   const pane = document.getElementById("detailPane");
   if (!item) {
     pane.innerHTML = `<div class="empty-state">${T.empty}</div>`;
+    return;
+  }
+  if (!state.candidateDetails[state.selectedCode]) {
+    pane.innerHTML = `
+      <div class="detail-head">
+        <div>
+          <h2>${escapeHtml(item.name || "-")}</h2>
+          <p class="note">${escapeHtml(item.code || "")} · ${escapeHtml(item.market || "")} · ${escapeHtml(item.sector || "")}</p>
+        </div>
+        <div class="recommendation ${recommendationClass(item.recommendation)}">${escapeHtml(item.recommendation || "-")}</div>
+      </div>
+      <div class="empty-state">상세 딜카드를 불러오는 중입니다.</div>
+    `;
     return;
   }
 
@@ -2226,7 +2270,7 @@ document.querySelectorAll(".chip").forEach((el) => {
     state.candidatePage = 0;
     state.selectedCode = null;
     renderList();
-    renderDetail();
+    ensureSelectedDetail();
   });
 });
 
