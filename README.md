@@ -60,6 +60,12 @@ MARKET_CAP_LIMIT_KRW=30000000000
 python scripts\run_pipeline.py --mode offline --max-reports 2 --memo-limit 30
 ```
 
+현재 저장된 후보/공시/뉴스 데이터 상태만 운영 메타에 다시 반영할 때는 아래 명령을 사용합니다.
+
+```powershell
+python scripts\run_pipeline.py --snapshot-only
+```
+
 DART, 후보 데이터, 뉴스까지 함께 갱신합니다.
 
 ```powershell

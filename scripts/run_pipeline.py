@@ -85,12 +85,20 @@ def data_summary() -> dict[str, Any]:
     if not data_path.exists():
         return {"candidates": 0}
     rows = json.loads(data_path.read_text(encoding="utf-8"))
+    analyses = [row.get("report_analysis") or {} for row in rows]
+    deal_memo_files = len(list((ROOT / "tl_ma_radar" / "data" / "deal_memos").glob("*.md")))
+    embedded_deal_memos = sum(1 for row in rows if row.get("deal_memo"))
     summary = {
         "candidates": len(rows),
         "dart_ok": sum(1 for row in rows if row.get("dart_enrichment", {}).get("status") == "ok"),
-        "report_analysis": sum(1 for row in rows if row.get("report_analysis")),
+        "dart_filing_files": len(list((ROOT / "tl_ma_radar" / "data" / "dart_filings").glob("*.json"))),
+        "report_analysis": sum(1 for analysis in analyses if analysis),
+        "report_text_analysis": sum(1 for analysis in analyses if int(analysis.get("text_chars") or 0) > 0),
+        "report_analysis_errors": sum(1 for analysis in analyses if analysis.get("status") == "error"),
+        "report_entries": sum(len(analysis.get("reports_analyzed") or []) for analysis in analyses),
         "deal_signals": sum(1 for row in rows if row.get("deal_signals")),
-        "deal_memos": sum(1 for row in rows if row.get("deal_memo")),
+        "deal_memos": max(embedded_deal_memos, deal_memo_files),
+        "deal_memo_files": deal_memo_files,
         "report_zips": len(list((ROOT / "tl_ma_radar" / "data" / "dart_reports").rglob("*.zip"))),
     }
     news_path = ROOT / "tl_ma_radar" / "data" / "candidate_news.json"
@@ -120,11 +128,19 @@ def run_pipeline(args: argparse.Namespace) -> Path:
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     payload: dict[str, Any] = {
         "run_id": run_id,
-        "mode": args.mode,
+        "mode": "snapshot" if args.snapshot_only else args.mode,
         "started_at": datetime.now(timezone.utc).isoformat(),
         "steps": [],
     }
     try:
+        if args.snapshot_only:
+            payload["status"] = "ok"
+            payload["note"] = "Current persisted data snapshot; no collection or analysis steps were executed."
+            payload["finished_at"] = datetime.now(timezone.utc).isoformat()
+            payload["summary"] = data_summary()
+            path = write_run_log(payload)
+            print(f"\nPipeline {payload['status']} -> {path}")
+            return path
         if args.mode == "full":
             run_required_step(
                 payload,
@@ -149,12 +165,12 @@ def run_pipeline(args: argparse.Namespace) -> Path:
                 ],
                 timeout=7200,
             )
-        run_required_step(
-            payload,
-            "analyze_reports",
-            ["scripts/analyze_reports.py", "--max-reports", str(args.max_reports)],
-            timeout=3600,
-        )
+        report_args = ["scripts/analyze_reports.py", "--max-reports", str(args.max_reports)]
+        if args.save_text:
+            report_args.append("--save-text")
+        if args.include_pdfs:
+            report_args.append("--include-pdfs")
+        run_required_step(payload, "analyze_reports", report_args, timeout=3600)
         run_required_step(payload, "analyze_event_digest", ["scripts/analyze_event_digest.py"], timeout=900)
         run_required_step(payload, "analyze_deal_signals", ["scripts/analyze_deal_signals.py"], timeout=900)
         news_mode = "top" if args.news == "auto" and args.mode == "full" else args.news
@@ -209,7 +225,14 @@ def main() -> None:
     parser.add_argument("--sleep", type=float, default=0.15)
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--max-reports", type=int, default=2)
+    parser.add_argument("--save-text", action="store_true")
+    parser.add_argument("--include-pdfs", action="store_true")
     parser.add_argument("--memo-limit", type=int, default=30)
+    parser.add_argument(
+        "--snapshot-only",
+        action="store_true",
+        help="Write pipeline_runs/latest.json from current persisted data without running refresh steps.",
+    )
     parser.add_argument("--news", choices=["auto", "skip", "top", "all"], default="auto")
     parser.add_argument("--news-limit", type=int, default=80)
     parser.add_argument("--news-months", type=int, default=6)

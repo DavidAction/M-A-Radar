@@ -251,6 +251,14 @@ def memo_markdown(row: dict[str, Any], memo: dict[str, Any]) -> str:
 """
 
 
+def clear_generated_memos() -> None:
+    if not MEMO_DIR.exists():
+        return
+    for path in MEMO_DIR.glob("*.md"):
+        if path.is_file():
+            path.unlink()
+
+
 def generate(limit: int) -> None:
     settings = get_settings(ROOT)
     rows = load_rows()
@@ -265,6 +273,7 @@ def generate(limit: int) -> None:
     ranked = sorted(scored_by_code.values(), key=lambda row: row["scores"]["total"], reverse=True)
     target_codes = {row["code"]: idx for idx, row in enumerate(ranked[:limit], start=1)}
     MEMO_DIR.mkdir(parents=True, exist_ok=True)
+    clear_generated_memos()
 
     updated_rows: list[dict[str, Any]] = []
     for row in rows:
