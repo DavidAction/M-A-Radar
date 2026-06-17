@@ -47,13 +47,13 @@ def build_automation_plan(root: Path) -> dict[str, Any]:
             {
                 "name": "Daily Radar Refresh",
                 "frequency": "매일 장 시작 전 또는 업무 시작 전",
-                "command": "powershell -ExecutionPolicy Bypass -File scripts\\run_daily_pipeline.ps1 -Mode full -News top",
-                "purpose": "DART 최신 공시, 상위 후보 뉴스, 모니터링 변경사항 갱신",
+                "command": "powershell -ExecutionPolicy Bypass -File scripts\\run_daily_pipeline.ps1 -Mode full -News top -IncludePdfs -SaveText",
+                "purpose": "DART 최신 공시, 상위 후보 뉴스, 보고서 원문, 품질/알림 리포트 갱신",
             },
             {
                 "name": "Weekly Full Refresh",
                 "frequency": "매주 1회",
-                "command": "python scripts\\run_pipeline.py --mode full --download-reports latest --news all",
+                "command": "python scripts\\run_pipeline.py --mode full --download-reports latest --include-pdfs --save-text --news all",
                 "purpose": "전체 후보 뉴스/보고서 보강 및 스코어 재산정",
             },
             {

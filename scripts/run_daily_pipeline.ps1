@@ -9,11 +9,24 @@ param(
 
   [int]$MaxReports = 2,
   [int]$MemoLimit = 30,
+  [ValidateSet("auto", "skip", "top", "all")]
+  [string]$News = "top",
+  [int]$NewsLimit = 120,
+
+  [switch]$IncludePdfs,
+  [switch]$SaveText,
 
   [switch]$DryRun
 )
 
 $ErrorActionPreference = "Stop"
+if (-not $PSBoundParameters.ContainsKey("IncludePdfs")) {
+  $IncludePdfs = $true
+}
+if (-not $PSBoundParameters.ContainsKey("SaveText")) {
+  $SaveText = $true
+}
+
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Root = Resolve-Path (Join-Path $ScriptDir "..")
 $Python = Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
@@ -36,8 +49,16 @@ $PipelineArgs = @(
   "--begin", $Begin,
   "--download-reports", $DownloadReports,
   "--max-reports", "$MaxReports",
-  "--memo-limit", "$MemoLimit"
+  "--memo-limit", "$MemoLimit",
+  "--news", $News,
+  "--news-limit", "$NewsLimit"
 )
+if ($IncludePdfs) {
+  $PipelineArgs += "--include-pdfs"
+}
+if ($SaveText) {
+  $PipelineArgs += "--save-text"
+}
 
 Set-Location $Root
 if ($DryRun) {
@@ -62,6 +83,9 @@ $Meta = [ordered]@{
   mode = $Mode
   begin = $Begin
   download_reports = $DownloadReports
+  news = $News
+  include_pdfs = [bool]$IncludePdfs
+  save_text = [bool]$SaveText
   stdout_log = $OutLog
   stderr_log = $ErrLog
 }

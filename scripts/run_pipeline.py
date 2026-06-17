@@ -100,6 +100,7 @@ def data_summary() -> dict[str, Any]:
         "deal_memos": max(embedded_deal_memos, deal_memo_files),
         "deal_memo_files": deal_memo_files,
         "report_zips": len(list((ROOT / "tl_ma_radar" / "data" / "dart_reports").rglob("*.zip"))),
+        "quality_reports": len(list((ROOT / "tl_ma_radar" / "data" / "quality_reports").glob("*.json"))),
     }
     news_path = ROOT / "tl_ma_radar" / "data" / "candidate_news.json"
     if news_path.exists():
@@ -199,6 +200,12 @@ def run_pipeline(args: argparse.Namespace) -> Path:
             payload,
             "analyze_monitoring",
             ["scripts/analyze_monitoring.py", "--run-id", run_id],
+            timeout=900,
+        )
+        run_required_step(
+            payload,
+            "export_daily_quality_report",
+            ["scripts/export_daily_quality_report.py"],
             timeout=900,
         )
         payload["status"] = "ok"

@@ -28,6 +28,7 @@ from tl_ma_radar.monitoring import latest_monitoring, monitoring_csv
 from tl_ma_radar.news_analysis import load_news_cache, news_for_code
 from tl_ma_radar.news_events import build_news_events
 from tl_ma_radar.operations import operations_status
+from tl_ma_radar.remediation import read_remediation_status, start_quality_remediation
 from tl_ma_radar.repository import data_source, load_candidates
 from tl_ma_radar.report_intelligence import build_report_intelligence
 from tl_ma_radar.scoring import score_candidate
@@ -351,6 +352,10 @@ class RadarHandler(BaseHTTPRequestHandler):
             json_response(self, build_data_quality_summary(candidates))
             return
 
+        if path == "/api/data-quality/remediation-status":
+            json_response(self, read_remediation_status(ROOT))
+            return
+
         if path == "/api/team-ops":
             settings = get_settings(ROOT)
             candidates = prepared_candidates(settings)
@@ -555,6 +560,30 @@ class RadarHandler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:  # noqa: N802 - stdlib callback name
         parsed = urlparse(self.path)
         path = parsed.path
+
+        if path == "/api/data-quality/remediate":
+            try:
+                payload = read_json_body(self)
+            except json.JSONDecodeError:
+                self.send_error(400, "Invalid JSON body")
+                return
+            try:
+                limit = max(1, min(int(payload.get("limit") or 30), 128))
+            except (TypeError, ValueError):
+                limit = 30
+            try:
+                max_reports = max(1, min(int(payload.get("max_reports") or 4), 8))
+            except (TypeError, ValueError):
+                max_reports = 4
+            try:
+                json_response(
+                    self,
+                    start_quality_remediation(ROOT, limit=limit, max_reports=max_reports),
+                    status=202,
+                )
+            except OSError as exc:
+                self.send_error(500, f"Could not start remediation: {exc}")
+            return
 
         if path.startswith("/api/candidates/") and path.endswith("/workflow"):
             code = path.removeprefix("/api/candidates/").removesuffix("/workflow").strip("/")

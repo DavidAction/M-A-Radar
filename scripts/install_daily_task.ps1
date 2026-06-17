@@ -3,7 +3,10 @@ param(
   [string]$At = "18:30",
 
   [ValidateSet("full", "offline")]
-  [string]$Mode = "full"
+  [string]$Mode = "full",
+
+  [ValidateSet("auto", "skip", "top", "all")]
+  [string]$News = "top"
 )
 
 $ErrorActionPreference = "Stop"
@@ -19,7 +22,10 @@ $ActionArgs = @(
   "-NoProfile",
   "-ExecutionPolicy", "Bypass",
   "-File", "`"$Runner`"",
-  "-Mode", $Mode
+  "-Mode", $Mode,
+  "-News", $News,
+  "-IncludePdfs",
+  "-SaveText"
 ) -join " "
 
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $ActionArgs
@@ -52,6 +58,9 @@ $Config = [ordered]@{
   user = $UserId
   at = $At
   mode = $Mode
+  news = $News
+  include_pdfs = $true
+  save_text = $true
   enabled = $true
   next_run_time = $Info.NextRunTime.ToString("yyyy-MM-dd HH:mm:ss")
   action = $ActionArgs

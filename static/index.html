@@ -58,9 +58,13 @@
               <h2>데이터 신뢰도</h2>
               <p id="dataQualitySummary" class="note"></p>
             </div>
-            <a class="export-link" href="/api/export-data-quality.csv">QA CSV</a>
+            <div class="export-actions">
+              <button id="qualityRemediate" class="export-link primary" type="button">보강 실행</button>
+              <a class="export-link" href="/api/export-data-quality.csv">QA CSV</a>
+            </div>
           </div>
           <div id="dataQualityGrid" class="quality-grid"></div>
+          <p id="qualityRemediationState" class="note"></p>
           <div id="dataQualityIssues" class="quality-issues"></div>
         </div>
         <div class="decision-card">

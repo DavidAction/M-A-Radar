@@ -131,6 +131,7 @@ const state = {
   operations: null,
   scoreAudit: null,
   dataQuality: null,
+  remediationStatus: null,
   scoreTuning: null,
   teamOps: null,
   icPackages: null,
@@ -231,6 +232,12 @@ async function loadScoreAudit() {
 async function loadDataQuality() {
   const res = await fetch("/api/data-quality");
   state.dataQuality = await res.json();
+  renderDataQuality();
+}
+
+async function loadRemediationStatus() {
+  const res = await fetch("/api/data-quality/remediation-status");
+  state.remediationStatus = await res.json();
   renderDataQuality();
 }
 
@@ -534,6 +541,7 @@ function renderDataQuality() {
   const summary = document.getElementById("dataQualitySummary");
   const grid = document.getElementById("dataQualityGrid");
   const issues = document.getElementById("dataQualityIssues");
+  const remediation = document.getElementById("qualityRemediationState");
   if (!summary || !grid || !state.dataQuality) return;
   const quality = state.dataQuality;
   const grades = quality.grade_counts || {};
@@ -556,6 +564,16 @@ function renderDataQuality() {
       weakRows[0] ? "risk" : "",
     ),
   ].join("");
+  if (remediation) {
+    const job = state.remediationStatus || {};
+    const steps = job.steps || [];
+    const lastStep = steps.length ? steps[steps.length - 1].name : "";
+    if (job.status && job.status !== "not_run") {
+      remediation.textContent = `보강 작업 ${job.status} · ${job.started_at ? job.started_at.slice(0, 16).replace("T", " ") : "-"}${lastStep ? ` · 최근 ${lastStep}` : ""}`;
+    } else {
+      remediation.textContent = "품질 점수가 낮은 후보부터 원문 다운로드, 재분석, 파이프라인 입력을 실행할 수 있습니다.";
+    }
+  }
   if (issues) {
     issues.innerHTML = buckets
       .filter((bucket) => bucket.count)
@@ -577,6 +595,24 @@ function renderDataQuality() {
         `;
       })
       .join("");
+  }
+}
+
+async function startQualityRemediation() {
+  const button = document.getElementById("qualityRemediate");
+  const status = document.getElementById("qualityRemediationState");
+  if (button) button.disabled = true;
+  if (status) status.textContent = "보강 작업을 시작하는 중입니다.";
+  try {
+    const res = await fetch("/api/data-quality/remediate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ limit: 30, max_reports: 4 }),
+    });
+    state.remediationStatus = await res.json();
+    renderDataQuality();
+  } finally {
+    if (button) button.disabled = false;
   }
 }
 
@@ -2301,10 +2337,16 @@ document.querySelectorAll(".chip").forEach((el) => {
   });
 });
 
+const qualityRemediateButton = document.getElementById("qualityRemediate");
+if (qualityRemediateButton) {
+  qualityRemediateButton.addEventListener("click", startQualityRemediation);
+}
+
 loadConfig();
 loadWorkflowOptions();
 loadOperations();
 loadDataQuality();
+loadRemediationStatus();
 loadScoreTuning();
 loadTeamOps();
 loadICPackages();

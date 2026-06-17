@@ -621,6 +621,16 @@ h2 {
   white-space: nowrap;
 }
 
+button.export-link {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button.export-link:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
 .export-link:hover {
   border-color: var(--blue);
   color: var(--blue);

@@ -1,14 +1,1745 @@
 {
-  "updated_at": "2026-06-17T05:29:36.536905+00:00",
+  "updated_at": "2026-06-17T13:00:54.112387+00:00",
   "items": {
     "121850": {
-      "status": "미검토",
-      "memo": "",
-      "owner": "",
-      "next_action": "",
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #2. 우선순위 82.0, 그룹 즉시 검토, 핵심 확인: 관리종목",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.642679+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.642679+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #2. 우선순위 82.0, 그룹 즉시 검토, 핵심 확인: 관리종목"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #2. 우선순위 82.0, 그룹 즉시 검토, 핵심 확인: 관리종목"
+          }
+        }
+      ]
+    },
+    "131100": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #1. 우선순위 82.3, 그룹 심층 실사, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.627146+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.627146+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #1. 우선순위 82.3, 그룹 심층 실사, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #1. 우선순위 82.3, 그룹 심층 실사, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "353590": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #3. 우선순위 80.2, 그룹 즉시 검토, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.654537+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.654537+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #3. 우선순위 80.2, 그룹 즉시 검토, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #3. 우선순위 80.2, 그룹 즉시 검토, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "177350": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #4. 우선순위 79.0, 그룹 즉시 검토, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.671719+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.671719+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #4. 우선순위 79.0, 그룹 즉시 검토, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #4. 우선순위 79.0, 그룹 즉시 검토, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "091340": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #5. 우선순위 77.9, 그룹 심층 실사, 핵심 확인: 최대주주변경",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.683551+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.683551+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #5. 우선순위 77.9, 그룹 심층 실사, 핵심 확인: 최대주주변경"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #5. 우선순위 77.9, 그룹 심층 실사, 핵심 확인: 최대주주변경"
+          }
+        }
+      ]
+    },
+    "069920": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #6. 우선순위 77.4, 그룹 고위험 옵션, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.695169+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.695169+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #6. 우선순위 77.4, 그룹 고위험 옵션, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #6. 우선순위 77.4, 그룹 고위험 옵션, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "247660": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #7. 우선순위 77.3, 그룹 심층 실사, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.707356+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.707356+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #7. 우선순위 77.3, 그룹 심층 실사, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #7. 우선순위 77.3, 그룹 심층 실사, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "285800": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #8. 우선순위 76.2, 그룹 심층 실사, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.721504+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.721504+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #8. 우선순위 76.2, 그룹 심층 실사, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #8. 우선순위 76.2, 그룹 심층 실사, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "016100": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #9. 우선순위 75.8, 그룹 심층 실사, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.734021+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.734021+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #9. 우선순위 75.8, 그룹 심층 실사, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #9. 우선순위 75.8, 그룹 심층 실사, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "368600": {
+      "status": "접촉",
+      "memo": "자동 파이프라인 편입 #10. 우선순위 75.7, 그룹 심층 실사, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "접촉준비",
+      "due_date": "2026-06-24",
+      "updated_at": "2026-06-17T13:00:53.751107+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.751107+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 연락 상태, 담당자, 검토 기한 외 2",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "접촉"
+            },
+            {
+              "field": "contact_status",
+              "label": "연락 상태",
+              "before": "미접촉",
+              "after": "접촉준비"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-06-24"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #10. 우선순위 75.7, 그룹 심층 실사, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "접촉",
+            "contact_status": "접촉준비",
+            "owner": "TL M&A Team",
+            "due_date": "2026-06-24",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #10. 우선순위 75.7, 그룹 심층 실사, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "154040": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #11. 우선순위 74.7, 그룹 즉시 검토, 핵심 확인: 거래정지/거래부진확인필요",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
       "contact_status": "미접촉",
-      "due_date": "",
-      "updated_at": "2026-06-17T05:29:36.536516+00:00"
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.767882+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.767882+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #11. 우선순위 74.7, 그룹 즉시 검토, 핵심 확인: 거래정지/거래부진확인필요"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #11. 우선순위 74.7, 그룹 즉시 검토, 핵심 확인: 거래정지/거래부진확인필요"
+          }
+        }
+      ]
+    },
+    "060260": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #12. 우선순위 73.4, 그룹 즉시 검토, 핵심 확인: CB/BW공시",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.788239+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.788239+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #12. 우선순위 73.4, 그룹 즉시 검토, 핵심 확인: CB/BW공시"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #12. 우선순위 73.4, 그룹 즉시 검토, 핵심 확인: CB/BW공시"
+          }
+        }
+      ]
+    },
+    "313760": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #13. 우선순위 73.4, 그룹 고위험 옵션, 핵심 확인: 초저시총",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.802591+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.802591+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #13. 우선순위 73.4, 그룹 고위험 옵션, 핵심 확인: 초저시총"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #13. 우선순위 73.4, 그룹 고위험 옵션, 핵심 확인: 초저시총"
+          }
+        }
+      ]
+    },
+    "123750": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #14. 우선순위 72.5, 그룹 즉시 검토, 핵심 확인: 유상증자공시",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.816513+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.816513+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #14. 우선순위 72.5, 그룹 즉시 검토, 핵심 확인: 유상증자공시"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #14. 우선순위 72.5, 그룹 즉시 검토, 핵심 확인: 유상증자공시"
+          }
+        }
+      ]
+    },
+    "060230": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #15. 우선순위 72.4, 그룹 고위험 옵션, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.831027+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.831027+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #15. 우선순위 72.4, 그룹 고위험 옵션, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #15. 우선순위 72.4, 그룹 고위험 옵션, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "347770": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #16. 우선순위 72.2, 그룹 즉시 검토, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.845121+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.845121+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #16. 우선순위 72.2, 그룹 즉시 검토, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #16. 우선순위 72.2, 그룹 즉시 검토, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "110020": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #17. 우선순위 71.9, 그룹 고위험 옵션, 핵심 확인: 관리종목",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.860334+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.860334+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #17. 우선순위 71.9, 그룹 고위험 옵션, 핵심 확인: 관리종목"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #17. 우선순위 71.9, 그룹 고위험 옵션, 핵심 확인: 관리종목"
+          }
+        }
+      ]
+    },
+    "418620": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #18. 우선순위 71.3, 그룹 즉시 검토, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.877277+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.877277+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #18. 우선순위 71.3, 그룹 즉시 검토, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #18. 우선순위 71.3, 그룹 즉시 검토, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "084180": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #19. 우선순위 71.2, 그룹 즉시 검토, 핵심 확인: 유상증자공시",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.894341+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.894341+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #19. 우선순위 71.2, 그룹 즉시 검토, 핵심 확인: 유상증자공시"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #19. 우선순위 71.2, 그룹 즉시 검토, 핵심 확인: 유상증자공시"
+          }
+        }
+      ]
+    },
+    "076080": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #20. 우선순위 70.7, 그룹 심층 실사, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.912887+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.912887+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #20. 우선순위 70.7, 그룹 심층 실사, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #20. 우선순위 70.7, 그룹 심층 실사, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "079190": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #21. 우선순위 70.5, 그룹 고위험 옵션, 핵심 확인: 유상증자공시",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.932286+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.932286+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #21. 우선순위 70.5, 그룹 고위험 옵션, 핵심 확인: 유상증자공시"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #21. 우선순위 70.5, 그룹 고위험 옵션, 핵심 확인: 유상증자공시"
+          }
+        }
+      ]
+    },
+    "900270": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #22. 우선순위 70.3, 그룹 고위험 옵션, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.959746+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.959746+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #22. 우선순위 70.3, 그룹 고위험 옵션, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #22. 우선순위 70.3, 그룹 고위험 옵션, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "091970": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #23. 우선순위 70.2, 그룹 고위험 옵션, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:53.980204+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:53.980204+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #23. 우선순위 70.2, 그룹 고위험 옵션, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #23. 우선순위 70.2, 그룹 고위험 옵션, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "009620": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #24. 우선순위 69.5, 그룹 즉시 검토, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:54.001248+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:54.001248+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #24. 우선순위 69.5, 그룹 즉시 검토, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #24. 우선순위 69.5, 그룹 즉시 검토, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "250930": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #25. 우선순위 69.5, 그룹 심층 실사, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:54.018483+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:54.018483+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #25. 우선순위 69.5, 그룹 심층 실사, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #25. 우선순위 69.5, 그룹 심층 실사, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "032980": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #26. 우선순위 69.2, 그룹 고위험 옵션, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:54.035150+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:54.035150+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #26. 우선순위 69.2, 그룹 고위험 옵션, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #26. 우선순위 69.2, 그룹 고위험 옵션, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "177830": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #27. 우선순위 69.2, 그룹 즉시 검토, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:54.052424+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:54.052424+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #27. 우선순위 69.2, 그룹 즉시 검토, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #27. 우선순위 69.2, 그룹 즉시 검토, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "142760": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #28. 우선순위 68.8, 그룹 즉시 검토, 핵심 확인: 적자",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:54.069829+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:54.069829+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #28. 우선순위 68.8, 그룹 즉시 검토, 핵심 확인: 적자"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #28. 우선순위 68.8, 그룹 즉시 검토, 핵심 확인: 적자"
+          }
+        }
+      ]
+    },
+    "191410": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #29. 우선순위 68.4, 그룹 심층 실사, 핵심 확인: 유상증자공시",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:54.091757+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:54.091757+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #29. 우선순위 68.4, 그룹 심층 실사, 핵심 확인: 유상증자공시"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #29. 우선순위 68.4, 그룹 심층 실사, 핵심 확인: 유상증자공시"
+          }
+        }
+      ]
+    },
+    "101390": {
+      "status": "추적",
+      "memo": "자동 파이프라인 편입 #30. 우선순위 68.2, 그룹 고위험 옵션, 핵심 확인: 초저시총",
+      "owner": "TL M&A Team",
+      "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+      "contact_status": "미접촉",
+      "due_date": "2026-07-01",
+      "updated_at": "2026-06-17T13:00:54.111868+00:00",
+      "history": [
+        {
+          "at": "2026-06-17T13:00:54.111868+00:00",
+          "type": "workflow_update",
+          "summary": "상태, 담당자, 검토 기한, 다음 액션 외 1",
+          "changes": [
+            {
+              "field": "status",
+              "label": "상태",
+              "before": "미검토",
+              "after": "추적"
+            },
+            {
+              "field": "owner",
+              "label": "담당자",
+              "before": "",
+              "after": "TL M&A Team"
+            },
+            {
+              "field": "due_date",
+              "label": "검토 기한",
+              "before": "",
+              "after": "2026-07-01"
+            },
+            {
+              "field": "next_action",
+              "label": "다음 액션",
+              "before": "",
+              "after": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토"
+            },
+            {
+              "field": "memo",
+              "label": "메모",
+              "before": "",
+              "after": "자동 파이프라인 편입 #30. 우선순위 68.2, 그룹 고위험 옵션, 핵심 확인: 초저시총"
+            }
+          ],
+          "snapshot": {
+            "status": "추적",
+            "contact_status": "미접촉",
+            "owner": "TL M&A Team",
+            "due_date": "2026-07-01",
+            "next_action": "감사의견, 최대주주, CB/BW, 특수관계 거래 원문 근거 우선 검토",
+            "memo": "자동 파이프라인 편입 #30. 우선순위 68.2, 그룹 고위험 옵션, 핵심 확인: 초저시총"
+          }
+        }
+      ]
     }
   }
 }

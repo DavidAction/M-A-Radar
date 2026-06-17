@@ -6,6 +6,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from tl_ma_radar.structured_extractors import (
+    largest_shareholder as professional_largest_shareholder,
+    structured_extracts as professional_structured_extracts,
+)
+
 try:
     from lxml import etree
 
@@ -460,8 +465,8 @@ def analyze_text(text: str) -> dict[str, Any]:
     customer_hits = find_hits(text, CUSTOMER_TERMS)
     exit_hits = find_hits(text, EXIT_STRUCTURE_TERMS)
     business_keywords = list(dict.fromkeys(flatten_hit_groups(tl_hits) + flatten_hit_groups(renes_hits)))
-    shareholder = largest_shareholder(text)
-    extracts = structured_extracts(text)
+    shareholder = professional_largest_shareholder(text)
+    extracts = professional_structured_extracts(text)
     structured_flags = analysis_flags(audit_hits, financing_hits, control_hits, related_hits)
     return {
         "text_chars": len(text),
