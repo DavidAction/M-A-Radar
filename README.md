@@ -23,11 +23,13 @@
 
 ```powershell
 cd <repo>\tl-ma-radar
-powershell -ExecutionPolicy Bypass -File .\setup_windows.ps1
+powershell -ExecutionPolicy Bypass -File .\FIRST_RUN_WINDOWS.ps1
 powershell -ExecutionPolicy Bypass -File .\start_radar.ps1
 ```
 
 브라우저에서 `http://127.0.0.1:8766`을 엽니다.
+
+다른 노트북/데스크탑에서 처음 실행하는 자세한 절차는 `OTHER_PC_SETUP.md`를 참고합니다.
 
 같은 내부 네트워크의 다른 컴퓨터에서 보려면 실행 PC에서 아래처럼 시작합니다.
 
