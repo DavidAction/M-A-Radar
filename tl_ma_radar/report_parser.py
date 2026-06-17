@@ -208,6 +208,15 @@ def snippets(text: str, limit_per_group: int = 3, radius: int = 150) -> dict[str
 
 
 def largest_shareholder(text: str) -> dict[str, Any] | None:
+    candidates = extract_largest_shareholders(text)
+    if candidates:
+        best = candidates[0]
+        return {
+            "name": best.get("name"),
+            "ratio": best.get("ratio"),
+            "confidence": best.get("confidence"),
+            "source": best.get("source"),
+        }
     patterns = [
         r"([가-힣A-Za-z0-9().&·]+)\s+최대주주\s+보통주\s+[\d,]+\s+[0-9.]+\s+[\d,]+\s+([0-9]{1,3}(?:\.\d+)?)",
         r"5%\s*이상\s*주주\s+([가-힣A-Za-z0-9().&·]+)\s+[\d,]+\s+([0-9]{1,3}(?:\.\d+)?)",
@@ -223,6 +232,129 @@ def largest_shareholder(text: str) -> dict[str, Any] | None:
             if 0 <= ratio <= 100:
                 return {"name": name, "ratio": ratio / 100}
     return None
+
+
+def _clean_holder_name(value: str) -> str:
+    value = re.sub(r"[\s:：,]+", " ", value or "").strip()
+    value = re.sub(r"^(성명|명칭|주주명|구분|변경전|변경후|소유자)\s+", "", value)
+    return value.strip(" -·")
+
+
+def _window(text: str, keyword: str, radius: int = 220) -> list[str]:
+    windows = []
+    start = 0
+    lowered = text.lower()
+    needle = keyword.lower()
+    while True:
+        idx = lowered.find(needle, start)
+        if idx == -1:
+            break
+        windows.append(clean_text(text[max(0, idx - radius) : idx + radius]))
+        start = idx + len(keyword)
+    return windows
+
+
+def extract_largest_shareholders(text: str) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    windows = _window(text, "최대주주", radius=320) + _window(text, "5% 이상", radius=260)
+    patterns = [
+        r"([가-힣A-Za-z0-9().&·]{2,40})\s+(?:외\s*\d+인\s+)?(?:보통주\s+)?[\d,]{3,}\s+(?:주\s+)?([0-9]{1,3}(?:\.\d+)?)\s*%",
+        r"([가-힣A-Za-z0-9().&·]{2,40})\s+[\d,]{3,}\s+([0-9]{1,3}(?:\.\d+)?)\s+(?:최대주주|대표이사|특수관계)",
+        r"최대주주[^가-힣A-Za-z0-9]{0,40}([가-힣A-Za-z0-9().&·]{2,40})[^0-9%]{0,100}([0-9]{1,3}(?:\.\d+)?)\s*%",
+    ]
+    blocked = {"최대주주", "변경", "보고서", "보통주", "합계", "소계", "주주", "성명", "명칭"}
+    for source in windows:
+        for pattern in patterns:
+            for match in re.finditer(pattern, source):
+                name = _clean_holder_name(match.group(1))
+                if not name or name in blocked or re.fullmatch(r"[\d.]+", name):
+                    continue
+                ratio = float(match.group(2))
+                if not (0 < ratio <= 100):
+                    continue
+                confidence = 0.72
+                if "최대주주" in source:
+                    confidence += 0.12
+                if "특수관계" in source or "외" in source:
+                    confidence += 0.05
+                candidates.append(
+                    {
+                        "name": name,
+                        "ratio": ratio / 100,
+                        "confidence": round(min(confidence, 0.96), 2),
+                        "source": source[:260],
+                    }
+                )
+    deduped: dict[tuple[str, float], dict[str, Any]] = {}
+    for candidate in candidates:
+        key = (str(candidate["name"]), round(float(candidate["ratio"]), 4))
+        if key not in deduped or candidate["confidence"] > deduped[key]["confidence"]:
+            deduped[key] = candidate
+    return sorted(deduped.values(), key=lambda row: (row["confidence"], row["ratio"]), reverse=True)[:8]
+
+
+def extract_audit_opinion(text: str) -> dict[str, Any]:
+    checks = [
+        ("의견거절", "critical", ["의견거절"]),
+        ("부적정", "critical", ["부적정"]),
+        ("한정", "high", ["한정의견", "한정 의견"]),
+        ("계속기업 불확실성", "high", ["계속기업", "중요한 불확실성"]),
+        ("적정", "low", ["적정의견", "감사의견은 적정", "적정 의견"]),
+    ]
+    hits = []
+    for label, severity, terms in checks:
+        matched = [term for term in terms if term in text]
+        if matched:
+            hits.append({"opinion": label, "severity": severity, "terms": matched})
+    opinion = hits[0] if hits else {"opinion": "미확인", "severity": "unknown", "terms": []}
+    source_terms = ["감사의견", "계속기업", "의견거절", "한정의견", "부적정", "적정의견"]
+    source = []
+    for term in source_terms:
+        source.extend(_window(text, term, radius=160)[:2])
+    return {
+        **opinion,
+        "confidence": 0.86 if hits else 0.25,
+        "source_snippets": source[:5],
+    }
+
+
+def extract_convertible_bonds(text: str) -> dict[str, Any]:
+    terms = ["전환사채", "신주인수권부사채", "CB", "BW", "전환가액", "리픽싱", "콜옵션", "풋옵션"]
+    counts = {term: len(re.findall(rf"(?<![A-Za-z0-9]){re.escape(term)}(?![A-Za-z0-9])", text, flags=re.IGNORECASE)) if term in {"CB", "BW"} else text.count(term) for term in terms}
+    snippets_out = []
+    for term in terms:
+        snippets_out.extend(_window(text, term, radius=180)[:2])
+    amount_patterns = re.findall(r"([0-9,]+(?:\.\d+)?)\s*(억원|백만원|원)\s*(?:규모|상당|발행|의)?\s*(?:전환사채|신주인수권부사채|CB|BW)?", text)
+    return {
+        "has_convertible": any(counts.values()),
+        "counts": {key: value for key, value in counts.items() if value},
+        "amount_mentions": [" ".join(match) for match in amount_patterns[:8]],
+        "source_snippets": list(dict.fromkeys(snippets_out))[:8],
+        "confidence": 0.82 if any(counts.values()) else 0.2,
+    }
+
+
+def extract_related_party_transactions(text: str) -> dict[str, Any]:
+    terms = ["특수관계자", "특수관계인", "대주주 등과의 거래", "이해관계자", "관계기업", "종속기업", "자금대여", "채무보증"]
+    hits = {term: text.count(term) for term in terms if text.count(term)}
+    snippets_out = []
+    for term in terms:
+        snippets_out.extend(_window(text, term, radius=180)[:2])
+    return {
+        "has_related_party": bool(hits),
+        "counts": hits,
+        "source_snippets": list(dict.fromkeys(snippets_out))[:8],
+        "confidence": 0.8 if hits else 0.2,
+    }
+
+
+def structured_extracts(text: str) -> dict[str, Any]:
+    return {
+        "largest_shareholder_candidates": extract_largest_shareholders(text),
+        "audit_opinion": extract_audit_opinion(text),
+        "convertible_bonds": extract_convertible_bonds(text),
+        "related_party_transactions": extract_related_party_transactions(text),
+    }
 
 
 def infer_sector(keywords: list[str]) -> str | None:
@@ -297,6 +429,7 @@ def analyze_text(text: str) -> dict[str, Any]:
     exit_hits = find_hits(text, EXIT_STRUCTURE_TERMS)
     business_keywords = list(dict.fromkeys(flatten_hit_groups(tl_hits) + flatten_hit_groups(renes_hits)))
     shareholder = largest_shareholder(text)
+    extracts = structured_extracts(text)
     structured_flags = analysis_flags(audit_hits, financing_hits, control_hits, related_hits)
     return {
         "text_chars": len(text),
@@ -328,6 +461,7 @@ def analyze_text(text: str) -> dict[str, Any]:
             text_chars=len(text),
         ),
         "largest_shareholder": shareholder,
+        "structured_extracts": extracts,
         "snippets": snippets(text),
         "inferred_sector": infer_sector(business_keywords),
     }

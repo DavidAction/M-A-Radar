@@ -107,6 +107,9 @@ const T = {
   newsEvents: "뉴스 이벤트 타임라인",
   dealScenario: "300억 딜 시나리오",
   aiBrief: "AI 투자 메모",
+  topReview: "상위 20 후보 검수",
+  alerts: "자동 알림",
+  icOnePager: "IC 1페이지",
 };
 
 const GROUP_ORDER = [T.instantReview, T.deepDiligence, T.highRiskOption, T.monitoring];
@@ -131,6 +134,8 @@ const state = {
   teamOps: null,
   icPackages: null,
   automationPlan: null,
+  topReview: null,
+  alerts: null,
   workflowOptions: null,
   newsArticlePages: {},
 };
@@ -271,14 +276,18 @@ function renderOperations() {
 
   const ops = state.operations;
   const scheduler = ops.scheduler || {};
+  const server = ops.server || {};
   const pipeline = ops.pipeline || {};
   const latestRun = ops.latest_scheduled_run;
   const monitoring = ops.monitoring || {};
   const taskReady = (scheduler.status === "ok" || scheduler.status === "configured") && scheduler.enabled !== false;
+  const serverReady = (server.status === "ok" || server.status === "configured") && server.enabled !== false;
   const pipelineTone = pipeline.status === "ok" ? "good" : pipeline.status === "not_run" ? "" : "risk";
   const runTone = !latestRun ? "" : latestRun.status === "success" ? "good" : "risk";
   const schedulerTone = taskReady ? "good" : "warn";
+  const serverTone = serverReady ? "good" : "warn";
   const schedulerDisplay = scheduler.status === "configured" ? scheduler.status : scheduler.state || scheduler.status;
+  const serverDisplay = server.status === "configured" ? server.status : server.state || server.status;
 
   summary.textContent = taskReady
     ? `다음 자동 실행 ${scheduler.next_run_time || "-"}`
@@ -288,6 +297,7 @@ function renderOperations() {
 
   grid.innerHTML = [
     opsCard("작업 스케줄러", statusText(schedulerDisplay), scheduler.next_run_time || "-", schedulerTone),
+    opsCard("상시 웹 서버", statusText(serverDisplay), server.url || "install_always_on_server.ps1", serverTone),
     opsCard("최근 파이프라인", statusText(pipeline.status), pipeline.run_id || "-", pipelineTone),
     opsCard("자동 실행 로그", latestRun ? statusText(latestRun.status) : "대기", latestRun?.finished_at || "아직 실행 전", runTone),
     opsCard("변화 알림", `${monitoring.alert_count ?? 0}건`, monitoring.run_id || "-", monitoring.alert_count ? "warn" : "good"),
@@ -336,6 +346,18 @@ async function loadMonitoring() {
   renderMonitoring();
 }
 
+async function loadAlerts() {
+  const res = await fetch("/api/alerts?limit=80");
+  state.alerts = await res.json();
+  renderAlerts();
+}
+
+async function loadTopReview() {
+  const res = await fetch("/api/top-review?limit=20");
+  state.topReview = await res.json();
+  renderTopReview();
+}
+
 function monitoringCard(row, label = "") {
   return `
     <button class="monitoring-card ${escapeHtml(row.severity || "")}" data-code="${escapeHtml(row.code)}">
@@ -350,14 +372,18 @@ function bindMonitoringCards() {
   document.querySelectorAll(".monitoring-card").forEach((el) => {
     el.addEventListener("click", () => {
       if (!el.dataset.code) return;
-      state.query = "";
-      state.candidatePage = 0;
-      setActiveFilter("all");
-      document.getElementById("searchInput").value = "";
-      state.selectedCode = el.dataset.code;
-      loadCandidates();
+      selectCandidate(el.dataset.code);
     });
   });
+}
+
+function selectCandidate(code) {
+  state.query = "";
+  state.candidatePage = 0;
+  setActiveFilter("all");
+  document.getElementById("searchInput").value = "";
+  state.selectedCode = code;
+  loadCandidates();
 }
 
 function renderMonitoring() {
@@ -391,6 +417,49 @@ function renderMonitoring() {
     .join("");
   alerts.innerHTML = cards || `<p class="note">표시할 변화가 없습니다.</p>`;
   bindMonitoringCards();
+}
+
+function severityLabel(value) {
+  const labels = {
+    critical: "Critical",
+    high: "High",
+    medium: "Medium",
+    watch: "Watch",
+    opportunity: "Opportunity",
+    info: "Info",
+  };
+  return labels[value] || value || "-";
+}
+
+function renderAlerts() {
+  const summary = document.getElementById("alertsSummary");
+  const list = document.getElementById("alertsList");
+  if (!summary || !list || !state.alerts) return;
+  const data = state.alerts;
+  const counts = data.summary || {};
+  const severity = counts.severity || {};
+  summary.textContent = `전체 ${counts.total || 0}건 · 액션 필요 ${counts.action_required || 0}건 · High+ ${(severity.critical || 0) + (severity.high || 0)}건`;
+  const rows = data.items || [];
+  list.innerHTML = rows.length
+    ? rows
+        .slice(0, 24)
+        .map(
+          (row) => `
+            <button class="alert-card ${escapeHtml(row.severity || "")}" data-code="${escapeHtml(row.code || "")}">
+              <span>${escapeHtml(severityLabel(row.severity))} · ${escapeHtml(row.category || "-")} · ${escapeHtml(row.code || "")}</span>
+              <strong>${escapeHtml(row.title || row.name || "-")}</strong>
+              <p>${escapeHtml(row.detail || "")}</p>
+              <em>${escapeHtml(row.next_action || "")}</em>
+            </button>
+          `,
+        )
+        .join("")
+    : `<p class="note">현재 자동 알림이 없습니다.</p>`;
+  document.querySelectorAll(".alert-card").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (el.dataset.code) selectCandidate(el.dataset.code);
+    });
+  });
 }
 
 function renderScoreAudit() {
@@ -534,6 +603,43 @@ function renderICPackages() {
       document.getElementById("searchInput").value = "";
       state.selectedCode = el.dataset.code;
       loadCandidates();
+    });
+  });
+}
+
+function renderTopReview() {
+  const summary = document.getElementById("topReviewSummary");
+  const list = document.getElementById("topReviewList");
+  if (!summary || !list || !state.topReview) return;
+  const data = state.topReview;
+  const counts = data.summary || {};
+  const countText = Object.entries(counts)
+    .map(([key, value]) => `${key} ${value}`)
+    .join(" · ");
+  summary.textContent = countText || "상위 후보 검수 대기";
+  const rows = data.items || [];
+  list.innerHTML = rows.length
+    ? rows
+        .map(
+          (row) => `
+            <button class="review-card" data-code="${escapeHtml(row.code || "")}">
+              <span>#${row.rank ?? "-"} · ${escapeHtml(row.ic_decision || "-")} · ${escapeHtml(row.code || "")}</span>
+              <strong>${escapeHtml(row.name || "-")}</strong>
+              <em>${escapeHtml(row.review_verdict || "-")}</em>
+              <p>${escapeHtml(row.reason || "")}</p>
+              <div class="review-metrics">
+                <b>IC ${row.readiness_score ?? "-"}</b>
+                <b>Risk ${row.risk_score ?? "-"}</b>
+                <b>Quality ${row.data_quality ?? "-"}</b>
+              </div>
+            </button>
+          `,
+        )
+        .join("")
+    : `<p class="note">검수할 후보가 없습니다.</p>`;
+  document.querySelectorAll(".review-card").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (el.dataset.code) selectCandidate(el.dataset.code);
     });
   });
 }
@@ -2017,6 +2123,7 @@ function renderDetail() {
       </div>
       <div class="detail-actions">
         <a class="export-link primary" href="/api/candidates/${encodeURIComponent(item.code)}/deal-card.docx" target="_blank" rel="noreferrer">Word Report</a>
+        <a class="export-link" href="/api/candidates/${encodeURIComponent(item.code)}/ic-summary.docx" target="_blank" rel="noreferrer">${T.icOnePager}</a>
         <div class="recommendation ${recommendationClass(item.recommendation)}">${escapeHtml(item.recommendation)}</div>
       </div>
     </div>
@@ -2132,6 +2239,8 @@ loadTeamOps();
 loadICPackages();
 loadAutomationPlan();
 loadMonitoring();
+loadAlerts();
+loadTopReview();
 loadShortlist();
 loadScoreAudit();
 loadCandidates();

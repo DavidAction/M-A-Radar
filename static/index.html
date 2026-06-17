@@ -105,6 +105,17 @@
         <div id="monitoringAlerts" class="monitoring-alerts"></div>
       </section>
 
+      <section class="alerts-panel">
+        <div class="score-audit-head">
+          <div>
+            <h2>자동 알림 센터</h2>
+            <p id="alertsSummary" class="note"></p>
+          </div>
+          <a class="export-link" href="/api/export-alerts.csv">Alert CSV</a>
+        </div>
+        <div id="alertsList" class="alerts-list"></div>
+      </section>
+
       <section class="score-audit-panel">
         <div class="score-audit-head">
           <div>
@@ -113,6 +124,20 @@
           </div>
         </div>
         <div id="scoreAuditList" class="score-audit-list"></div>
+      </section>
+
+      <section class="top-review-panel">
+        <div class="score-audit-head">
+          <div>
+            <h2>상위 20 후보 검수</h2>
+            <p id="topReviewSummary" class="note"></p>
+          </div>
+          <div class="export-actions">
+            <a class="export-link" href="/api/export-top-review.csv">CSV</a>
+            <a class="export-link primary" href="/api/export-top-review.docx">Word Report</a>
+          </div>
+        </div>
+        <div id="topReviewList" class="top-review-list"></div>
       </section>
 
       <section class="shortlist-panel">

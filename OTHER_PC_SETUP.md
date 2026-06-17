@@ -112,6 +112,18 @@ http://127.0.0.1:8766/api/candidates/<종목코드>/deal-card.docx
 http://127.0.0.1:8766/api/candidates/121850/deal-card.docx
 ```
 
+회사별 IC 1페이지 요약:
+
+```text
+http://127.0.0.1:8766/api/candidates/121850/ic-summary.docx
+```
+
+상위 20개 후보 검수 보고서:
+
+```text
+http://127.0.0.1:8766/api/export-top-review.docx
+```
+
 ## 9. GitHub 자동 업데이트
 
 이 PC에서 작업 후 자동으로 GitHub에 올리려면:
@@ -135,6 +147,8 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 - 데이터 신뢰도: 후보 데이터가 투자심의에 바로 쓸 수 있는 수준인지 확인합니다.
 - 스코어 튜닝: 상위 20개와 코이즈/나노씨엠에스/아이씨에이치/베셀 벤치마크를 검수합니다.
 - IC 패키지: IC 상정 후보, 조건부 후보, 프리-IC 관찰 후보를 보고 다음 액션을 정합니다.
+- 상위 20 후보 검수: 정량 점수와 사람 검수 포인트를 함께 확인합니다.
+- 자동 알림 센터: DART 원문, CB/BW, 특수관계, 뉴스 리스크, IC 진입, 검토 기한 알림을 확인합니다.
 - DART/뉴스/딜 시나리오/AI 메모: 후보 상세에서 원문 리스크, 뉴스 이벤트, 300억 유증 구조, AI형 투자 메모를 확인합니다.
 - 자동 갱신 운영: 매일/매주 실행 명령과 알림 조건을 확인합니다.
 - 팀 운영/이관: GitHub 원격 저장소, 자동 푸시 훅, 데이터 파일, 실행 준비 상태를 확인합니다.
@@ -150,3 +164,13 @@ http://127.0.0.1:8766/api/export-pipeline.sqlite
 ```text
 http://127.0.0.1:8766/api/export-deal-cards.docx?format=ic
 ```
+
+## 11. 항상 켜져 있는 운영 환경
+
+Windows PC/서버를 항상 켜진 운영 장비로 쓸 때:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\install_startup_server.ps1 -Lan -StartNow
+```
+
+Linux VPS, NAS, 클라우드 서버는 `DEPLOYMENT.md`의 Docker Compose 배포 절차를 따릅니다.

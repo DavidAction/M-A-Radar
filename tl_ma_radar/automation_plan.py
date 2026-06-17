@@ -28,6 +28,7 @@ def build_automation_plan(root: Path) -> dict[str, Any]:
     pipeline = _read_json(root / DATA_DIR / "pipeline_runs" / "latest.json", {"status": "not_run"})
     monitoring = _read_json(root / DATA_DIR / "monitoring" / "latest.json", {"status": "not_run"})
     scheduler = _read_json(root / DATA_DIR / "scheduler_config.json", {})
+    server_task = _read_json(root / DATA_DIR / "server_task_config.json", {})
     return {
         "status": "ok",
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -37,6 +38,8 @@ def build_automation_plan(root: Path) -> dict[str, Any]:
             "monitoring_status": monitoring.get("status"),
             "monitoring_alert_count": len(monitoring.get("alerts") or []),
             "scheduler_configured": bool(scheduler),
+            "always_on_server_configured": bool(server_task),
+            "always_on_server_url": server_task.get("url"),
             "candidate_data_updated_at": _mtime(root / DATA_DIR / "real_candidates.json"),
             "news_updated_at": _mtime(root / DATA_DIR / "candidate_news.json"),
         },
@@ -59,6 +62,12 @@ def build_automation_plan(root: Path) -> dict[str, Any]:
                 "command": "브라우저에서 /api/export-deal-cards.docx?format=ic 다운로드",
                 "purpose": "상위 후보 투자심의 패키지 생성",
             },
+            {
+                "name": "Always-On Web Server",
+                "frequency": "Windows 로그인 시 자동 실행 또는 Docker restart",
+                "command": "powershell -ExecutionPolicy Bypass -File scripts\\install_startup_server.ps1 -Lan -StartNow",
+                "purpose": "로컬 실행 없이 팀이 접속 가능한 상시 M&A 레이더 운영",
+            },
         ],
         "alert_rules": [
             "최대주주 변경, 유상증자, CB/BW, 감자, 거래정지 공시 발생",
@@ -76,6 +85,9 @@ def build_automation_plan(root: Path) -> dict[str, Any]:
         ],
         "setup_commands": [
             "powershell -ExecutionPolicy Bypass -File scripts\\install_daily_task.ps1",
+            "powershell -ExecutionPolicy Bypass -File scripts\\install_always_on_server.ps1 -Lan -StartNow",
+            "powershell -ExecutionPolicy Bypass -File scripts\\install_startup_server.ps1 -Lan -StartNow",
+            "docker compose up -d --build",
             "powershell -ExecutionPolicy Bypass -File scripts\\git_auto_push.ps1 -Message \"daily refresh\"",
         ],
     }

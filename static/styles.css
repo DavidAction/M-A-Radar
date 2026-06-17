@@ -104,6 +104,8 @@ h2 {
 .score-audit-panel,
 .ic-panel,
 .automation-panel,
+.alerts-panel,
+.top-review-panel,
 .shortlist-panel {
   margin-bottom: 20px;
   border: 1px solid var(--line);
@@ -114,7 +116,9 @@ h2 {
 }
 
 .ops-panel,
-.monitoring-panel {
+.monitoring-panel,
+.alerts-panel,
+.top-review-panel {
   display: grid;
   gap: 12px;
 }
@@ -506,6 +510,67 @@ h2 {
   line-height: 1.35;
 }
 
+.alerts-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.alert-card {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-height: 154px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-2);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.alert-card:hover {
+  border-color: var(--teal);
+}
+
+.alert-card.critical,
+.alert-card.high {
+  border-color: #704247;
+  background: #21181b;
+}
+
+.alert-card.medium {
+  border-color: #68522e;
+  background: #211d16;
+}
+
+.alert-card.opportunity {
+  border-color: #245445;
+  background: #13231d;
+}
+
+.alert-card span,
+.alert-card em {
+  color: var(--muted);
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.alert-card strong {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.alert-card p {
+  margin: 0;
+  color: #b7c6d2;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .export-link {
   border: 1px solid var(--teal);
   border-radius: 6px;
@@ -539,6 +604,72 @@ h2 {
 .export-link.primary:hover {
   border-color: var(--teal);
   color: var(--teal);
+}
+
+.top-review-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.review-card {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-height: 164px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-2);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.review-card:hover {
+  border-color: var(--teal);
+}
+
+.review-card span,
+.review-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.review-card strong {
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.review-card em {
+  width: fit-content;
+  border: 1px solid #245445;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: #13231d;
+  color: var(--green);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.review-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.review-metrics b {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 6px;
+  background: #111820;
+  color: #c4d6e3;
+  font-size: 11px;
+  text-align: center;
 }
 
 .shortlist-grid {
@@ -1882,11 +2013,13 @@ ul.clean {
   .decision-panel,
   .ops-grid,
   .monitoring-alerts,
+  .alerts-list,
   .score-audit-list,
   .ic-list,
   .automation-grid,
   .report-insight-grid,
   .snippet-list.evidence-snippets,
+  .top-review-list,
   .shortlist-grid {
     grid-template-columns: 1fr;
   }

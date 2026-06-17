@@ -8,7 +8,7 @@
 - 관리종목/투자주의환기종목을 리스크가 아닌 기회군으로 별도 포함
 - 본업 안정성, 저평가, 지배구조, 자금조달 압박, 백기사 필요도, TL/르네스 시너지 평가
 - DART 공시, 사업보고서/감사보고서, 최근 6개월 뉴스, 후보 상태/메모/액션을 하나의 딜 파이프라인으로 관리
-- 후보별 딜카드와 전체 후보 딜카드 패키지를 Word 보고서로 다운로드
+- 후보별 딜카드, IC 1페이지, 상위 20개 검수표, 전체 딜카드 패키지를 Word 보고서로 다운로드
 
 ## 현재 구성
 
@@ -90,6 +90,9 @@ python scripts\collect_news.py --code 121850 --code 247660
 
 - 전체 딜카드 보고서: `/api/export-deal-cards.docx`
 - 단일 회사 딜카드 보고서: `/api/candidates/<종목코드>/deal-card.docx`
+- 단일 회사 IC 1페이지 요약: `/api/candidates/<종목코드>/ic-summary.docx`
+- 상위 20개 후보 검수 보고서: `/api/export-top-review.docx`
+- 자동 알림 CSV: `/api/export-alerts.csv`
 - 숏리스트 CSV: `/api/export-shortlist.csv`
 - 변화 모니터링 CSV: `/api/export-monitoring.csv`
 
@@ -172,6 +175,9 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 - 뉴스 이벤트 타임라인: 최대주주/경영권, 유상증자/CB/BW, 감사/상장유지, 소송, 공급계약, 실적, 시너지 이벤트로 분류합니다.
 - 300억 딜 시나리오: 단순 신규 지분율과 CB/BW 오버행을 반영한 보수적 지분율, 경영권 확보 가능성을 함께 보여줍니다.
 - AI형 투자 메모: 외부 AI API 없이 현재 데이터 기반 투자 메모, 반론, 법무/회계 요청서 초안을 생성합니다.
+- 상위 20개 후보 검수: IC 준비도, 리스크, 데이터 신뢰도 기준으로 과대평가/과소평가/자료보강 후보를 분류합니다.
+- 자동 알림 센터: DART 원문 리스크, CB/BW, 특수관계 거래, 뉴스 리스크, IC 진입, 검토 기한을 통합 알림으로 보여줍니다.
+- IC One-Pager: 후보별 1페이지 투자심의 요약 Word 파일을 다운로드할 수 있습니다.
 - 팀 이관: `/api/team-ops`에서 GitHub 연결, 자동 푸시 훅, 데이터 파일, 다른 PC 실행 준비 상태를 점검합니다.
 - SQLite Export: `/api/export-pipeline.sqlite`로 후보/뉴스/워크플로 데이터를 외부 분석툴에 넘길 수 있습니다.
 
@@ -182,10 +188,13 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 /api/score-tuning?limit=20
 /api/ic-packages?limit=12
 /api/automation-plan
+/api/top-review
+/api/alerts
 /api/team-ops
 /api/export-pipeline.sqlite
 /api/export-deal-cards.docx?format=ic
 /api/candidates/121850/deal-card.docx?format=ic
+/api/candidates/121850/ic-summary.docx
 ```
 
 다른 PC에서 쓰는 기본 절차:
@@ -198,3 +207,5 @@ powershell -ExecutionPolicy Bypass -File .\start_radar.ps1
 ```
 
 새 PC에서 최신 DART/뉴스 수집까지 하려면 `.env`에 `DART_API_KEY`, `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`을 입력한 뒤 실행합니다.
+
+상시 운영 서버로 띄우는 방법은 `DEPLOYMENT.md`를 참고합니다. Windows는 `scripts\install_startup_server.ps1`, 관리자 권한 Windows Server는 `scripts\install_always_on_server.ps1`, Linux/VPS는 `docker compose up -d --build`를 사용합니다.

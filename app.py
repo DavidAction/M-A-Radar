@@ -12,6 +12,7 @@ from urllib.parse import parse_qs, quote, urlencode, urlparse
 
 from tl_ma_radar.acquisition_judgment import build_acquisition_judgment
 from tl_ma_radar.ai_brief import build_ai_brief
+from tl_ma_radar.alerts import alerts_csv, build_alerts
 from tl_ma_radar.automation_plan import build_automation_plan
 from tl_ma_radar.candidate_workflow import load_workflows, update_workflow, workflow_for_code, workflow_options
 from tl_ma_radar.collectors.dart import download_filing_pdf
@@ -22,6 +23,7 @@ from tl_ma_radar.deal_scenario import build_deal_scenario
 from tl_ma_radar.deal_signals import analyze_deal_signals
 from tl_ma_radar.event_digest import build_event_digest
 from tl_ma_radar.ic_package import build_ic_package, build_ic_package_summary
+from tl_ma_radar.ic_one_pager import build_ic_one_pager_docx
 from tl_ma_radar.monitoring import latest_monitoring, monitoring_csv
 from tl_ma_radar.news_analysis import load_news_cache, news_for_code
 from tl_ma_radar.news_events import build_news_events
@@ -33,6 +35,7 @@ from tl_ma_radar.score_audit import build_score_audit
 from tl_ma_radar.score_tuning import build_score_tuning
 from tl_ma_radar.shortlist import grouped_shortlist, shortlist_csv, shortlist_items
 from tl_ma_radar.team_ops import build_pipeline_sqlite, team_ops_status
+from tl_ma_radar.top_review import build_top_review, top_review_csv, top_review_docx
 
 
 ROOT = Path(__file__).resolve().parent
@@ -304,6 +307,16 @@ class RadarHandler(BaseHTTPRequestHandler):
             json_response(self, build_automation_plan(ROOT))
             return
 
+        if path == "/api/alerts":
+            settings = get_settings(ROOT)
+            limit_text = (query.get("limit", ["80"])[0] or "80").strip()
+            try:
+                limit = max(10, min(int(limit_text), 200))
+            except ValueError:
+                limit = 80
+            json_response(self, build_alerts(prepared_candidates(settings), latest_monitoring(ROOT), limit=limit))
+            return
+
         if path == "/api/data-quality":
             settings = get_settings(ROOT)
             candidates = prepared_candidates(settings)
@@ -350,6 +363,16 @@ class RadarHandler(BaseHTTPRequestHandler):
             json_response(self, build_score_tuning(prepared_candidates(settings), limit=limit))
             return
 
+        if path == "/api/top-review":
+            settings = get_settings(ROOT)
+            limit_text = (query.get("limit", ["20"])[0] or "20").strip()
+            try:
+                limit = max(5, min(int(limit_text), 50))
+            except ValueError:
+                limit = 20
+            json_response(self, build_top_review(prepared_candidates(settings), limit=limit))
+            return
+
         if path == "/api/export-shortlist.csv":
             settings = get_settings(ROOT)
             body = shortlist_csv(prepared_candidates(settings))
@@ -359,6 +382,32 @@ class RadarHandler(BaseHTTPRequestHandler):
         if path == "/api/export-monitoring.csv":
             body = monitoring_csv(latest_monitoring(ROOT))
             bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_monitoring.csv")
+            return
+
+        if path == "/api/export-alerts.csv":
+            settings = get_settings(ROOT)
+            payload = build_alerts(prepared_candidates(settings), latest_monitoring(ROOT), limit=200)
+            body = alerts_csv(payload)
+            bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_alerts.csv")
+            return
+
+        if path == "/api/export-top-review.csv":
+            settings = get_settings(ROOT)
+            payload = build_top_review(prepared_candidates(settings), limit=20)
+            body = top_review_csv(payload)
+            bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_top20_review.csv")
+            return
+
+        if path == "/api/export-top-review.docx":
+            settings = get_settings(ROOT)
+            payload = build_top_review(prepared_candidates(settings), limit=20)
+            body = top_review_docx(payload)
+            bytes_response(
+                self,
+                body,
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "TL_Holdings_Top20_Candidate_Review.docx",
+            )
             return
 
         if path == "/api/export-pipeline.sqlite":
@@ -424,6 +473,28 @@ class RadarHandler(BaseHTTPRequestHandler):
                         body,
                         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                         f"{safe_download_name(str(candidate.get('name') or code))}_{code}_Deal_Card.docx",
+                    )
+                    return
+            self.send_error(404, "Candidate not found")
+            return
+
+        if path.startswith("/api/candidates/") and path.endswith("/ic-summary.docx"):
+            code = path.removeprefix("/api/candidates/").removesuffix("/ic-summary.docx").strip("/")
+            if not re.fullmatch(r"\d{6}", code):
+                self.send_error(400, "Invalid candidate code")
+                return
+            settings = get_settings(ROOT)
+            workflows = load_workflows(ROOT)
+            news_cache = load_news_cache(ROOT)
+            for item in load_candidates(ROOT):
+                if str(item.get("code")) == code:
+                    candidate = prepare_candidate(item, settings, workflows, news_cache)
+                    body = build_ic_one_pager_docx(candidate)
+                    bytes_response(
+                        self,
+                        body,
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        f"{safe_download_name(str(candidate.get('name') or code))}_{code}_IC_One_Pager.docx",
                     )
                     return
             self.send_error(404, "Candidate not found")

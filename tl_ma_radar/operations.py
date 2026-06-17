@@ -7,6 +7,7 @@ from typing import Any
 
 
 TASK_NAME = "TL M&A Radar Daily Pipeline"
+SERVER_TASK_NAME = "TL M&A Radar Always-On Server"
 DATA_DIR = Path("tl_ma_radar") / "data"
 
 
@@ -45,6 +46,10 @@ def _task_result_label(code: Any) -> str:
 
 def _scheduler_config(root: Path) -> dict[str, Any]:
     return _read_json(root / DATA_DIR / "scheduler_config.json", {})
+
+
+def _server_config(root: Path) -> dict[str, Any]:
+    return _read_json(root / DATA_DIR / "server_task_config.json", {})
 
 
 def _query_scheduled_task(task_name: str = TASK_NAME) -> dict[str, Any]:
@@ -160,6 +165,20 @@ def operations_status(root: Path) -> dict[str, Any]:
             "mode": config.get("mode"),
         }
 
+    server_config = _server_config(root)
+    server = _query_scheduled_task(str(server_config.get("task_name") or SERVER_TASK_NAME))
+    if server.get("status") != "ok" and server_config:
+        server = {
+            "status": "configured",
+            "query_status": server.get("status"),
+            "query_error": server.get("error"),
+            "task_name": server_config.get("task_name"),
+            "state": "Unknown",
+            "enabled": server_config.get("enabled"),
+            "url": server_config.get("url"),
+            "action": server_config.get("action"),
+        }
+
     recent_runs = _recent_scheduled_runs(root)
     latest_run = recent_runs[0] if recent_runs else None
     pipeline = _latest_pipeline(root)
@@ -167,6 +186,7 @@ def operations_status(root: Path) -> dict[str, Any]:
     return {
         "status": "ok",
         "scheduler": scheduler,
+        "server": server,
         "latest_scheduled_run": latest_run,
         "recent_scheduled_runs": recent_runs,
         "pipeline": pipeline,

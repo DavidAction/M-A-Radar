@@ -1,0 +1,11 @@
+services:
+  radar:
+    build: .
+    container_name: tl-ma-radar
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8766:8766"
+    volumes:
+      - ./tl_ma_radar/data:/app/tl_ma_radar/data
