@@ -31,8 +31,9 @@ def notification_status(root: Path, settings: object) -> dict[str, Any]:
 
     webhook_configured = bool(_text(_setting(settings, "alert_webhook_url")))
     smtp_configured = bool(_text(_setting(settings, "smtp_host")) and _text(_setting(settings, "alert_email_to")))
+    configured = webhook_configured or smtp_configured
     return {
-        "status": "configured" if webhook_configured or smtp_configured else "not_configured",
+        "status": "configured" if configured else "not_configured",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "channels": {
             "webhook": webhook_configured,
@@ -44,6 +45,12 @@ def notification_status(root: Path, settings: object) -> dict[str, Any]:
             "smtp_host": _text(_setting(settings, "smtp_host")) or "-",
         },
         "latest": latest_payload,
+        "ready_for_real_send": configured,
+        "next_step": (
+            "Real alert delivery is enabled. Use /api/send-alerts with dry_run=false or the daily pipeline."
+            if configured
+            else "Set ALERT_WEBHOOK_URL or SMTP settings in .env/GitHub Secrets, then run scripts/send_alert_notifications.py --dry-run."
+        ),
     }
 
 
@@ -96,7 +103,14 @@ def send_alert_notifications(
     if smtp_host and email_to:
         channels.append(_send_email(settings, message, dry_run=dry_run))
     if not channels:
-        channels.append({"channel": "preview", "status": "not_configured", "detail": "Webhook or SMTP settings are not configured."})
+        channels.append(
+            {
+                "channel": "preview",
+                "status": "not_configured",
+                "detail": "Webhook or SMTP settings are not configured.",
+                "next_step": "Set ALERT_WEBHOOK_URL or SMTP settings before real delivery.",
+            }
+        )
 
     status = "ok" if any(row.get("status") in {"sent", "dry_run"} for row in channels) else "not_configured"
     if any(row.get("status") == "error" for row in channels):

@@ -303,6 +303,11 @@ def _ai_brief(item: dict[str, Any]) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
+def _extraction_feedback(item: dict[str, Any]) -> dict[str, Any]:
+    value = item.get("extraction_feedback")
+    return value if isinstance(value, dict) else {}
+
+
 def _score(item: dict[str, Any], key: str) -> float:
     return float((item.get("scores") or {}).get(key) or 0)
 
@@ -532,6 +537,25 @@ def _investment_case_detail(doc: Docx, item: dict[str, Any]) -> None:
         )
 
 
+def _extraction_feedback_detail(doc: Docx, item: dict[str, Any]) -> None:
+    feedback = _extraction_feedback(item)
+    if not feedback or feedback.get("status") in {None, "", "미검수"}:
+        return
+    doc.paragraph("Extraction QA Feedback", style="Heading3", color="13232E", bold=True, size=21, before=120, after=60)
+    doc.table(
+        [
+            ["Field", "Status", "Corrected Value / Note"],
+            [
+                feedback.get("field") or "-",
+                feedback.get("status") or "-",
+                _clip(feedback.get("corrected_value") or feedback.get("note") or "-", 260),
+            ],
+        ],
+        widths=[2200, 1600, 5560],
+        compact=True,
+    )
+
+
 def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_format: str = "ic") -> None:
     scores = item.get("scores") or {}
     analysis = _analysis(item)
@@ -575,6 +599,7 @@ def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_forma
     )
     if report_format in {"ic", "deep", "full"}:
         _investment_case_detail(doc, item)
+        _extraction_feedback_detail(doc, item)
         _ic_package_detail(doc, item)
         _advanced_intelligence_detail(doc, item)
         doc.paragraph("Investment Committee Lens", style="Heading2", color="13232E", bold=True, size=24, before=180, after=80)

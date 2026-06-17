@@ -23,6 +23,13 @@ from tl_ma_radar.deal_scenario import build_deal_scenario
 from tl_ma_radar.deal_signals import analyze_deal_signals
 from tl_ma_radar.event_digest import build_event_digest
 from tl_ma_radar.extraction_audit import build_extraction_audit, extraction_audit_csv
+from tl_ma_radar.extraction_feedback import (
+    feedback_for_code,
+    feedback_options,
+    feedback_summary,
+    load_feedbacks,
+    update_feedback,
+)
 from tl_ma_radar.ic_package import build_ic_package, build_ic_package_summary
 from tl_ma_radar.ic_one_pager import build_ic_one_pager_docx
 from tl_ma_radar.investment_case import build_investment_case
@@ -176,6 +183,7 @@ def prepare_candidate(
     settings: object,
     workflows: dict[str, dict[str, object]] | None = None,
     news_cache: dict[str, dict[str, object]] | None = None,
+    extraction_feedbacks: dict[str, dict[str, object]] | None = None,
 ) -> dict[str, object]:
     prepared = dict(item)
     code = str(prepared.get("code", ""))
@@ -199,6 +207,7 @@ def prepare_candidate(
     scored = score_candidate(prepared, settings)
     scored["acquisition_judgment"] = build_acquisition_judgment(scored)
     scored["workflow"] = workflow_for_code(workflows or {}, str(scored.get("code") or ""))
+    scored["extraction_feedback"] = feedback_for_code(extraction_feedbacks or {}, str(scored.get("code") or ""))
     scored["data_quality"] = build_data_quality(ROOT, scored, filings, scored["news_analysis"])
     scored["ic_package"] = build_ic_package(scored)
     scored["deal_scenario"] = build_deal_scenario(scored)
@@ -214,7 +223,11 @@ def prepare_candidate(
 def prepared_candidates(settings: object) -> list[dict[str, object]]:
     workflows = load_workflows(ROOT)
     news_cache = load_news_cache(ROOT)
-    return [prepare_candidate(item, settings, workflows, news_cache) for item in load_candidates(ROOT)]
+    extraction_feedbacks = load_feedbacks(ROOT)
+    return [
+        prepare_candidate(item, settings, workflows, news_cache, extraction_feedbacks)
+        for item in load_candidates(ROOT)
+    ]
 
 
 def slim_candidate(item: dict[str, object]) -> dict[str, object]:
@@ -371,6 +384,15 @@ class RadarHandler(BaseHTTPRequestHandler):
             except ValueError:
                 limit = 30
             json_response(self, build_extraction_audit(prepared_candidates(settings), limit=limit))
+            return
+
+        if path == "/api/extraction-feedback":
+            settings = get_settings(ROOT)
+            json_response(self, feedback_summary(prepared_candidates(settings)))
+            return
+
+        if path == "/api/extraction-feedback-options":
+            json_response(self, feedback_options())
             return
 
         if path == "/api/pipeline-dashboard":
@@ -539,9 +561,10 @@ class RadarHandler(BaseHTTPRequestHandler):
             settings = get_settings(ROOT)
             workflows = load_workflows(ROOT)
             news_cache = load_news_cache(ROOT)
+            extraction_feedbacks = load_feedbacks(ROOT)
             for item in load_candidates(ROOT):
                 if str(item.get("code")) == code:
-                    candidate = prepare_candidate(item, settings, workflows, news_cache)
+                    candidate = prepare_candidate(item, settings, workflows, news_cache, extraction_feedbacks)
                     report_format = (query.get("format", ["ic"])[0] or "ic").strip().lower()
                     body = build_deal_cards_docx(
                         [candidate],
@@ -566,9 +589,10 @@ class RadarHandler(BaseHTTPRequestHandler):
             settings = get_settings(ROOT)
             workflows = load_workflows(ROOT)
             news_cache = load_news_cache(ROOT)
+            extraction_feedbacks = load_feedbacks(ROOT)
             for item in load_candidates(ROOT):
                 if str(item.get("code")) == code:
-                    candidate = prepare_candidate(item, settings, workflows, news_cache)
+                    candidate = prepare_candidate(item, settings, workflows, news_cache, extraction_feedbacks)
                     body = build_ic_one_pager_docx(candidate)
                     bytes_response(
                         self,
@@ -588,9 +612,10 @@ class RadarHandler(BaseHTTPRequestHandler):
             settings = get_settings(ROOT)
             workflows = load_workflows(ROOT)
             news_cache = load_news_cache(ROOT)
+            extraction_feedbacks = load_feedbacks(ROOT)
             for item in load_candidates(ROOT):
                 if item["code"] == code:
-                    json_response(self, prepare_candidate(item, settings, workflows, news_cache))
+                    json_response(self, prepare_candidate(item, settings, workflows, news_cache, extraction_feedbacks))
                     return
             self.send_error(404, "Candidate not found")
             return
@@ -639,6 +664,23 @@ class RadarHandler(BaseHTTPRequestHandler):
             dry_run = bool(payload.get("dry_run"))
             alerts = build_alerts(prepared_candidates(settings), latest_monitoring(ROOT), limit=limit)
             json_response(self, send_alert_notifications(ROOT, alerts, settings, dry_run=dry_run, limit=limit))
+            return
+
+        if path.startswith("/api/candidates/") and path.endswith("/extraction-feedback"):
+            code = path.removeprefix("/api/candidates/").removesuffix("/extraction-feedback").strip("/")
+            if not re.fullmatch(r"\d{6}", code):
+                self.send_error(400, "Invalid candidate code")
+                return
+            if not any(str(item.get("code")) == code for item in load_candidates(ROOT)):
+                self.send_error(404, "Candidate not found")
+                return
+            try:
+                payload = read_json_body(self)
+                feedback = update_feedback(ROOT, code, payload)
+            except json.JSONDecodeError:
+                self.send_error(400, "Invalid JSON body")
+                return
+            json_response(self, {"status": "ok", "code": code, "extraction_feedback": feedback})
             return
 
         if path.startswith("/api/candidates/") and path.endswith("/workflow"):

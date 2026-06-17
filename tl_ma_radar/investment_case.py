@@ -29,6 +29,23 @@ def _float(value: object, default: float = 0.0) -> float:
         return default
 
 
+def _ratio(value: object, default: float = 0.0) -> float:
+    if value is None:
+        return default
+    if isinstance(value, str):
+        text = value.strip().replace(",", "")
+        if not text or text == "-":
+            return default
+        if text.endswith("%"):
+            return _float(text[:-1], default * 100) / 100
+        parsed = _float(text, default)
+    else:
+        parsed = _float(value, default)
+    if parsed > 1:
+        return parsed / 100
+    return parsed
+
+
 def _fmt_pct(value: object) -> str:
     if value is None:
         return "-"
@@ -56,13 +73,29 @@ def _scorecard(item: dict[str, Any]) -> dict[str, int]:
     judgment = _dict(item.get("acquisition_judgment"))
     display = _dict(deal_scenario.get("display"))
 
-    new_share = _float(display.get("new_share_raw") or deal_scenario.get("new_share"))
-    conservative_share = _float(display.get("conservative_new_share_raw") or deal_scenario.get("conservative_new_share"))
-    largest_share = _float(item.get("largest_shareholder_ratio")) / 100 if _float(item.get("largest_shareholder_ratio")) > 1 else _float(item.get("largest_shareholder_ratio"))
+    base_scenario = _dict((deal_scenario.get("scenarios") or [{}])[0]) if isinstance(deal_scenario.get("scenarios"), list) else {}
+    conservative_scenario = (
+        _dict((deal_scenario.get("scenarios") or [{}, {}])[1])
+        if isinstance(deal_scenario.get("scenarios"), list) and len(deal_scenario.get("scenarios") or []) > 1
+        else {}
+    )
+    new_share = _ratio(
+        display.get("new_share_raw")
+        or deal_scenario.get("new_share")
+        or base_scenario.get("new_share")
+        or display.get("new_share")
+    )
+    conservative_share = _ratio(
+        display.get("conservative_new_share_raw")
+        or deal_scenario.get("conservative_new_share")
+        or conservative_scenario.get("new_share")
+        or display.get("conservative_new_share")
+    )
+    largest_share = _ratio(item.get("largest_shareholder_ratio"))
 
     synergy = min(100, int(_float(scores.get("tl_synergy")) + _float(scores.get("renes_synergy")) + _float(scores.get("core_business")) * 0.35))
-    control = min(100, int((new_share * 100) * 1.2 + max(0, 30 - largest_share * 100) * 0.8))
-    financing = min(100, int((conservative_share * 100) * 1.1 + _float(scores.get("dealability")) * 0.3))
+    control = min(100, int((new_share * 100) * 1.15 + max(0, 30 - largest_share * 100) * 0.65))
+    financing = min(100, int((conservative_share * 100) * 1.05 + _float(scores.get("dealability")) * 0.35))
     risk_adjusted = max(0, min(100, int(_float(scores.get("total")) - _float(scores.get("risk_penalty")) * 0.35)))
     exit_fit_text = str(judgment.get("exit_structure_fit") or "")
     exit_path = 82 if "높" in exit_fit_text or "우수" in exit_fit_text else 68 if "보통" in exit_fit_text else 55

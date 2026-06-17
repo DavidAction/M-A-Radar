@@ -5,6 +5,10 @@ on:
     - cron: "30 9 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: tl-ma-radar-daily-refresh
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -31,6 +35,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,6 +45,21 @@ jobs:
 
       - name: Install dependencies
         run: python -m pip install --upgrade pip && pip install -r requirements.txt
+
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          missing=0
+          if [ -z "$DART_API_KEY" ]; then
+            echo "::error::DART_API_KEY secret is required for DART collection."
+            missing=1
+          fi
+          if [ -z "$NAVER_CLIENT_ID" ] || [ -z "$NAVER_CLIENT_SECRET" ]; then
+            echo "::warning::Naver Search API secrets are missing. News collection may fall back or be incomplete."
+          fi
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
 
       - name: Run full refresh pipeline
         run: >
@@ -59,10 +80,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
           git add tl_ma_radar/data README.md DEPLOYMENT.md OTHER_PC_SETUP.md || true
           if git diff --cached --quiet; then
             echo "No refreshed artifacts to commit."
           else
             git commit -m "Daily M&A radar refresh"
-            git push
+            git push origin HEAD:main
           fi
+
+      - name: Upload pipeline logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-debug-artifacts
+          path: |
+            tl_ma_radar/data/pipeline_runs/latest.json
+            tl_ma_radar/data/notifications/latest.json
+          if-no-files-found: ignore

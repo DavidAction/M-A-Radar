@@ -177,6 +177,7 @@ def build_extraction_audit(items: list[dict[str, Any]], limit: int = 30) -> dict
         shareholder = _dict(analysis.get("largest_shareholder"))
         audit = _audit_opinion(structured)
         counts = _signal_counts(item)
+        feedback = _dict(item.get("extraction_feedback"))
         score, issues, recommendations = _coverage_score(item)
         rows.append(
             {
@@ -198,6 +199,11 @@ def build_extraction_audit(items: list[dict[str, Any]], limit: int = 30) -> dict
                 "related_party_signals": _top_counts(counts, "related_party"),
                 "issues": issues[:5],
                 "recommended_tuning": recommendations[:4],
+                "feedback": {
+                    "field": feedback.get("field") or "largest_shareholder",
+                    "status": feedback.get("status") or "미검수",
+                    "updated_at": feedback.get("updated_at") or "",
+                },
             }
         )
 

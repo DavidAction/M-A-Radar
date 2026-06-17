@@ -1,29 +1,29 @@
 const T = {
-  market: "\uc2dc\uc7a5",
-  marketCap: "\uc2dc\ucd1d",
-  below: "\uc774\ud558",
-  capitalRaise: "\uc720\uc99d",
-  connected: "\uc5f0\uacb0\ub428",
-  waiting: "\ub300\uae30",
-  data: "\ub370\uc774\ud130",
-  count: "\uac1c",
-  all: "\uc804\uccb4",
-  managed: "\uad00\ub9ac\uc885\ubaa9",
-  watch: "\ud22c\uc790\uc8fc\uc758\ud658\uae30",
-  conditional: "\uc870\uac74\ubd80 \uac80\ud1a0",
-  observe: "\uad00\ucc30",
-  hold: "\ubcf4\ub958",
-  empty: "\ud6c4\ubcf4\ub97c \uc120\ud0dd\ud558\uba74 \ub51c \uce74\ub4dc\uac00 \ud45c\uc2dc\ub429\ub2c8\ub2e4.",
-  sales: "\ub9e4\ucd9c",
-  operatingProfit: "\uc601\uc5c5\uc190\uc775",
-  newStake: "\uc720\uc99d \ud6c4 \uc2e0\uaddc\uc9c0\ubd84",
-  score: "\uc2a4\ucf54\uc5b4",
-  undervaluation: "\uc800\ud3c9\uac00",
-  coreBusiness: "\ubcf8\uc5c5 \uc548\uc815\uc131",
-  dealability: "\uac70\ub798 \uac00\ub2a5\uc131",
-  tlSynergy: "\ud2f0\uc5d8 \uc2dc\ub108\uc9c0",
-  renesSynergy: "\ub974\ub124\uc2a4 \uc2dc\ub108\uc9c0",
-  riskPenalty: "\ub9ac\uc2a4\ud06c \uac10\uc810",
+  market: "시장",
+  marketCap: "시총",
+  below: "이하",
+  capitalRaise: "유증",
+  connected: "연결됨",
+  waiting: "대기",
+  data: "데이터",
+  count: "개",
+  all: "전체",
+  managed: "관리종목",
+  watch: "투자주의환기",
+  conditional: "조건부 검토",
+  observe: "관찰",
+  hold: "보류",
+  empty: "후보를 선택하면 딜 카드가 표시됩니다.",
+  sales: "매출",
+  operatingProfit: "영업손익",
+  newStake: "유증 후 신규지분",
+  score: "스코어",
+  undervaluation: "저평가",
+  coreBusiness: "본업 안정성",
+  dealability: "거래 가능성",
+  tlSynergy: "티엘 시너지",
+  renesSynergy: "르네스 시너지",
+  riskPenalty: "리스크 감점",
   strategicFit: "전략 적합도",
   reportEvidence: "보고서 근거",
   newsMomentum: "뉴스 모멘텀",
@@ -34,33 +34,33 @@ const T = {
   newsAttention: "주의도",
   latestNews: "주요 기사",
   noNews: "최근 6개월 뉴스가 아직 수집되지 않았습니다.",
-  thesis: "\ub51c \ub17c\uac70",
-  raiseScenario: "300\uc5b5 \uc720\uc99d \uc2dc\ub098\ub9ac\uc624",
-  newMoney: "\uc2e0\uaddc\uc790\uae08",
-  postMoney: "\ub2e8\uc21c \ud3ec\uc2a4\ud2b8\uba38\ub2c8 \uae30\uc900 \uc2e0\uaddc \uc9c0\ubd84\uc728",
-  afterEquity: "\uc720\uc99d \ud6c4 \uc790\ubcf8\ucd1d\uacc4 \ucd94\uc815\uce58",
-  riskSignal: "\uc704\ud5d8 \uc2e0\ud638",
-  keywords: "\uc0ac\uc5c5 \ud0a4\uc6cc\ub4dc",
-  ddQuestions: "\uc815\ubc00 \uc2e4\uc0ac \uc9c8\ubb38",
-  sourceMemo: "\ucd9c\ucc98 \uba54\ubaa8",
-  dartSection: "DART \ubcf4\uac15",
-  reportSignals: "\ubcf4\uace0\uc11c \uc2e0\ud638",
-  largestShareholder: "\ucd5c\ub300\uc8fc\uc8fc",
-  snippets: "\uadfc\uac70 \uc2a4\ub2c8\ud3ab",
-  latestFiling: "\ucd5c\uc2e0 \uacf5\uc2dc",
-  filingCount: "\uacf5\uc2dc \uc218",
-  reportDownloads: "\ubcf4\uace0\uc11c \ub2e4\uc6b4\ub85c\ub4dc",
-  noReports: "\ub2e4\uc6b4\ub85c\ub4dc\ub41c \ubcf4\uace0\uc11c\uac00 \uc544\uc9c1 \uc5c6\uc2b5\ub2c8\ub2e4.",
-  autoMemo: "\uc790\ub3d9 \ub51c \uba54\ubaa8",
-  fitPoints: "\uc778\uc218 \ub17c\uac70",
-  riskChecklist: "\ub9ac\uc2a4\ud06c \uccb4\ud06c",
-  nextActions: "\ub2e4\uc74c \uc561\uc158",
-  evidence: "\uadfc\uac70",
-  memoDownload: "\uba54\ubaa8 \ub2e4\uc6b4\ub85c\ub4dc",
-  dealSignals: "\ub51c \uac00\ub2a5\uc131 \uc2e0\ud638",
-  whiteKnightNeed: "\ubc31\uae30\uc0ac \ud544\uc694\ub3c4",
-  dealWindow: "\ub51c \uc2e4\ud589 \ucc3d",
-  dealExecution: "\ub51c \uc2e4\ud589 \uac00\ub2a5\uc131",
+  thesis: "딜 논거",
+  raiseScenario: "300억 유증 시나리오",
+  newMoney: "신규자금",
+  postMoney: "단순 포스트머니 기준 신규 지분율",
+  afterEquity: "유증 후 자본총계 추정치",
+  riskSignal: "위험 신호",
+  keywords: "사업 키워드",
+  ddQuestions: "정밀 실사 질문",
+  sourceMemo: "출처 메모",
+  dartSection: "DART 보강",
+  reportSignals: "보고서 신호",
+  largestShareholder: "최대주주",
+  snippets: "근거 스니펫",
+  latestFiling: "최신 공시",
+  filingCount: "공시 수",
+  reportDownloads: "보고서 다운로드",
+  noReports: "다운로드된 보고서가 아직 없습니다.",
+  autoMemo: "자동 딜 메모",
+  fitPoints: "인수 논거",
+  riskChecklist: "리스크 체크",
+  nextActions: "다음 액션",
+  evidence: "근거",
+  memoDownload: "메모 다운로드",
+  dealSignals: "딜 가능성 신호",
+  whiteKnightNeed: "백기사 필요도",
+  dealWindow: "딜 실행 창",
+  dealExecution: "딜 실행 가능성",
   acquisitionJudgment: "인수 판단 요약",
   attractiveness: "인수 매력도",
   executionFeasibility: "실행 가능성",
@@ -69,19 +69,19 @@ const T = {
   judgmentFitPoints: "핵심 근거",
   blockers: "확인 리스크",
   diligenceFocus: "실사 초점",
-  rescueNeed: "\uc7ac\ubb34\uad6c\uc870 \uac1c\uc120 \ud544\uc694",
-  controlOpenness: "\uacbd\uc601\uad8c \uac1c\ubc29\uc131",
-  financingPressure: "\uc790\uae08\uc870\ub2ec \uc555\ubc15",
-  governanceRisk: "\uac70\ubc84\ub10c\uc2a4 \uc8fc\uc758",
-  evidenceEvents: "\uacf5\uc2dc \uc774\ubca4\ud2b8",
-  shortlist: "\uc20f\ub9ac\uc2a4\ud2b8",
-  instantReview: "\uc989\uc2dc \uac80\ud1a0",
-  deepDiligence: "\uc2ec\uce35 \uc2e4\uc0ac",
-  highRiskOption: "\uace0\uc704\ud5d8 \uc635\uc158",
-  monitoring: "\ubaa8\ub2c8\ud130\ub9c1",
-  pipeline: "\ud30c\uc774\ud504\ub77c\uc778",
-  eventDigest: "\uc774\ubca4\ud2b8 \uc2e4\uc0ac \uccb4\ud06c",
-  checklist: "\uccb4\ud06c\ub9ac\uc2a4\ud2b8",
+  rescueNeed: "재무구조 개선 필요",
+  controlOpenness: "경영권 개방성",
+  financingPressure: "자금조달 압박",
+  governanceRisk: "거버넌스 주의",
+  evidenceEvents: "공시 이벤트",
+  shortlist: "숏리스트",
+  instantReview: "즉시 검토",
+  deepDiligence: "심층 실사",
+  highRiskOption: "고위험 옵션",
+  monitoring: "모니터링",
+  pipeline: "파이프라인",
+  eventDigest: "이벤트 실사 체크",
+  checklist: "체크리스트",
   scoreAudit: "스코어 검수",
   workflow: "후보 관리",
   status: "상태",
@@ -110,6 +110,7 @@ const T = {
   topReview: "상위 20 후보 검수",
   alerts: "자동 알림",
   icOnePager: "IC 1페이지",
+  extractionFeedback: "추출 피드백",
 };
 
 const GROUP_ORDER = [T.instantReview, T.deepDiligence, T.highRiskOption, T.monitoring];
@@ -140,6 +141,7 @@ const state = {
   alerts: null,
   notificationStatus: null,
   extractionAudit: null,
+  extractionFeedbackOptions: null,
   pipelineDashboard: null,
   workflowOptions: null,
   newsArticlePages: {},
@@ -375,6 +377,11 @@ async function loadExtractionAudit() {
   renderExtractionAudit();
 }
 
+async function loadExtractionFeedbackOptions() {
+  const res = await fetch("/api/extraction-feedback-options");
+  state.extractionFeedbackOptions = await res.json();
+}
+
 async function loadPipelineDashboard() {
   const res = await fetch("/api/pipeline-dashboard");
   state.pipelineDashboard = await res.json();
@@ -564,13 +571,14 @@ function renderExtractionAudit() {
       const tone = row.verdict === "투자심의 사용 가능" ? "good" : row.verdict === "원문 보강 우선" ? "risk" : "warn";
       const issueText = (row.issues || []).slice(0, 3).join(" / ") || "핵심 추출값 정상";
       const tuningText = (row.recommended_tuning || []).slice(0, 2).join(" / ");
+      const feedback = row.feedback || {};
       return `
         <button class="extraction-card ${tone}" data-code="${escapeHtml(row.code || "")}">
           <span>#${row.rank} · ${escapeHtml(row.code || "")} · ${row.confidence_score}점</span>
           <strong>${escapeHtml(row.name || "-")}</strong>
           <em>${escapeHtml(row.verdict || "-")} · ${escapeHtml(row.audit_opinion || "-")} · ${escapeHtml(row.shareholder_quality || "-")}</em>
           <p>${escapeHtml(issueText)}</p>
-          <small>${escapeHtml(tuningText)}</small>
+          <small>${escapeHtml(tuningText)}${feedback.status && feedback.status !== "미검수" ? ` · 피드백 ${escapeHtml(feedback.status)}` : ""}</small>
         </button>
       `;
     })
@@ -1916,6 +1924,73 @@ function dataQualityBlock(item) {
   `;
 }
 
+function dataQualityBlock(item) {
+  const quality = item.data_quality || {};
+  if (!quality.score) return "";
+  const checks = quality.checks || [];
+  return `
+    <section class="section quality-detail">
+      <div class="section-title-row">
+        <h3>${T.dataQuality}</h3>
+        <span class="meta-pill">${escapeHtml(quality.grade || "-")} · ${quality.score}점</span>
+      </div>
+      <div class="quality-check-grid">
+        ${checks
+          .map(
+            (check) => `
+              <div class="quality-check ${escapeHtml(check.status || "")}">
+                <span>${escapeHtml(check.label || "-")}</span>
+                <strong>${escapeHtml(check.value || "-")}</strong>
+                <em>${escapeHtml(check.detail || "")}</em>
+              </div>
+            `,
+          )
+          .join("")}
+      </div>
+      ${(quality.warnings || []).length ? `<div class="warning-list">${memoList(quality.warnings)}</div>` : ""}
+    </section>
+  `;
+}
+
+function extractionFeedbackBlock(item) {
+  const feedback = item.extraction_feedback || {};
+  const options = state.extractionFeedbackOptions || {
+    fields: ["largest_shareholder", "audit_opinion", "cb_bw", "related_party", "business_keywords", "other"],
+    statuses: ["미검수", "정상", "오탐", "수정", "보류"],
+  };
+  return `
+    <section class="section extraction-feedback-panel">
+      <div class="section-title-row">
+        <h3>${T.extractionFeedback}</h3>
+        <span id="extractionFeedbackSaveState" class="save-state">${feedback.updated_at ? `저장 ${escapeHtml(feedback.updated_at.slice(0, 16).replace("T", " "))}` : ""}</span>
+      </div>
+      <div class="workflow-grid">
+        <label>
+          <span>검수 항목</span>
+          <select id="feedbackField">${optionTags(options.fields, feedback.field || "largest_shareholder")}</select>
+        </label>
+        <label>
+          <span>검수 상태</span>
+          <select id="feedbackStatus">${optionTags(options.statuses, feedback.status || "미검수")}</select>
+        </label>
+        <label>
+          <span>검수자</span>
+          <input id="feedbackReviewer" value="${escapeHtml(feedback.reviewer || "")}" placeholder="검수자" />
+        </label>
+        <label class="workflow-wide">
+          <span>수정값</span>
+          <input id="feedbackCorrectedValue" value="${escapeHtml(feedback.corrected_value || "")}" placeholder="예: 김희자 6.8%, 의견거절, CB 전환가능물량 확인" />
+        </label>
+        <label class="workflow-wide">
+          <span>메모</span>
+          <textarea id="feedbackNote" rows="3" placeholder="오탐 사유, 원문 위치, 파서 개선 룰">${escapeHtml(feedback.note || "")}</textarea>
+        </label>
+      </div>
+      <button id="extractionFeedbackSave" class="primary-action" data-code="${escapeHtml(item.code)}">피드백 저장</button>
+    </section>
+  `;
+}
+
 function workflowHistoryBlock(workflow) {
   const history = workflow.history || [];
   if (!history.length) return "";
@@ -2254,6 +2329,87 @@ async function saveWorkflow(code) {
   renderDetail();
 }
 
+function workflowBlock(item) {
+  const workflow = item.workflow || {};
+  const options = state.workflowOptions || {
+    statuses: ["미검토", "관심", "제외", "추적", "접촉", "실사중"],
+    contact_statuses: ["미접촉", "접촉준비", "접촉완료", "자료요청", "미팅예정", "보류"],
+  };
+  return `
+    <section class="section workflow-panel">
+      <div class="section-title-row">
+        <h3>${T.workflow}</h3>
+        <span id="workflowSaveState" class="save-state">${workflow.updated_at ? `저장 ${escapeHtml(workflow.updated_at.slice(0, 16).replace("T", " "))}` : ""}</span>
+      </div>
+      <div class="workflow-grid">
+        <label>
+          <span>${T.status}</span>
+          <select id="workflowStatus">${optionTags(options.statuses, workflow.status || "미검토")}</select>
+        </label>
+        <label>
+          <span>${T.contactStatus}</span>
+          <select id="workflowContact">${optionTags(options.contact_statuses, workflow.contact_status || "미접촉")}</select>
+        </label>
+        <label>
+          <span>${T.owner}</span>
+          <input id="workflowOwner" value="${escapeHtml(workflow.owner || "")}" placeholder="담당자" />
+        </label>
+        <label>
+          <span>${T.dueDate}</span>
+          <input id="workflowDue" type="date" value="${escapeHtml(workflow.due_date || "")}" />
+        </label>
+      </div>
+      <label class="workflow-wide">
+        <span>${T.nextAction}</span>
+        <input id="workflowNext" value="${escapeHtml(workflow.next_action || "")}" placeholder="예: IR 자료 요청, 감사보고서 원문 확인" />
+      </label>
+      <label class="workflow-wide">
+        <span>${T.memo}</span>
+        <textarea id="workflowMemo" rows="4" placeholder="후보별 검토 메모">${escapeHtml(workflow.memo || "")}</textarea>
+      </label>
+      <button id="workflowSave" class="primary-action" data-code="${escapeHtml(item.code)}">${T.save}</button>
+      ${workflowHistoryBlock(workflow)}
+    </section>
+  `;
+}
+
+async function saveExtractionFeedback(item) {
+  const code = item.code;
+  const payload = {
+    field: document.getElementById("feedbackField")?.value || "largest_shareholder",
+    status: document.getElementById("feedbackStatus")?.value || "미검수",
+    reviewer: document.getElementById("feedbackReviewer")?.value || "",
+    corrected_value: document.getElementById("feedbackCorrectedValue")?.value || "",
+    note: document.getElementById("feedbackNote")?.value || "",
+  };
+  const stateEl = document.getElementById("extractionFeedbackSaveState");
+  if (stateEl) stateEl.textContent = "저장 중";
+  const res = await fetch(`/api/candidates/${encodeURIComponent(code)}/extraction-feedback`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const result = await res.json();
+  if (stateEl) stateEl.textContent = result.status === "ok" ? "저장 완료" : "저장 실패";
+  if (result.status !== "ok") return;
+  state.items = state.items.map((row) =>
+    row.code === code ? { ...row, extraction_feedback: result.extraction_feedback } : row,
+  );
+  if (state.candidateDetails[code]) {
+    state.candidateDetails[code] = {
+      ...state.candidateDetails[code],
+      extraction_feedback: result.extraction_feedback,
+    };
+  }
+  loadExtractionAudit();
+}
+
+function bindExtractionFeedbackForm(item) {
+  const button = document.getElementById("extractionFeedbackSave");
+  if (!button) return;
+  button.addEventListener("click", () => saveExtractionFeedback(item));
+}
+
 function bindWorkflowForm(item) {
   const button = document.getElementById("workflowSave");
   if (!button) return;
@@ -2433,6 +2589,7 @@ function renderDetail() {
     ${newsAnalysisBlock(item)}
     ${newsEventsBlock(item)}
     ${dataQualityBlock(item)}
+    ${extractionFeedbackBlock(item)}
     ${aiBriefBlock(item)}
     ${workflowBlock(item)}
 
@@ -2500,6 +2657,7 @@ function renderDetail() {
       <p class="note">${escapeHtml(item.source_note)}</p>
     </section>
   `;
+  bindExtractionFeedbackForm(item);
   bindWorkflowForm(item);
   bindNewsPager(item);
 }
@@ -2536,6 +2694,7 @@ loadWorkflowOptions();
 loadOperations();
 loadDataQuality();
 loadRemediationStatus();
+loadExtractionFeedbackOptions();
 loadExtractionAudit();
 loadPipelineDashboard();
 loadScoreTuning();

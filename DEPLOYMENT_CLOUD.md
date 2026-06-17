@@ -113,3 +113,23 @@ Webhook payload is:
 SMTP uses a plain-text email with the same alert summary.
 
 Use `/api/send-alerts` with `{"dry_run": true}` before enabling real delivery.
+
+Real delivery checklist:
+
+1. Add either `ALERT_WEBHOOK_URL` or the SMTP variables to GitHub Secrets or the server `.env`.
+2. Run a local preview:
+
+```bash
+python scripts/send_alert_notifications.py --dry-run --limit 5
+```
+
+3. Confirm `/api/notification-status` returns `ready_for_real_send: true`.
+4. Trigger a real send from the deployed server:
+
+```bash
+curl -X POST "$APP_BASE_URL/api/send-alerts" \
+  -H "Content-Type: application/json" \
+  -d '{"dry_run": false, "limit": 10}'
+```
+
+5. Check `tl_ma_radar/data/notifications/latest.json` for the delivery result.
