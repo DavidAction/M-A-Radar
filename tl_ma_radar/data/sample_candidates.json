@@ -1,0 +1,120 @@
+[
+  {
+    "code": "121850",
+    "name": "코이즈",
+    "market": "KOSDAQ",
+    "sector": "디스플레이 소재 / 정밀화학",
+    "market_cap_krw": 8700000000,
+    "pbr": 0.42,
+    "per": null,
+    "revenue_krw": 12540000000,
+    "operating_profit_krw": -7340000000,
+    "operating_cash_flow_krw": -2640000000,
+    "equity_krw": 7390000000,
+    "debt_krw": 13380000000,
+    "largest_shareholder_ratio": 0.1677,
+    "has_operating_assets": true,
+    "status_flags": [
+      "관리종목",
+      "계속기업불확실성",
+      "유동성갭",
+      "낮은최대주주지분",
+      "CB오버행",
+      "매출채권검증필요"
+    ],
+    "business_keywords": [
+      "광학필름",
+      "코팅",
+      "정밀화학",
+      "2차전지",
+      "양극재",
+      "폐수",
+      "자원순환",
+      "소재"
+    ],
+    "deal_thesis": "상장 플랫폼 희소성과 르네스머테리얼의 소재/환경 흐름을 결합할 수 있는 고옵션성 후보. 단기 유동성 갭과 계속기업 불확실성은 가격 협상력의 원천이자 핵심 리스크.",
+    "key_diligence": [
+      "단기차입금 만기연장 확약",
+      "CB 콜옵션/오버행 통제",
+      "매출채권 실재성 및 연령분석",
+      "상장유지 시총 요건 적용 기준 확인"
+    ],
+    "source_note": "사용자 제공 코이즈 심층 실사 보고서 v3.1 기반 샘플"
+  },
+  {
+    "code": "SAMPLE1",
+    "name": "샘플정밀화학",
+    "market": "KOSDAQ",
+    "sector": "정밀화학 / 기능성 첨가제",
+    "market_cap_krw": 21000000000,
+    "pbr": 0.55,
+    "per": 8.4,
+    "revenue_krw": 42000000000,
+    "operating_profit_krw": 1900000000,
+    "operating_cash_flow_krw": 1200000000,
+    "equity_krw": 38000000000,
+    "debt_krw": 22000000000,
+    "largest_shareholder_ratio": 0.231,
+    "has_operating_assets": true,
+    "status_flags": [
+      "투자주의환기",
+      "낮은최대주주지분"
+    ],
+    "business_keywords": [
+      "석유화학",
+      "첨가제",
+      "수지",
+      "원료",
+      "가공",
+      "납품",
+      "정밀화학"
+    ],
+    "deal_thesis": "티엘홀딩스의 원료 조달 및 유통망과 직접 연결 가능성이 높고, 르네스의 가공/납품 역량과도 접점이 큼.",
+    "key_diligence": [
+      "주요 고객사 매출 집중도",
+      "최대주주 매각 의향",
+      "원재료 가격 전가 구조",
+      "환기종목 지정 사유 해소 가능성"
+    ],
+    "source_note": "화면 검증용 가상 샘플"
+  },
+  {
+    "code": "SAMPLE2",
+    "name": "샘플친환경소재",
+    "market": "KOSDAQ",
+    "sector": "재생원료 / 환경소재",
+    "market_cap_krw": 14500000000,
+    "pbr": 0.33,
+    "per": null,
+    "revenue_krw": 18500000000,
+    "operating_profit_krw": -900000000,
+    "operating_cash_flow_krw": 300000000,
+    "equity_krw": 44000000000,
+    "debt_krw": 31000000000,
+    "largest_shareholder_ratio": 0.189,
+    "has_operating_assets": true,
+    "status_flags": [
+      "관리종목",
+      "유동성갭",
+      "낮은최대주주지분"
+    ],
+    "business_keywords": [
+      "자원순환",
+      "재생원료",
+      "용제",
+      "폐수",
+      "화학",
+      "가공",
+      "소재"
+    ],
+    "deal_thesis": "르네스의 공정 부산물/폐수 흐름과 티엘의 화학 유통망을 연결해 재생원료 사업 서사를 만들 수 있음.",
+    "key_diligence": [
+      "환경 인허가 잔여 용량",
+      "폐수/용제 회수 수율",
+      "관리종목 지정 사유",
+      "제3자배정 후 지배력 확보 가능성"
+    ],
+    "source_note": "화면 검증용 가상 샘플"
+  }
+]
+

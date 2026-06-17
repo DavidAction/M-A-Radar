@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TL M&A Radar</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">KOSDAQ Under 30B KRW</p>
+          <h1>TL M&A Radar</h1>
+        </div>
+        <div class="meta-strip" id="configMeta"></div>
+      </header>
+
+      <section class="toolbar">
+        <label class="search">
+          <span>검색</span>
+          <input id="searchInput" type="search" placeholder="회사명, 종목코드, 키워드" />
+        </label>
+        <div class="toggle-row">
+          <button class="chip active" data-filter="all">전체</button>
+          <button class="chip" data-filter="우선 검토">우선 검토</button>
+          <button class="chip" data-filter="조건부 검토">조건부 검토</button>
+          <button class="chip" data-filter="관리종목">관리/환기</button>
+        </div>
+      </section>
+
+      <section class="ops-panel">
+        <div class="ops-head">
+          <div>
+            <h2>운영 상태</h2>
+            <p id="opsSummary" class="note"></p>
+          </div>
+          <span id="opsState" class="meta-pill">-</span>
+        </div>
+        <div id="opsGrid" class="ops-grid"></div>
+        <div id="opsLogs" class="ops-logs"></div>
+      </section>
+
+      <section class="monitoring-panel">
+        <div class="monitoring-head">
+          <div>
+            <h2>변화 모니터링</h2>
+            <p id="monitoringSummary" class="note"></p>
+          </div>
+          <a class="export-link" href="/api/export-monitoring.csv">Change CSV</a>
+        </div>
+        <div id="monitoringStats" class="monitoring-stats"></div>
+        <div id="monitoringAlerts" class="monitoring-alerts"></div>
+      </section>
+
+      <section class="score-audit-panel">
+        <div class="score-audit-head">
+          <div>
+            <h2>스코어 검수</h2>
+            <p id="scoreAuditSummary" class="note"></p>
+          </div>
+        </div>
+        <div id="scoreAuditList" class="score-audit-list"></div>
+      </section>
+
+      <section class="shortlist-panel">
+        <div class="shortlist-head">
+          <div>
+            <h2>숏리스트</h2>
+            <p id="shortlistCounts" class="note"></p>
+          </div>
+          <div class="export-actions">
+            <a class="export-link" href="/api/export-shortlist.csv">CSV Export</a>
+            <a class="export-link primary" href="/api/export-deal-cards.docx">Word Report</a>
+          </div>
+        </div>
+        <div id="shortlistGrid" class="shortlist-grid"></div>
+      </section>
+
+      <section class="layout">
+        <div class="list-pane">
+          <div class="list-head">
+            <h2>후보 리스트</h2>
+            <span id="candidateCount"></span>
+          </div>
+          <div id="candidateList" class="candidate-list"></div>
+          <div id="candidatePager" class="candidate-pager"></div>
+        </div>
+
+        <article class="detail-pane" id="detailPane">
+          <div class="empty-state">후보를 선택하면 딜 카드가 표시됩니다.</div>
+        </article>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

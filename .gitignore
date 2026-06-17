@@ -1,0 +1,15 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+*.log
+ui_*.png
+edge-profile-news*/
+.pytest_cache/
+render_check/
+tl_ma_radar/data/cache/
+tl_ma_radar/data/dart_reports/
+tl_ma_radar/data/dart_texts/
+tl_ma_radar/data/dart_pdfs/
+tl_ma_radar/data/deal_memos/*.docx
+tl_ma_radar/data/scheduled_runs/

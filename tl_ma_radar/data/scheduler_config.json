@@ -1,0 +1,10 @@
+﻿{
+    "task_name":  "TL M\u0026A Radar Daily Pipeline",
+    "installed_at":  "2026-06-17T13:36:37.8877958+09:00",
+    "user":  "DESKTOP-RTEP2Q9\\bynay",
+    "at":  "18:30",
+    "mode":  "full",
+    "enabled":  true,
+    "next_run_time":  "2026-06-17 18:30:00",
+    "action":  "-NoProfile -ExecutionPolicy Bypass -File \"C:\\Users\\bynay\\Documents\\Codex\\2026-06-17\\files-mentioned-by-the-user-2026-2\\work\\tl-ma-radar\\scripts\\run_daily_pipeline.ps1\" -Mode full"
+}
