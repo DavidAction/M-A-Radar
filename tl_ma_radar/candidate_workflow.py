@@ -9,6 +9,15 @@ from typing import Any
 WORKFLOW_FILE = Path("tl_ma_radar") / "data" / "candidate_workflow.json"
 STATUS_OPTIONS = ["미검토", "관심", "제외", "추적", "접촉", "실사중"]
 CONTACT_OPTIONS = ["미접촉", "접촉준비", "접촉완료", "자료요청", "미팅예정", "보류"]
+TRACKED_FIELDS = ["status", "contact_status", "owner", "due_date", "next_action", "memo"]
+FIELD_LABELS = {
+    "status": "상태",
+    "contact_status": "연락 상태",
+    "owner": "담당자",
+    "due_date": "검토 기한",
+    "next_action": "다음 액션",
+    "memo": "메모",
+}
 
 
 def default_workflow() -> dict[str, Any]:
@@ -20,6 +29,7 @@ def default_workflow() -> dict[str, Any]:
         "contact_status": "미접촉",
         "due_date": "",
         "updated_at": "",
+        "history": [],
     }
 
 
@@ -52,6 +62,8 @@ def save_workflows(root: Path, workflows: dict[str, dict[str, Any]]) -> None:
 def workflow_for_code(workflows: dict[str, dict[str, Any]], code: str) -> dict[str, Any]:
     merged = default_workflow()
     merged.update(workflows.get(str(code)) or {})
+    if not isinstance(merged.get("history"), list):
+        merged["history"] = []
     return merged
 
 
@@ -69,10 +81,47 @@ def sanitize_update(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _change_summary(changes: list[dict[str, str]]) -> str:
+    labels = [FIELD_LABELS.get(change["field"], change["field"]) for change in changes]
+    return ", ".join(labels[:4]) + (f" 외 {len(labels) - 4}" if len(labels) > 4 else "")
+
+
+def _build_history_event(previous: dict[str, Any], updated: dict[str, Any]) -> dict[str, Any] | None:
+    changes = []
+    for field in TRACKED_FIELDS:
+        before = str(previous.get(field) or "")
+        after = str(updated.get(field) or "")
+        if before == after:
+            continue
+        changes.append(
+            {
+                "field": field,
+                "label": FIELD_LABELS.get(field, field),
+                "before": before,
+                "after": after,
+            }
+        )
+    if not changes:
+        return None
+    return {
+        "at": updated.get("updated_at") or datetime.now(timezone.utc).isoformat(),
+        "type": "workflow_update",
+        "summary": _change_summary(changes),
+        "changes": changes,
+        "snapshot": {field: updated.get(field) for field in TRACKED_FIELDS},
+    }
+
+
 def update_workflow(root: Path, code: str, payload: dict[str, Any]) -> dict[str, Any]:
     workflows = load_workflows(root)
-    current = workflow_for_code(workflows, code)
+    previous = workflow_for_code(workflows, code)
+    current = dict(previous)
     current.update(sanitize_update(payload))
+    history = list(previous.get("history") or [])
+    event = _build_history_event(previous, current)
+    if event:
+        history.append(event)
+    current["history"] = history[-100:]
     workflows[str(code)] = current
     save_workflows(root, workflows)
     return current

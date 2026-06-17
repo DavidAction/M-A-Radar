@@ -25,7 +25,8 @@ def _clip(value: object, limit: int = 280) -> str:
     text = " ".join(str(value if value is not None else "").split())
     if len(text) <= limit:
         return text
-    return text[: limit - 3].rstrip() + "..."
+    suffix = " (중략)"
+    return text[: max(1, limit - len(suffix))].rstrip() + suffix
 
 
 def _fmt_won(value: object) -> str:
@@ -267,7 +268,76 @@ def _summary_table(candidates: list[dict[str, Any]]) -> list[list[object]]:
     return rows
 
 
-def _candidate_section(doc: Docx, item: dict[str, Any], index: int) -> None:
+def _quality(item: dict[str, Any]) -> dict[str, Any]:
+    quality = item.get("data_quality")
+    return quality if isinstance(quality, dict) else {}
+
+
+def _workflow(item: dict[str, Any]) -> dict[str, Any]:
+    workflow = item.get("workflow")
+    return workflow if isinstance(workflow, dict) else {}
+
+
+def _score(item: dict[str, Any], key: str) -> float:
+    return float((item.get("scores") or {}).get(key) or 0)
+
+
+def _judgment_score(item: dict[str, Any], key: str) -> float:
+    return float(((_judgment(item).get("scores") or {}).get(key)) or 0)
+
+
+def _ic_lens_rows(item: dict[str, Any]) -> list[list[object]]:
+    quality = _quality(item)
+    workflow = _workflow(item)
+    news = _news(item)
+    news_scores = news.get("scores") or {}
+    risk_items = []
+    risk_level = _judgment_score(item, "risk_level")
+    if risk_level >= 70:
+        risk_items.append(f"인수 리스크 {risk_level:.1f}")
+    if float(news_scores.get("risk") or 0) >= 45:
+        risk_items.append(f"뉴스 리스크 {float(news_scores.get('risk') or 0):.1f}")
+    risk_items.extend((item.get("status_flags") or [])[:3])
+    return [
+        ["영역", "판단", "투자심의 활용 포인트"],
+        [
+            "데이터 신뢰도",
+            f"{quality.get('grade', '-')} / {_fmt_score(quality.get('score'))}",
+            _join(quality.get("warnings"), 2, "공시/뉴스/보고서 근거가 사용 가능한 수준입니다."),
+        ],
+        [
+            "스코어 검수",
+            f"총점 {_fmt_score((item.get('scores') or {}).get('total'))} / 전략 {_fmt_score(_score(item, 'strategic_fit'))}",
+            f"보고서 근거 {_fmt_score(_score(item, 'report_evidence'))}, 본업 {_fmt_score(_score(item, 'core_business'))}를 함께 봅니다.",
+        ],
+        [
+            "핵심 리스크",
+            _join(risk_items, 4, "중대 자동 리스크 신호 없음"),
+            "리스크가 높아도 백기사/구조개선 딜이면 기회로 분류하되 원문 검증을 우선합니다.",
+        ],
+        [
+            "파이프라인",
+            f"{workflow.get('status') or '미검토'} / {workflow.get('contact_status') or '미접촉'}",
+            workflow.get("next_action") or "담당자, 접촉 여부, 다음 액션을 지정해야 합니다.",
+        ],
+    ]
+
+
+def _workflow_history_rows(item: dict[str, Any]) -> list[list[object]]:
+    workflow = _workflow(item)
+    rows = [["일시", "변경", "요약"]]
+    for event in (workflow.get("history") or [])[-5:]:
+        rows.append(
+            [
+                str(event.get("at") or "")[:16].replace("T", " "),
+                event.get("type") or "-",
+                event.get("summary") or "-",
+            ]
+        )
+    return rows if len(rows) > 1 else []
+
+
+def _candidate_section(doc: Docx, item: dict[str, Any], index: int, report_format: str = "ic") -> None:
     scores = item.get("scores") or {}
     analysis = _analysis(item)
     signals = _signals(item)
@@ -308,6 +378,13 @@ def _candidate_section(doc: Docx, item: dict[str, Any], index: int) -> None:
         widths=[2100, 2580, 2100, 2580],
         compact=True,
     )
+    if report_format in {"ic", "deep", "full"}:
+        doc.paragraph("Investment Committee Lens", style="Heading2", color="13232E", bold=True, size=24, before=180, after=80)
+        doc.table(_ic_lens_rows(item), widths=[1700, 2600, 5060], compact=True)
+        history_rows = _workflow_history_rows(item)
+        if history_rows:
+            doc.paragraph("Pipeline History", style="Heading3", color="374151", bold=True, size=21, before=120, after=60)
+            doc.table(history_rows, widths=[1800, 1800, 5760], compact=True)
     doc.paragraph("투자 논거", style="Heading2", color="0F766E", bold=True, size=24, before=220, after=80)
     for point in (judgment.get("fit_points") or [])[:5]:
         doc.bullet(point)
@@ -345,7 +422,12 @@ def _candidate_section(doc: Docx, item: dict[str, Any], index: int) -> None:
         doc.bullet(question)
 
 
-def build_deal_cards_docx(candidates: list[dict[str, Any]], *, title: str = "TL Holdings M&A Deal Card Report") -> bytes:
+def build_deal_cards_docx(
+    candidates: list[dict[str, Any]],
+    *,
+    title: str = "TL Holdings M&A Deal Card Report",
+    report_format: str = "ic",
+) -> bytes:
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
     ordered = sorted(
         candidates,
@@ -375,7 +457,7 @@ def build_deal_cards_docx(candidates: list[dict[str, Any]], *, title: str = "TL 
     doc.table(_summary_table(ordered), widths=[650, 2100, 900, 1250, 1200, 1500, 1760], compact=True)
     doc.page_break()
     for index, item in enumerate(ordered, 1):
-        _candidate_section(doc, item, index)
+        _candidate_section(doc, item, index, report_format=report_format)
         if index != len(ordered):
             doc.page_break()
     return doc.build()

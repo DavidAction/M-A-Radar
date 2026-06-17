@@ -127,3 +127,23 @@ powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1 -Message "작
 ```
 
 민감한 API 키는 `.env`에만 두고 GitHub에 올리지 않습니다.
+
+## 10. 새 운영 기능 확인
+
+실행 후 브라우저 첫 화면에서 아래 3개 패널이 보여야 합니다.
+
+- 데이터 신뢰도: 후보 데이터가 투자심의에 바로 쓸 수 있는 수준인지 확인합니다.
+- 스코어 튜닝: 상위 20개와 코이즈/나노씨엠에스/아이씨에이치/베셀 벤치마크를 검수합니다.
+- 팀 운영/이관: GitHub 원격 저장소, 자동 푸시 훅, 데이터 파일, 실행 준비 상태를 확인합니다.
+
+외부 분석이나 외주사 전달용 데이터베이스가 필요하면 아래 주소에서 SQLite 파일을 내려받습니다.
+
+```text
+http://127.0.0.1:8766/api/export-pipeline.sqlite
+```
+
+투자심의용 Word 보고서는 아래 주소를 사용합니다.
+
+```text
+http://127.0.0.1:8766/api/export-deal-cards.docx?format=ic
+```

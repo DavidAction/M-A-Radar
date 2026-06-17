@@ -14,6 +14,7 @@ from tl_ma_radar.acquisition_judgment import build_acquisition_judgment
 from tl_ma_radar.candidate_workflow import load_workflows, update_workflow, workflow_for_code, workflow_options
 from tl_ma_radar.collectors.dart import download_filing_pdf
 from tl_ma_radar.config import get_settings
+from tl_ma_radar.data_quality import build_data_quality, build_data_quality_summary
 from tl_ma_radar.deal_report import build_deal_cards_docx
 from tl_ma_radar.deal_signals import analyze_deal_signals
 from tl_ma_radar.event_digest import build_event_digest
@@ -23,7 +24,9 @@ from tl_ma_radar.operations import operations_status
 from tl_ma_radar.repository import data_source, load_candidates
 from tl_ma_radar.scoring import score_candidate
 from tl_ma_radar.score_audit import build_score_audit
+from tl_ma_radar.score_tuning import build_score_tuning
 from tl_ma_radar.shortlist import grouped_shortlist, shortlist_csv, shortlist_items
+from tl_ma_radar.team_ops import build_pipeline_sqlite, team_ops_status
 
 
 ROOT = Path(__file__).resolve().parent
@@ -180,6 +183,7 @@ def prepare_candidate(
     scored = score_candidate(prepared, settings)
     scored["acquisition_judgment"] = build_acquisition_judgment(scored)
     scored["workflow"] = workflow_for_code(workflows or {}, str(scored.get("code") or ""))
+    scored["data_quality"] = build_data_quality(ROOT, scored, filings, scored["news_analysis"])
     shortlist_row = shortlist_items([scored])[0]
     scored["shortlist_score"] = shortlist_row["shortlist_score"]
     scored["priority_score"] = shortlist_row["priority_score"]
@@ -285,6 +289,18 @@ class RadarHandler(BaseHTTPRequestHandler):
             json_response(self, operations_status(ROOT))
             return
 
+        if path == "/api/data-quality":
+            settings = get_settings(ROOT)
+            candidates = prepared_candidates(settings)
+            json_response(self, build_data_quality_summary(candidates))
+            return
+
+        if path == "/api/team-ops":
+            settings = get_settings(ROOT)
+            candidates = prepared_candidates(settings)
+            json_response(self, team_ops_status(ROOT, candidates))
+            return
+
         if path == "/api/workflow-options":
             json_response(self, workflow_options())
             return
@@ -299,6 +315,16 @@ class RadarHandler(BaseHTTPRequestHandler):
             json_response(self, build_score_audit(prepared_candidates(settings), limit=limit))
             return
 
+        if path == "/api/score-tuning":
+            settings = get_settings(ROOT)
+            limit_text = (query.get("limit", ["20"])[0] or "20").strip()
+            try:
+                limit = max(5, min(int(limit_text), 50))
+            except ValueError:
+                limit = 20
+            json_response(self, build_score_tuning(prepared_candidates(settings), limit=limit))
+            return
+
         if path == "/api/export-shortlist.csv":
             settings = get_settings(ROOT)
             body = shortlist_csv(prepared_candidates(settings))
@@ -310,6 +336,12 @@ class RadarHandler(BaseHTTPRequestHandler):
             bytes_response(self, body, "text/csv; charset=utf-8", "tl_ma_radar_monitoring.csv")
             return
 
+        if path == "/api/export-pipeline.sqlite":
+            settings = get_settings(ROOT)
+            body = build_pipeline_sqlite(prepared_candidates(settings))
+            bytes_response(self, body, "application/vnd.sqlite3", "tl_ma_radar_pipeline.sqlite")
+            return
+
         if path == "/api/export-deal-cards.docx":
             settings = get_settings(ROOT)
             candidates = prepared_candidates(settings)
@@ -319,7 +351,8 @@ class RadarHandler(BaseHTTPRequestHandler):
                     str(item.get("name") or ""),
                 )
             )
-            body = build_deal_cards_docx(candidates)
+            report_format = (query.get("format", ["ic"])[0] or "ic").strip().lower()
+            body = build_deal_cards_docx(candidates, report_format=report_format)
             bytes_response(
                 self,
                 body,
@@ -355,7 +388,12 @@ class RadarHandler(BaseHTTPRequestHandler):
             for item in load_candidates(ROOT):
                 if str(item.get("code")) == code:
                     candidate = prepare_candidate(item, settings, workflows, news_cache)
-                    body = build_deal_cards_docx([candidate], title=f"{candidate.get('name', code)} Deal Card Report")
+                    report_format = (query.get("format", ["ic"])[0] or "ic").strip().lower()
+                    body = build_deal_cards_docx(
+                        [candidate],
+                        title=f"{candidate.get('name', code)} Deal Card Report",
+                        report_format=report_format,
+                    )
                     bytes_response(
                         self,
                         body,

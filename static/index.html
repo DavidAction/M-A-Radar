@@ -41,6 +41,37 @@
         <div id="opsLogs" class="ops-logs"></div>
       </section>
 
+      <section class="decision-panel">
+        <div class="decision-card">
+          <div class="score-audit-head">
+            <div>
+              <h2>데이터 신뢰도</h2>
+              <p id="dataQualitySummary" class="note"></p>
+            </div>
+          </div>
+          <div id="dataQualityGrid" class="quality-grid"></div>
+        </div>
+        <div class="decision-card">
+          <div class="score-audit-head">
+            <div>
+              <h2>스코어 튜닝</h2>
+              <p id="scoreTuningSummary" class="note"></p>
+            </div>
+          </div>
+          <div id="scoreTuningList" class="tuning-list"></div>
+        </div>
+        <div class="decision-card">
+          <div class="score-audit-head">
+            <div>
+              <h2>팀 운영/이관</h2>
+              <p id="teamOpsSummary" class="note"></p>
+            </div>
+            <a class="export-link" href="/api/export-pipeline.sqlite">SQLite</a>
+          </div>
+          <div id="teamOpsGrid" class="quality-grid"></div>
+        </div>
+      </section>
+
       <section class="monitoring-panel">
         <div class="monitoring-head">
           <div>

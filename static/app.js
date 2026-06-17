@@ -91,6 +91,10 @@ const T = {
   dueDate: "기한",
   memo: "메모",
   save: "저장",
+  dataQuality: "데이터 신뢰도",
+  scoreTuning: "스코어 튜닝",
+  teamOps: "팀 운영/이관",
+  workflowHistory: "변경 이력",
 };
 
 const GROUP_ORDER = [T.instantReview, T.deepDiligence, T.highRiskOption, T.monitoring];
@@ -110,6 +114,9 @@ const state = {
   monitoring: null,
   operations: null,
   scoreAudit: null,
+  dataQuality: null,
+  scoreTuning: null,
+  teamOps: null,
   workflowOptions: null,
   newsArticlePages: {},
 };
@@ -199,6 +206,24 @@ async function loadScoreAudit() {
   const res = await fetch("/api/score-audit?limit=20");
   state.scoreAudit = await res.json();
   renderScoreAudit();
+}
+
+async function loadDataQuality() {
+  const res = await fetch("/api/data-quality");
+  state.dataQuality = await res.json();
+  renderDataQuality();
+}
+
+async function loadScoreTuning() {
+  const res = await fetch("/api/score-tuning?limit=20");
+  state.scoreTuning = await res.json();
+  renderScoreTuning();
+}
+
+async function loadTeamOps() {
+  const res = await fetch("/api/team-ops");
+  state.teamOps = await res.json();
+  renderTeamOps();
 }
 
 function opsCard(label, value, sub = "", tone = "") {
@@ -371,6 +396,88 @@ function renderScoreAudit() {
       loadCandidates();
     });
   });
+}
+
+function qualityCard(label, value, sub = "", tone = "") {
+  return `
+    <div class="quality-card ${escapeHtml(tone)}">
+      <span>${escapeHtml(label)}</span>
+      <strong>${escapeHtml(value ?? "-")}</strong>
+      <em>${escapeHtml(sub || "")}</em>
+    </div>
+  `;
+}
+
+function renderDataQuality() {
+  const summary = document.getElementById("dataQualitySummary");
+  const grid = document.getElementById("dataQualityGrid");
+  if (!summary || !grid || !state.dataQuality) return;
+  const quality = state.dataQuality;
+  const grades = quality.grade_counts || {};
+  const weakRows = quality.weakest || [];
+  summary.textContent = quality.status === "ok"
+    ? `평균 ${quality.average_score}점 · 보완 필요 ${grades["보완 필요"] || 0}개 · 데이터 부족 ${grades["데이터 부족"] || 0}개`
+    : quality.summary || "";
+  grid.innerHTML = [
+    qualityCard("평균 신뢰도", `${quality.average_score ?? "-"}점`, "공시·뉴스·보고서 기반", "good"),
+    qualityCard("투자심의 가능", `${grades["투자심의 사용 가능"] || 0}개`, "즉시 보고서 활용 가능", "good"),
+    qualityCard("보완 필요", `${(grades["보완 필요"] || 0) + (grades["데이터 부족"] || 0)}개`, "원문/뉴스 재검증 우선", "warn"),
+    qualityCard(
+      "최우선 보강",
+      weakRows[0] ? `${weakRows[0].name} ${weakRows[0].score}점` : "-",
+      weakRows[0]?.grade || "",
+      weakRows[0] ? "risk" : "",
+    ),
+  ].join("");
+}
+
+function renderScoreTuning() {
+  const summary = document.getElementById("scoreTuningSummary");
+  const list = document.getElementById("scoreTuningList");
+  if (!summary || !list || !state.scoreTuning) return;
+  const tuning = state.scoreTuning;
+  const stats = tuning.summary || {};
+  summary.textContent = `상위 ${stats.top_count || 0}개 · 과대평가 점검 ${stats.over_risk_count || 0}개 · 시너지 과소반영 ${stats.under_synergy_count || 0}개`;
+  const rows = [...(tuning.benchmarks || []), ...(tuning.items || []).slice(0, 6)];
+  list.innerHTML = rows
+    .map(
+      (row) => `
+        <button class="tuning-row" data-code="${escapeHtml(row.code || "")}">
+          <span>${row.rank ? `#${row.rank}` : "벤치마크"} · ${escapeHtml(row.code || "")}</span>
+          <strong>${escapeHtml(row.name || "-")}</strong>
+          <em>${escapeHtml(row.verdict || "-")} · ${row.score ?? "-"}점</em>
+        </button>
+      `,
+    )
+    .join("");
+  document.querySelectorAll(".tuning-row").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (!el.dataset.code) return;
+      state.query = "";
+      state.candidatePage = 0;
+      setActiveFilter("all");
+      document.getElementById("searchInput").value = "";
+      state.selectedCode = el.dataset.code;
+      loadCandidates();
+    });
+  });
+}
+
+function renderTeamOps() {
+  const summary = document.getElementById("teamOpsSummary");
+  const grid = document.getElementById("teamOpsGrid");
+  if (!summary || !grid || !state.teamOps) return;
+  const ops = state.teamOps;
+  const git = ops.git || {};
+  const data = ops.data || {};
+  const handoff = ops.handoff || {};
+  summary.textContent = `${git.branch || "-"} · ${git.commit || "-"} · 후보 ${data.candidate_count || 0}개 · DART ${data.dart_filing_files || 0}개`;
+  grid.innerHTML = [
+    qualityCard("GitHub", git.remote ? "연결됨" : "확인 필요", git.remote || "remote 미설정", git.remote ? "good" : "warn"),
+    qualityCard("자동 푸시", git.auto_push_hook ? "설치됨" : "미설치", "커밋 후 GitHub 업데이트", git.auto_push_hook ? "good" : "warn"),
+    qualityCard("다른 PC 실행", "준비됨", handoff.first_run || "FIRST_RUN_WINDOWS.ps1", "good"),
+    qualityCard("팀 데이터", "SQLite Export", "/api/export-pipeline.sqlite", "good"),
+  ].join("");
 }
 
 function shortlistGroups() {
@@ -1367,6 +1474,56 @@ function optionTags(options, selected) {
     .join("");
 }
 
+function dataQualityBlock(item) {
+  const quality = item.data_quality || {};
+  if (!quality.score) return "";
+  const checks = quality.checks || [];
+  return `
+    <section class="section quality-detail">
+      <div class="section-title-row">
+        <h3>${T.dataQuality}</h3>
+        <span class="meta-pill">${escapeHtml(quality.grade || "-")} · ${quality.score}점</span>
+      </div>
+      <div class="quality-check-grid">
+        ${checks
+          .map(
+            (check) => `
+              <div class="quality-check ${escapeHtml(check.status || "")}">
+                <span>${escapeHtml(check.label || "-")}</span>
+                <strong>${escapeHtml(check.value || "-")}</strong>
+                <em>${escapeHtml(check.detail || "")}</em>
+              </div>
+            `,
+          )
+          .join("")}
+      </div>
+      ${(quality.warnings || []).length ? `<div class="warning-list">${memoList(quality.warnings)}</div>` : ""}
+    </section>
+  `;
+}
+
+function workflowHistoryBlock(workflow) {
+  const history = workflow.history || [];
+  if (!history.length) return "";
+  return `
+    <div class="workflow-history">
+      <h4>${T.workflowHistory}</h4>
+      ${history
+        .slice(-5)
+        .reverse()
+        .map(
+          (event) => `
+            <div class="history-row">
+              <span>${escapeHtml((event.at || "").slice(0, 16).replace("T", " "))}</span>
+              <strong>${escapeHtml(event.summary || event.type || "-")}</strong>
+            </div>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 function workflowBlock(item) {
   const workflow = item.workflow || {};
   const options = state.workflowOptions || {
@@ -1406,6 +1563,7 @@ function workflowBlock(item) {
         <textarea id="workflowMemo" rows="4" placeholder="후보별 검토 메모">${escapeHtml(workflow.memo || "")}</textarea>
       </label>
       <button id="workflowSave" class="primary-action" data-code="${escapeHtml(item.code)}">${T.save}</button>
+      ${workflowHistoryBlock(workflow)}
     </section>
   `;
 }
@@ -1596,6 +1754,7 @@ function renderDetail() {
 
     ${acquisitionJudgmentBlock(item)}
     ${newsAnalysisBlock(item)}
+    ${dataQualityBlock(item)}
     ${workflowBlock(item)}
 
     <section class="section">
@@ -1686,6 +1845,9 @@ document.querySelectorAll(".chip").forEach((el) => {
 loadConfig();
 loadWorkflowOptions();
 loadOperations();
+loadDataQuality();
+loadScoreTuning();
+loadTeamOps();
 loadMonitoring();
 loadShortlist();
 loadScoreAudit();
