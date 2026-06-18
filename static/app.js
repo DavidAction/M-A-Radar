@@ -501,6 +501,120 @@ function severityLabel(value) {
   return labels[value] || value || "-";
 }
 
+const ROW_CLAMPS = [
+  { container: "alertsList", toggle: "alertsToggle", rows: 2 },
+  { container: "scoreAuditList", toggle: "scoreAuditToggle", rows: 2 },
+];
+
+// 딜 파이프라인 보드는 레인(세로 컬럼) 구조라 레인당 카드 2장까지만 보이도록 별도 클램프한다.
+function clampPipelineBoard() {
+  const board = document.getElementById("pipelineDashboardLanes");
+  const toggle = document.getElementById("pipelineToggle");
+  if (!board || !toggle) return;
+  const open = board.classList.contains("row-open");
+  board.classList.remove("row-clamped");
+  board.style.removeProperty("--clamp-h");
+  const lanes = Array.from(board.querySelectorAll(".pipeline-lane"));
+  if (!lanes.length) {
+    toggle.hidden = true;
+    return;
+  }
+  const maxCards = Math.max(...lanes.map((lane) => lane.querySelectorAll(".pipeline-card").length));
+  if (maxCards <= 2) {
+    toggle.hidden = true;
+    return;
+  }
+  toggle.hidden = false;
+  toggle.textContent = open ? "접기" : "Show more";
+  if (open) return;
+  const boardTop = board.getBoundingClientRect().top;
+  let bottom = boardTop;
+  lanes.forEach((lane) => {
+    const cards = lane.querySelectorAll(".pipeline-card");
+    const anchor = cards[Math.min(1, cards.length - 1)] || lane.querySelector(".pipeline-lane-head") || lane;
+    bottom = Math.max(bottom, anchor.getBoundingClientRect().bottom);
+  });
+  board.style.setProperty("--clamp-h", `${Math.round(bottom - boardTop) + 14}px`);
+  board.classList.add("row-clamped");
+}
+
+function applyRowClamp(container, toggle, rows = 2) {
+  if (!container || !toggle) return;
+  const open = container.classList.contains("row-open");
+  container.classList.remove("row-clamped");
+  container.style.removeProperty("--clamp-h");
+  const kids = Array.from(container.children).filter((node) => node.nodeType === 1);
+  if (!kids.length) {
+    toggle.hidden = true;
+    return;
+  }
+  const containerTop = container.getBoundingClientRect().top;
+  const rowTops = [];
+  kids.forEach((kid) => {
+    const top = Math.round(kid.getBoundingClientRect().top - containerTop);
+    if (!rowTops.some((value) => Math.abs(value - top) < 6)) rowTops.push(top);
+  });
+  rowTops.sort((a, b) => a - b);
+  if (rowTops.length <= rows) {
+    toggle.hidden = true;
+    return;
+  }
+  toggle.hidden = false;
+  toggle.textContent = open ? "접기" : "Show more";
+  if (open) return;
+  const boundary = rowTops[rows];
+  let visibleBottom = 0;
+  kids.forEach((kid) => {
+    const rect = kid.getBoundingClientRect();
+    if (Math.round(rect.top - containerTop) < boundary - 6) {
+      visibleBottom = Math.max(visibleBottom, Math.round(rect.bottom - containerTop));
+    }
+  });
+  container.style.setProperty("--clamp-h", `${visibleBottom}px`);
+  container.classList.add("row-clamped");
+}
+
+function refreshRowClamp(containerId) {
+  const config = ROW_CLAMPS.find((entry) => entry.container === containerId);
+  if (!config) return;
+  applyRowClamp(
+    document.getElementById(config.container),
+    document.getElementById(config.toggle),
+    config.rows,
+  );
+}
+
+function refreshAllClamps() {
+  ROW_CLAMPS.forEach((config) => refreshRowClamp(config.container));
+  clampPipelineBoard();
+}
+
+function bindRowClamps() {
+  ROW_CLAMPS.forEach((config) => {
+    const toggle = document.getElementById(config.toggle);
+    const container = document.getElementById(config.container);
+    if (!toggle || !container) return;
+    toggle.addEventListener("click", () => {
+      container.classList.toggle("row-open");
+      applyRowClamp(container, toggle, config.rows);
+    });
+  });
+  const pipelineToggle = document.getElementById("pipelineToggle");
+  const pipelineBoard = document.getElementById("pipelineDashboardLanes");
+  if (pipelineToggle && pipelineBoard) {
+    pipelineToggle.addEventListener("click", () => {
+      pipelineBoard.classList.toggle("row-open");
+      clampPipelineBoard();
+    });
+  }
+  let resizeTimer = null;
+  window.addEventListener("resize", () => {
+    if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(refreshAllClamps, 150);
+  });
+  window.addEventListener("load", refreshAllClamps);
+}
+
 function renderAlerts() {
   const summary = document.getElementById("alertsSummary");
   const list = document.getElementById("alertsList");
@@ -530,6 +644,7 @@ function renderAlerts() {
       if (el.dataset.code) selectCandidate(el.dataset.code);
     });
   });
+  refreshRowClamp("alertsList");
 }
 
 function renderNotificationStatus() {
@@ -640,6 +755,7 @@ function renderPipelineDashboard() {
       if (el.dataset.code) selectCandidate(el.dataset.code);
     });
   });
+  clampPipelineBoard();
 }
 
 function renderScoreAudit() {
@@ -671,6 +787,7 @@ function renderScoreAudit() {
       loadCandidates();
     });
   });
+  refreshRowClamp("scoreAuditList");
 }
 
 function qualityCard(label, value, sub = "", tone = "") {
@@ -1987,29 +2104,34 @@ function extractionFeedbackBlock(item) {
         <h3>${T.extractionFeedback}</h3>
         <span id="extractionFeedbackSaveState" class="save-state">${feedback.updated_at ? `저장 ${escapeHtml(feedback.updated_at.slice(0, 16).replace("T", " "))}` : ""}</span>
       </div>
-      <div class="workflow-grid">
-        <label>
-          <span>검수 항목</span>
-          <select id="feedbackField">${optionTags(options.fields, feedback.field || "largest_shareholder")}</select>
-        </label>
-        <label>
-          <span>검수 상태</span>
-          <select id="feedbackStatus">${optionTags(options.statuses, feedback.status || "미검수")}</select>
-        </label>
-        <label>
-          <span>검수자</span>
-          <input id="feedbackReviewer" value="${escapeHtml(feedback.reviewer || "")}" placeholder="검수자" />
-        </label>
-        <label class="workflow-wide">
+      <p class="note">DART 원문에서 추출한 핵심 항목의 정확도를 검수하고 파서 튜닝에 반영합니다.</p>
+      <div class="feedback-form">
+        <div class="feedback-row">
+          <label class="feedback-field">
+            <span>검수 항목</span>
+            <select id="feedbackField">${optionTags(options.fields, feedback.field || "largest_shareholder")}</select>
+          </label>
+          <label class="feedback-field">
+            <span>검수 상태</span>
+            <select id="feedbackStatus">${optionTags(options.statuses, feedback.status || "미검수")}</select>
+          </label>
+          <label class="feedback-field">
+            <span>검수자</span>
+            <input id="feedbackReviewer" value="${escapeHtml(feedback.reviewer || "")}" placeholder="검수자 이름" />
+          </label>
+        </div>
+        <label class="feedback-field">
           <span>수정값</span>
           <input id="feedbackCorrectedValue" value="${escapeHtml(feedback.corrected_value || "")}" placeholder="예: 김희자 6.8%, 의견거절, CB 전환가능물량 확인" />
         </label>
-        <label class="workflow-wide">
+        <label class="feedback-field">
           <span>메모</span>
           <textarea id="feedbackNote" rows="3" placeholder="오탐 사유, 원문 위치, 파서 개선 룰">${escapeHtml(feedback.note || "")}</textarea>
         </label>
       </div>
-      <button id="extractionFeedbackSave" class="primary-action" data-code="${escapeHtml(item.code)}">피드백 저장</button>
+      <div class="feedback-actions">
+        <button id="extractionFeedbackSave" class="primary-action" data-code="${escapeHtml(item.code)}">피드백 저장</button>
+      </div>
     </section>
   `;
 }
@@ -2424,7 +2546,6 @@ async function saveExtractionFeedback(item) {
       extraction_feedback: result.extraction_feedback,
     };
   }
-  loadExtractionAudit();
 }
 
 function bindExtractionFeedbackForm(item) {
@@ -2702,33 +2823,22 @@ document.querySelectorAll(".chip").forEach((el) => {
   });
 });
 
-const qualityRemediateButton = document.getElementById("qualityRemediate");
-if (qualityRemediateButton) {
-  qualityRemediateButton.addEventListener("click", startQualityRemediation);
-}
-
 const sendAlertsDryRunButton = document.getElementById("sendAlertsDryRun");
 if (sendAlertsDryRunButton) {
   sendAlertsDryRunButton.addEventListener("click", sendAlertsDryRun);
 }
 
+bindRowClamps();
+
 loadConfig();
 loadWorkflowOptions();
 loadOperations();
-loadDataQuality();
-loadRemediationStatus();
 loadExtractionFeedbackOptions();
-loadExtractionAudit();
 loadPipelineDashboard();
-loadScoreTuning();
-loadCalibration();
-loadTeamOps();
 loadICPackages();
-loadAutomationPlan();
 loadMonitoring();
 loadAlerts();
 loadNotificationStatus();
-loadTopReview();
 loadShortlist();
 loadScoreAudit();
 loadCandidates();

@@ -2227,6 +2227,110 @@ ul.clean {
   line-height: 1.5;
 }
 
+/* 후보 상세 핵심 지표 카드 가운데 정렬 (딜 시나리오 · 인베스트먼트 케이스 · 데이터 신뢰도) */
+.scenario-metrics .quality-card,
+.investment-case .compact-quality .quality-card,
+.quality-check-grid .quality-check {
+  justify-items: center;
+  text-align: center;
+}
+
+/* Show more 토글 + 2줄 클램프 */
+.row-toggle-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.row-toggle {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 20px;
+  background: #122027;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.row-toggle:hover {
+  border-color: var(--teal);
+}
+
+.row-toggle[hidden] {
+  display: none;
+}
+
+.row-clamped {
+  max-height: var(--clamp-h, none);
+  overflow: hidden;
+}
+
+/* 추출 피드백 폼 */
+.extraction-feedback-panel .feedback-form {
+  display: grid;
+  gap: 12px;
+}
+
+.extraction-feedback-panel .feedback-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.extraction-feedback-panel .feedback-field {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.extraction-feedback-panel .feedback-field input,
+.extraction-feedback-panel .feedback-field select,
+.extraction-feedback-panel .feedback-field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 11px;
+  background: var(--panel-2);
+  color: var(--ink);
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.extraction-feedback-panel .feedback-field input:focus,
+.extraction-feedback-panel .feedback-field select:focus,
+.extraction-feedback-panel .feedback-field textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+}
+
+.extraction-feedback-panel .feedback-field textarea {
+  min-height: 84px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.extraction-feedback-panel .feedback-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+
+.extraction-feedback-panel .save-state {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .extraction-feedback-panel .feedback-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 980px) {
   .shell {
     padding: 16px;

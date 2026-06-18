@@ -41,54 +41,6 @@
         <div id="opsLogs" class="ops-logs"></div>
       </section>
 
-      <section class="automation-panel">
-        <div class="score-audit-head">
-          <div>
-            <h2>자동 갱신 운영</h2>
-            <p id="automationSummary" class="note"></p>
-          </div>
-        </div>
-        <div id="automationGrid" class="automation-grid"></div>
-      </section>
-
-      <section class="decision-panel">
-        <div class="decision-card">
-          <div class="score-audit-head">
-            <div>
-              <h2>데이터 신뢰도</h2>
-              <p id="dataQualitySummary" class="note"></p>
-            </div>
-            <div class="export-actions">
-              <button id="qualityRemediate" class="export-link primary" type="button">보강 실행</button>
-              <a class="export-link" href="/api/export-data-quality.csv">QA CSV</a>
-            </div>
-          </div>
-          <div id="dataQualityGrid" class="quality-grid"></div>
-          <p id="qualityRemediationState" class="note"></p>
-          <div id="dataQualityIssues" class="quality-issues"></div>
-        </div>
-        <div class="decision-card">
-          <div class="score-audit-head">
-            <div>
-              <h2>스코어 튜닝</h2>
-              <p id="scoreTuningSummary" class="note"></p>
-            </div>
-          </div>
-          <div id="scoreTuningList" class="tuning-list"></div>
-          <div id="calibrationList" class="calibration-list"></div>
-        </div>
-        <div class="decision-card">
-          <div class="score-audit-head">
-            <div>
-              <h2>팀 운영/이관</h2>
-              <p id="teamOpsSummary" class="note"></p>
-            </div>
-            <a class="export-link" href="/api/export-pipeline.sqlite">SQLite</a>
-          </div>
-          <div id="teamOpsGrid" class="quality-grid"></div>
-        </div>
-      </section>
-
       <section class="ic-panel">
         <div class="score-audit-head">
           <div>
@@ -125,17 +77,9 @@
         </div>
         <div id="notificationStatus" class="notification-status"></div>
         <div id="alertsList" class="alerts-list"></div>
-      </section>
-
-      <section class="extraction-panel">
-        <div class="score-audit-head">
-          <div>
-            <h2>추출 정확도 검수</h2>
-            <p id="extractionAuditSummary" class="note"></p>
-          </div>
-          <a class="export-link" href="/api/export-extraction-audit.csv">Audit CSV</a>
+        <div class="row-toggle-wrap">
+          <button id="alertsToggle" class="row-toggle" type="button" hidden>Show more</button>
         </div>
-        <div id="extractionAuditList" class="extraction-list"></div>
       </section>
 
       <section class="pipeline-board-panel">
@@ -148,6 +92,9 @@
         </div>
         <div id="pipelineDashboardActions" class="pipeline-actions"></div>
         <div id="pipelineDashboardLanes" class="pipeline-board"></div>
+        <div class="row-toggle-wrap">
+          <button id="pipelineToggle" class="row-toggle" type="button" hidden>Show more</button>
+        </div>
       </section>
 
       <section class="score-audit-panel">
@@ -158,20 +105,9 @@
           </div>
         </div>
         <div id="scoreAuditList" class="score-audit-list"></div>
-      </section>
-
-      <section class="top-review-panel">
-        <div class="score-audit-head">
-          <div>
-            <h2>상위 20 후보 검수</h2>
-            <p id="topReviewSummary" class="note"></p>
-          </div>
-          <div class="export-actions">
-            <a class="export-link" href="/api/export-top-review.csv">CSV</a>
-            <a class="export-link primary" href="/api/export-top-review.docx">Word Report</a>
-          </div>
+        <div class="row-toggle-wrap">
+          <button id="scoreAuditToggle" class="row-toggle" type="button" hidden>Show more</button>
         </div>
-        <div id="topReviewList" class="top-review-list"></div>
       </section>
 
       <section class="shortlist-panel">
